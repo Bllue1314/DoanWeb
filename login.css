@@ -16,7 +16,7 @@ body{
     font-size: 50px;
 }
 
-.container{
+.wrap{
     position: relative;
     width: 50%;
     background: rgba(255, 255, 255, 0.05);
@@ -26,10 +26,16 @@ body{
     padding: 3rem;
 }
 
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
 .Username{
     position: relative;
     height: 2rem;
     line-height: 2rem;
+    margin-bottom: 46px;
 }
 
 input{
