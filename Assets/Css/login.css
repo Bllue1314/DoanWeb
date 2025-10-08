@@ -8,7 +8,7 @@ body{
 
 .wrapper{
     width: 20rem;
-    background: #0D0D0D;
+    background: #0d0d0d;
     color: white;
     border-radius: 10px;
     padding: 30px 40px;
@@ -93,6 +93,17 @@ input:focus + .labelline, input:valid + .labelline{
     color: black;
     box-shadow: 0 0 10px;
     font-weight: 600;
+}
+
+#cancel{
+    text-decoration: none;
+    font-size: 200%;
+    color: white;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    border: none;
+    float: right;
 }
 
 .wrapper .register-link{
