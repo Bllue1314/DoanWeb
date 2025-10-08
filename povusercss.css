@@ -1,0 +1,49 @@
+#background {
+    background: url('gif2.gif') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#home {
+    width: 70%;
+    height: 80%;
+    background-color: black;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 30px;
+    justify-items: center;
+    align-items: center;
+}
+
+
+.item {
+    width: 100px;
+    height: 140px;
+    background-color: red;
+    border-radius: 10px;
+    border: solid 5px white;
+    transition: background-color 0.4s ease, transform 0.2s ease, border 0.2s ease;
+}
+
+.item:hover {
+    background-color: white;
+    border-color: yellow;
+    transform: scale(1.05);
+}
+
+.item:active {
+  transform: scale(0.95);
+}
