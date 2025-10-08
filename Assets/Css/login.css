@@ -37,8 +37,10 @@ body{
     outline: none;
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 40px;
-    font-size: 16px;
+    font-size: 1.6em;
     color: white;
+    transition: 0.1s ease;
+    padding-left: 10px;
 }
 
 .labelline{
