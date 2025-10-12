@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Database Tests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        .test-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .test-results {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tech Database Testing Interface</h1>
+    
+    <div class="test-container">
+        <h2>Test Controls</h2>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <button onclick="testTechDB()">Test TechDB</button>
+        <button onclick="testProducts()">Test Products</button>
+        <button onclick="testCart()">Test Cart</button>
+        <button onclick="testSpecificScenarios()">Test Specific Scenarios</button>
+        <button onclick="testErrorHandling()">Test Error Handling</button>
+        <button onclick="clearAllData()">Clear All Data</button>
+    </div>
+
+    <div class="test-container">
+        <h2>Test Results</h2>
+        <div id="testResults" class="test-results"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>Console Output</h2>
+        <pre id="consoleOutput" class="test-results"></pre>
+    </div>
+
+    <!-- Import database classes -->
+    <script src="../src/Components/database/db.js"></script>
+    
+    <!-- Import test scripts -->
+    <script src="../src/Components/database/test.js"></script>
+
+    <script>
+        // Override console.log to display in our custom output
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalAssert = console.assert;
+
+        console.log = function() {
+            const output = document.getElementById('consoleOutput');
+            const args = Array.from(arguments);
+            output.innerHTML += args.join(' ') + '\n';
+            originalLog.apply(console, arguments);
+        };
+
+        console.error = function() {
+            const output = document.getElementById('consoleOutput');
+            const args = Array.from(arguments);
+            output.innerHTML += '<span class="error">ERROR: ' + args.join(' ') + '</span>\n';
+            originalError.apply(console, arguments);
+        };
+
+        console.assert = function(condition, message) {
+            if (!condition) {
+                const output = document.getElementById('testResults');
+                output.innerHTML += '<div class="error">✖ ' + message + '</div>';
+            } else {
+                const output = document.getElementById('testResults');
+                output.innerHTML += '<div class="success">✓ Test passed</div>';
+            }
+            originalAssert.apply(console, arguments);
+        };
+
+        // Clear all test data
+        function clearAllData() {
+            localStorage.clear();
+            document.getElementById('testResults').innerHTML = '';
+            document.getElementById('consoleOutput').innerHTML = '';
+            console.log('All data cleared');
+        }
+
+        // Initialize page
+        window.onload = function() {
+            console.log('Test page loaded');
+            console.log('LocalStorage status:', localStorage.length, 'items stored');
+        };
+    </script>
+</body>
+</html>
