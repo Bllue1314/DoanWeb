@@ -231,6 +231,7 @@ class Order {
     }
 }
 
+
 class User {
     constructor(id, username, email, password, role = 'user') {
         this.id = id;
