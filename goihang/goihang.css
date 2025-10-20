@@ -1,0 +1,110 @@
+/* Nền chính */
+#background {
+  background: url('background.gif') no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Khung nội dung */
+#chinh {
+  width: 80%;
+  height: 85%;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 0 20px gold;
+}
+
+/* Tiêu đề */
+.tieude {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 2px solid gold;
+}
+
+/* Lưới sản phẩm */
+#sapxep {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+  align-items: start;
+}
+
+/* Thẻ sản phẩm */
+.sanpham {
+  width: 180px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: solid 2px white;
+  border-radius: 12px;
+  text-align: center;
+  padding: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.item:hover {
+  background-color: white;
+  color: black;
+  border-color: gold;
+  transform: scale(1.05);
+}
+.item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Giỏ hàng */
+#cart {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-top: 2px solid gold;
+  padding: 15px;
+  color: white;
+  max-height: 200px;
+  overflow-y: auto;
+}
+#cart h3 {
+  margin-top: 0;
+  color: gold;
+  text-align: center;
+}
+
+/* Mục trong giỏ hàng */
+#goihang div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin: 5px 0;
+}
+.remove-btn {
+  background: crimson;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 6px;
+}
+.remove-btn:hover {
+  background: red;
+}
+
+/* Tổng tiền */
+#tonggoihang{
+  text-align: right;
+  margin-top: 10px;
+  font-weight: bold;
+  color: gold;
+}
