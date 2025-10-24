@@ -405,3 +405,7 @@ input:focus + .labelline, input:valid + .labelline{
 .register-link p a:hover{
     text-decoration: underline;
 }
+
+#email:focus:invalid{
+    border: 2[x solid red]
+}

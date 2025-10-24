@@ -121,3 +121,16 @@ input:focus + .labelline, input:valid + .labelline{
 .register-link p a:hover{
     text-decoration: underline;
 }
+
+.input-box input:focus:invalid + .labelline{
+    color: red;
+    height: 30px;
+    transform: translate(-15px, -40px) scale(0.88);
+    z-index: 1111;
+    padding: 0 12px;
+}
+
+input:invalid{
+    color: red;
+    border: 3px solid red;
+}
