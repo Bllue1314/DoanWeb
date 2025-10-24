@@ -296,6 +296,7 @@ nav {
     padding: 30px 40px;
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
     text-align: center;
+    z-index: 1111;
 }
 
 .login h1{
@@ -404,8 +405,4 @@ input:focus + .labelline, input:valid + .labelline{
 
 .register-link p a:hover{
     text-decoration: underline;
-}
-
-#email:focus:invalid{
-    border: 2[x solid red]
 }
