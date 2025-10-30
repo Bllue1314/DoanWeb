@@ -68,7 +68,7 @@
     transition: 0.2s ease;
 }
 
-input:focus, input:valid{
+#container input:focus, #container input:valid{
     color: skyblue;
     border: 3px solid skyblue;
 }
