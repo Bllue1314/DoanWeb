@@ -204,6 +204,7 @@ document.getElementById("showRegister").addEventListener("click", function() {
         });
     });
 });
+/*
 // list_items.js - Hiển thị sản phẩm
 document.addEventListener('DOMContentLoaded', function() {
     const productsContainer = document.getElementById('productsContainer');
@@ -258,4 +259,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     displayProducts();
+});*/
+
+function toggleDropdown(button) {
+        const dropdown = button.nextElementSibling; // Lấy menu tương ứng
+        const isVisible = dropdown.style.display === "block";
+
+        // Ẩn tất cả dropdown trước
+        document.querySelectorAll(".dropdown-menu").forEach(d => {
+            d.style.display = "none";
+        });
+
+        // Nếu dropdown này đang ẩn trước đó → bật lên
+        if (!isVisible) {
+            dropdown.style.display = "block";
+        }
+    }
+    window.addEventListener("click", function(e) {
+    if (!e.target.closest(".filter-container")) {
+            document.querySelectorAll(".dropdown-menu").forEach(d => {
+            d.style.display = "none";
+            });
+        }
 });
