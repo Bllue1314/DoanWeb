@@ -57,7 +57,7 @@ nav {
     display: block;
     margin-top: 5px;
     right: 0;
-    background: var(--primary-color, #4daf54);
+    background: #4daf54;
     transition: width 0.3s ease;
     -webkit-transition: width 0.3s ease;
 }
@@ -69,7 +69,7 @@ nav {
 .nav-links li a:hover::after {
     width: 100%;
     left: 0;
-    background: var(--primary-color, #4daf54);
+    background: #4daf54;
 }
 
 .btns {
@@ -87,7 +87,7 @@ nav {
     border: none;
     cursor: pointer;
     margin: 20px 10px;
-    background: var(--primary-color);
+    background: #4daf54;
 }
 
 .btn-login:hover {
