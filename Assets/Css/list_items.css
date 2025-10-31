@@ -22,13 +22,14 @@ body {
 .sidebar {
     width: 20%;
     padding: 40px 0;
-    color: white;
+    color: black;
     border-right: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     background: #FFFFFF;
     border: 5px solid rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
     text-align: center;
+    z-index: 10000;
 }
 
 .container {
@@ -77,6 +78,7 @@ h3 {
     color: black;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 3px solid rgba(0, 0, 0, 0.1);
+    z-index: 0;
 }
 
 .card:hover {
@@ -167,6 +169,7 @@ h3 {
 .card_color h3 {
     font-size: 14px;
     margin-right: 10px;
+    color: black;
 }
 
 .card_color span {
@@ -276,4 +279,89 @@ h3 {
         /* Hiển thị 1 cột trên điện thoại */
         grid-template-columns: 1fr;
     }
+}
+
+/*nut loc*/
+
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+}
+
+.filter-button {
+  padding: 10px 16px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.filter-button:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.filter-button.active {
+  background-color: #000;
+  color: white;
+  border-color: #000;
+}
+
+.arrow {
+  font-size: 12px;
+}
+
+/*phan chon loc */
+
+.filter-container {
+    position: relative;
+    width: 100%;
+    display: block;
+}
+
+.filter-container .filter-button {
+    width: 100%;
+    justify-content: space-between;
+}
+
+
+.dropdown-menu {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    margin-top: 6px;
+    padding: 0;
+    list-style: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: none;
+    min-width: 180px;
+    z-index: 9999;
+}
+
+.dropdown-item {
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item.selected {
+    font-weight: bold;
+    color: #000;
 }
