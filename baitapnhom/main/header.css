@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main_header {
+    width: 100%;
+    background-color: black;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    flex-direction: row;
+    height: 100px;
+}
+
+.search_container {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 30px;
+    padding: 5px 15px;
+    width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 25px;
+    left: 35px;
+}
+
+.search_input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+.search_button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #aaa;
+    padding-right: 10px;
+}
+
+.search_button:hover {
+    color: #3a8a40;
+}
+
+.social_icons {
+    display: flex;
+    right: 60px;
+    position: absolute;
+    top: 25px;
+    list-style: none;
+    gap: 25px;
+    align-items: center;
+
+}
+
+.social_icons a {
+    color: white;
+    font-size: 25px;
+    transition: color 0.3s ease;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+}
+
+.social_icons a:hover {
+    color: #4daf54;
+}
