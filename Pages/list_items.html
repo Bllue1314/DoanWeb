@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="../Assets/Css/list_items.css">
     <link rel="stylesheet" href="../Assets/Css/header.css">
     <link rel="stylesheet" href="../Assets/Css/login.css">
+    <link rel="stylesheet" href="../Assets/Css/cart.css">
+
 </head>
 
 <body>
@@ -44,8 +46,13 @@
             <li><a href="#">More info</a></li>
         </ul>
         <div class="btns">
-            <button class="btn" id = "showLogin">Login</button>
-            <button class="btn" id = "showRegister">Sign up</button>
+            <!-- THÊM ICON GIỎ HÀNG VÀO ĐÂY -->
+            <a href="cart.html" class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </a>
+            <button class="btn" id="showLogin">Login</button>
+            <button class="btn" id="showRegister">Sign up</button>
         </div>
     </nav>
 
@@ -93,6 +100,7 @@
     </div>
 
     <script src="../src/Components/list_items.js"></script>
+    <script src="../src/Components/cart-manager.js"></script>
 </body>
 
 </html>
