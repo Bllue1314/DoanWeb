@@ -88,7 +88,7 @@ function createProductCard(product) {
                 </div>
                 <div class="card_buy">
                     <div class="card_price">
-                        ${product.price}
+                        ${product.price}$
                     </div>
                     <div class="card_action" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
                         <button onclick="buyProduct('${product.name}')">Buy Now</button>
