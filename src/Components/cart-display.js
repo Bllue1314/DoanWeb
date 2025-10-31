@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <img src="${item.image}" alt="${item.name}" class="cart-item-image">
                 <div class="cart-item-info">
                     <h4>${item.name}</h4>
-                    <p>${item.price.toLocaleString()} VND</p>
+                    <p>${item.price.toLocaleString()}$</p>
                 </div>
                 <div class="cart-item-controls">
                     <button onclick="updateQuantity(${item.id}, -1)">-</button>
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </button>
                 </div>
                 <div class="cart-item-total">
-                    ${(item.price * item.quantity).toLocaleString()} VND
+                    ${(item.price * item.quantity).toLocaleString()} $
                 </div>
             </div>
         `).join('');

@@ -1,50 +1,56 @@
 // Danh sách sản phẩm - Bạn có thể thêm/sửa/xóa sản phẩm ở đây
 const products = [
   {
+    id: 1,
     name: "Logitech Pro X Gaming",
     brand: "Logitech",
     description: "The Logitech Pro X Gaming is designed for professional gamers",
-    price: "$99.99",
+    price: 99.99,
     image: "https://images.unsplash.com/photo-1599669454699-248893623440?w=400",
     colors: ["#000000", "#FFC0CB"]
   },
   {
+    id: 2,
     name: "Razer BlackWidow V3",
     brand: "Razer",
     description: "Mechanical gaming keyboard with RGB lighting",
-    price: "$139.99",
+    price: 139.99,
     image: "https://images.unsplash.com/photo-1595225476474-87563907a212?w=400",
     colors: ["#000000", "#00FF00"]
   },
   {
+    id: 3,
     name: "SteelSeries Apex Pro",
     brand: "SteelSeries",
     description: "Adjustable mechanical switches for ultimate control",
-    price: "$199.99",
+    price: 199.99,
     image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400",
     colors: ["#000000", "#FF0000"]
   },
   {
+    id: 4,
     name: "Corsair K95 RGB",
     brand: "Corsair",
     description: "Premium gaming keyboard with Cherry MX switches",
-    price: "$179.99",
+    price: 179.99,
     image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400",
     colors: ["#000000", "#FFD700"]
   },
   {
+    id: 5,
     name: "HyperX Alloy FPS",
     brand: "HyperX",
     description: "Compact mechanical keyboard for FPS games",
-    price: "$89.99",
+    price: 89.99,
     image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400",
     colors: ["#000000", "#FF4500"]
   },
   {
+    id: 6,
     name: "Logitech G915",
     brand: "Logitech",
     description: "Wireless mechanical gaming keyboard",
-    price: "$249.99",
+    price: 249.99,
     image: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=400",
     colors: ["#000000", "#FFFFFF"]
   }
@@ -82,9 +88,9 @@ function createProductCard(product) {
                 </div>
                 <div class="card_buy">
                     <div class="card_price">
-                        ${product.price}
+                        ${product.price}$
                     </div>
-                    <div class="card_action">
+                    <div class="card_action" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
                         <button onclick="buyProduct('${product.name}')">Buy Now</button>
                     </div>
                 </div>
@@ -97,11 +103,6 @@ function createProductCard(product) {
 function renderProducts() {
     const container = document.getElementById('productsContainer');
     container.innerHTML = products.map(product => createProductCard(product)).join('');
-}
-
-// Hàm xử lý khi click Buy Now
-function buyProduct(productName) {
-    alert(`Added "${productName}" to cart!`);
 }
 
 // Render sản phẩm khi trang load
@@ -203,61 +204,6 @@ document.getElementById("showRegister").addEventListener("click", function() {
             input.classList.add("touched");
         });
     });
-});
-// list_items.js - Hiển thị sản phẩm
-document.addEventListener('DOMContentLoaded', function() {
-    const productsContainer = document.getElementById('productsContainer');
-    
-    // Dữ liệu sản phẩm mẫu
-    const products = [
-        {
-            id: 1,
-            name: "Chuột Gaming Razer",
-            price: 450000,
-            image: "../Assets/img/mouse.jpg",
-            description: "Chuột chơi game chuyên nghiệp"
-        },
-        {
-            id: 2,
-            name: "Bàn phím Cơ",
-            price: 1200000,
-            image: "../Assets/img/keyboard.jpg",
-            description: "Bàn phím cơ LED RGB"
-        },
-        {
-            id: 3,
-            name: "Tai nghe Gaming",
-            price: 800000,
-            image: "../Assets/img/headphone.jpg",
-            description: "Tai nghe 7.1 surround"
-        },
-        {
-            id: 4,
-            name: "Lót chuột",
-            price: 150000,
-            image: "../Assets/img/mousepad.jpg",
-            description: "Lót chuột size lớn"
-        }
-    ];
-
-    // Hiển thị sản phẩm
-    function displayProducts() {
-        productsContainer.innerHTML = products.map(product => `
-            <div class="product-card">
-                <img src="${product.image}" alt="${product.name}" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-name">${product.name}</h3>
-                    <p class="product-description">${product.description}</p>
-                    <div class="product-price">${product.price.toLocaleString()} VND</div>
-                    <button class="add-to-cart-btn" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
-                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ
-                    </button>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    displayProducts();
 });
 
 function toggleDropdown(button) {
