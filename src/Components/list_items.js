@@ -204,3 +204,80 @@ document.getElementById("showRegister").addEventListener("click", function() {
         });
     });
 });
+// list_items.js - Hiển thị sản phẩm
+document.addEventListener('DOMContentLoaded', function() {
+    const productsContainer = document.getElementById('productsContainer');
+    
+    // Dữ liệu sản phẩm mẫu
+    const products = [
+        {
+            id: 1,
+            name: "Chuột Gaming Razer",
+            price: 450000,
+            image: "../Assets/img/mouse.jpg",
+            description: "Chuột chơi game chuyên nghiệp"
+        },
+        {
+            id: 2,
+            name: "Bàn phím Cơ",
+            price: 1200000,
+            image: "../Assets/img/keyboard.jpg",
+            description: "Bàn phím cơ LED RGB"
+        },
+        {
+            id: 3,
+            name: "Tai nghe Gaming",
+            price: 800000,
+            image: "../Assets/img/headphone.jpg",
+            description: "Tai nghe 7.1 surround"
+        },
+        {
+            id: 4,
+            name: "Lót chuột",
+            price: 150000,
+            image: "../Assets/img/mousepad.jpg",
+            description: "Lót chuột size lớn"
+        }
+    ];
+
+    // Hiển thị sản phẩm
+    function displayProducts() {
+        productsContainer.innerHTML = products.map(product => `
+            <div class="product-card">
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-description">${product.description}</p>
+                    <div class="product-price">${product.price.toLocaleString()} VND</div>
+                    <button class="add-to-cart-btn" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    displayProducts();
+});
+
+function toggleDropdown(button) {
+        const dropdown = button.nextElementSibling; // Lấy menu tương ứng
+        const isVisible = dropdown.style.display === "block";
+
+        // Ẩn tất cả dropdown trước
+        document.querySelectorAll(".dropdown-menu").forEach(d => {
+            d.style.display = "none";
+        });
+
+        // Nếu dropdown này đang ẩn trước đó → bật lên
+        if (!isVisible) {
+            dropdown.style.display = "block";
+        }
+    }
+    window.addEventListener("click", function(e) {
+    if (!e.target.closest(".filter-container")) {
+            document.querySelectorAll(".dropdown-menu").forEach(d => {
+            d.style.display = "none";
+            });
+        }
+});
