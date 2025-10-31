@@ -204,7 +204,6 @@ document.getElementById("showRegister").addEventListener("click", function() {
         });
     });
 });
-/*
 // list_items.js - Hiển thị sản phẩm
 document.addEventListener('DOMContentLoaded', function() {
     const productsContainer = document.getElementById('productsContainer');
@@ -259,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     displayProducts();
-});*/
+});
 
 function toggleDropdown(button) {
         const dropdown = button.nextElementSibling; // Lấy menu tương ứng

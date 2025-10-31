@@ -245,28 +245,6 @@
     border-color: #3498db !important;
 }
 
-/* INPUT STYLES */
-input[type="text"],
-input[type="tel"],
-input[type="email"],
-textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="tel"]:focus,
-input[type="email"]:focus,
-textarea:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-}
-
 /* BUTTON STYLES */
 .continue-shopping,
 .checkout-btn {
