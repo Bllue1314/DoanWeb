@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #4daf54;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: #f4f4f4;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.sidebar {
+    width: 20%;
+    padding: 40px 0;
+    color: black;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    background: #FFFFFF;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    z-index: 10000;
+}
+
+.container {
+    width: 80%;
+    margin: 0;
+    padding-left: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 10px;
+    font-size: 36px;
+    font-family: 'Poppins', sans-serif;
+}
+
+h3 {
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.main-wrapper {
+    display: flex;
+    margin: 0 20px;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+    justify-items: center;
+}
+
+.card {
+    min-width: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border-radius: 15px;
+    color: black;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    z-index: 0;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card_heart {
+    font-size: 25px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    transition: 0.5s;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card_cart {
+    font-size: 25px;
+    position: absolute;
+    cursor: pointer;
+    left: 15px;
+    top: 15px;
+    transition: 0.5s;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card_content {
+    padding: 10px 15px;
+}
+
+.card_img img {
+    width: 85%;
+    height: 220px;
+    object-fit: contain;
+    margin: 10px auto;
+    display: block;
+}
+
+.card_img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+}
+
+.card_title,
+.card_price {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    margin: 8px 0;
+}
+
+.card_title {
+    color: var(--primary-color);
+}
+
+.card_description {
+    font-size: 14px;
+    text-align: left;
+    font-weight: normal;
+    color: #666;
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.card_color {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.card_color h3 {
+    font-size: 14px;
+    margin-right: 10px;
+    color: black;
+}
+
+.card_color span {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0px 5px;
+    cursor: pointer;
+    border: 2px solid grey;
+    transition: border 0.3s;
+}
+
+.card_color span:hover {
+    border-color: var(--primary-color);
+}
+
+.card_action button {
+    background-color: var(--primary-color);
+    border: none;
+    outline: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.card_action button:hover {
+    background-color: #3e8e41;
+}
+
+.card_buy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.card_heart .bxs-heart {
+    display: none;
+    color: red;
+}
+
+.card_cart .bxs-cart {
+    display: none;
+    color: var(--primary-color);
+}
+
+.card_heart:hover .bxs-heart {
+    display: block;
+}
+
+.card_cart:hover .bxs-cart {
+    display: block;
+}
+
+.card_heart:hover .bx-heart {
+    display: none;
+}
+
+.card_cart:hover .bx-cart {
+    display: none;
+}
+
+.card_heart:hover {
+    background-color: #ffebee;
+    transform: scale(1.1);
+}
+
+.card_cart:hover {
+    background-color: #e8f5e9;
+    transform: scale(1.1);
+}
+
+@media (max-width: 1024px) {
+    .container {
+        /* Cho container chiếm 100% trên màn hình nhỏ */
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .main-wrapper {
+        flex-direction: column;
+    }
+
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar,
+    .container {
+        width: 100%;
+        padding-right: 20px;
+        padding-left: 20px;
+
+    }
+
+    .products-grid {
+        /* Hiển thị 2 cột trên máy tính bảng */
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        /* Hiển thị 1 cột trên điện thoại */
+        grid-template-columns: 1fr;
+    }
+}
+
+/*nut loc*/
+
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+}
+
+.filter-button {
+  padding: 10px 16px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.filter-button:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.filter-button.active {
+  background-color: #000;
+  color: white;
+  border-color: #000;
+}
+
+.arrow {
+  font-size: 12px;
+}
+
+/*phan chon loc */
+
+.filter-container {
+    position: relative;
+    width: 100%;
+    display: block;
+}
+
+.filter-container .filter-button {
+    width: 100%;
+    justify-content: space-between;
+}
+
+
+.dropdown-menu {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    margin-top: 6px;
+    padding: 0;
+    list-style: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: none;
+    min-width: 180px;
+    z-index: 9999;
+}
+
+.dropdown-item {
+    padding: 10px 16px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item.selected {
+    font-weight: bold;
+    color: #000;
+}

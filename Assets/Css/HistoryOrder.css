@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+caption {
+    caption-side: top;
+    font-size: 24px;
+    font-weight: bold;
+    color: greenyellow;
+    padding: 10px;
+    text-align: center;
+}
+
+.table_container {
+    width: 80%;               /* nhỏ hơn toàn trang */
+    max-width: 1100px;
+    margin:10rem auto ;
+    background: rgba(0,0,0,0.7);
+    border: 2px solid greenyellow;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+table {
+    width: 100%;              /* bảng đầy trong container */
+    border-collapse: collapse;
+}
+
+h1{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: greenyellow;
+}
+
+tr{
+    color: greenyellow;
+    border-top: 1px solid greenyellow;
+}
+
+tr:hover {
+    background-color: rgba(0, 255, 0, 0.1);
+    transition: 0.3s;
+}
+
+td {
+    text-align: center;
+    color: greenyellow;
+    border-top: 1px solid greenyellow;
+}
+table th, table td{
+    text-align: center;
+    padding: 12px 15px;
+}
+
+/* Màu trạng thái */
+.status.done {
+    color: #00ff88;
+    font-weight: bold;
+}
+
+.status.shipping {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+.status.canceled {
+    color: #ff4444;
+    font-weight: bold;
+}

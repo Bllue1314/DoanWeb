@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng - Ộ i i Gaming Store</title>
+    <link rel="stylesheet" href="../Assets/Css/navi.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../Assets/Css/cart.css">
+</head>
+<body>
+    <header class="main_header">
+        <!-- Copy header từ trang chủ -->
+        <marquee behavior="scroll" direction="left" scrollamount="15">
+            <h1>Ộ i i Gaming Store - Giỏ hàng</h1>
+        </marquee>
+    </header>
+    
+    <nav>
+        <div class="logo">
+            <img src="../Assets/img/conchobopc.png">
+        </div>
+        <ul class="nav-links">
+            <li><a href="../Pages/index.html">Trang chủ</a></li>
+            <li><a href="#">Dịch vụ</a></li>
+        </ul>
+        <div class="btns">
+            <a href="../Pages/index.html" class="btn">Tiếp tục mua sắm</a>
+        </div>
+    </nav>
+
+    <div class="cart-container">
+        <h2>Giỏ hàng của bạn</h2>
+        <div id="cartItems">
+            <!-- Sản phẩm sẽ hiển thị ở đây -->
+        </div>
+        <div class="cart-total">
+            <h3>Tổng cộng: <span id="totalAmount">0</span> $</h3>
+            <button class="checkout-btn">Thanh toán</button>
+        </div>
+    </div>
+
+    <script src="../src/Components/cart-manager.js"></script>
+    <script src="../src/Components/cart-display.js"></script>
+</body>
+</html>
