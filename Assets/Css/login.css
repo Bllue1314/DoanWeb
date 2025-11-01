@@ -356,6 +356,36 @@ input:focus + .labelline, input:valid + .labelline{
   display: flex;
 }
 
+#userSection{
+    display: none;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.welcome h2 {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+}
+
+.btn-logout {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  background: #c82333;
+}
+
+
 
 
 

@@ -51,9 +51,17 @@
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count" id="cartCount">0</span>
             </a>
-            <!---->
-            <button class="btn-login" id="showLogin" onclick="showForm('login')">Đăng Nhập</button>
-            <button class="btn-login" id="showRegister" onclick="showForm('register')">Đăng Ký</button>
+            <!--Log button-->
+            <div id="logBtn">
+                <button class="btn-login" id="showLogin" onclick="showForm('login')">Đăng Nhập</button>
+                <button class="btn-login" id="showRegister" onclick="showForm('register')">Đăng Ký</button>
+            </div>
+            <!--Tên user + đăng xuất-->
+            <div class="userName" id="userSection">
+                <h2 id="userName"></h2>
+                <button type="button" class="btn-logout" onclick="logout()">Đăng xuất</button>
+            </div>
+            
         </div>
     </nav>
 
