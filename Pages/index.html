@@ -18,24 +18,6 @@
 </head>
 
 <body>
-    <header class="main_header">
-        <form class="search_container">
-            <button type="submit" class="search_button">
-                <i class="fas fa-search"></i>
-            </button>
-            <input type="search" class="search_input" placeholder="Tìm kiếm...">
-        </form>
-        <marquee behavior="scroll" direction="left" scrollamount="25">
-            <h1>Ộ i i Gaming Store</h1>
-            <h3>Địa chỉ: 120 phố Yên lãng</h3>
-        </marquee>
-        <ul class="social_icons">
-            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-        </ul>
-    </header>
     <nav>
         <div class="logo">
             <img src="../Assets/img/conchobopc.png">
@@ -61,9 +43,74 @@
                 <h2 id="userName"></h2>
                 <button type="button" class="btn-logout" onclick="logout()">Đăng xuất</button>
             </div>
-            
         </div>
+        <div class="menu-btn" id="menuBtn">☰</div>
     </nav>
+    <header class="main_header">
+        <form class="search_container">
+            <button type="submit" class="search_button">
+                <i class="fas fa-search"></i>
+            </button>
+            <input type="search" class="search_input" placeholder="Tìm kiếm...">
+        </form>
+        <marquee behavior="scroll" direction="left" scrollamount="25">
+            <h1>Ộ i i Gaming Store</h1>
+            <h3>Địa chỉ: 120 phố Yên lãng</h3>
+        </marquee>
+        <ul class="social_icons">
+            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+    </header>
+
+    <div class="overlay" id="overlay"></div>
+
+        <div class="filter-panel" id="filterPanel">
+        <div class="filter-header">
+            <h2>Bộ lọc</h2>
+            <span id="closeFilter" class="close-btn">x</span>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-item">
+                <div class="filter-title">Màu</div>
+                    <div class="filter-color">
+                        <span style="background-color: #000000"></span>
+                        <span style="background-color: #FFC0CB"></span>
+                        <span style="background-color: #00FF00"></span>
+                        <span style="background-color: #FF0000"></span>
+                        <span style="background-color: #FFD700"></span>
+                        <span style="background-color: #FF4500"></span>
+                        <span style="background-color: #FFFFFF"></span>
+                    </div>
+            </div>
+            <div class="filter-item">
+                <div class="filter-title">Loại</div>
+                    <div class="filter-content">
+                        <label><input type = "checkbox">Bàn phím</label>
+                        <label><input type = "checkbox">Chuột</label>
+                        <label><input type = "checkbox">Tai nghe</label>
+                        <label><input type = "checkbox">CPU</label>
+                    </div>
+            </div>
+            <div class="filter-item">
+                <div class="filter-title">Hãng</div>
+                    <div class="filter-content">
+                        <label><input type = "checkbox">Logitech</label>
+                        <label><input type = "checkbox">Razer</label>
+                        <label><input type = "checkbox">SteelSeries</label>
+                        <label><input type = "checkbox">Corsair</label>
+                    </div>
+            </div>
+        </div>
+
+        <div class="filter-footer">
+            <button class="apply">Xem các mục (1)</button>
+            <button class="reset">Xóa</button>
+        </div>
+    </div>
 
     <div id = "container">
         <div class="login" id="loginForm">
@@ -142,7 +189,7 @@
         <aside class="sidebar">
             <h2>Bộ lọc</h2>
             <div class="filter-bar">
-                <button class="filter-button active"> Tất cả bộ lọc</button>
+                <button class="filter-button active" id = "Allfilter"> Tất cả bộ lọc</button>
                 <div class="filter-container">
                     <button class="filter-button" onclick="toggleDropdown(this)">Loại <span class="arrow">▼</span></button>
                     <ul class="dropdown-menu">

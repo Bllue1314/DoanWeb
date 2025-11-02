@@ -198,11 +198,6 @@
 }
 
 /* Đảm bảo nút và icon căn giữa */
-.btns {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
 
 .btn {
     padding: 8px 20px;

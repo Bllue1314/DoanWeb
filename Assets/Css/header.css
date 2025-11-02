@@ -63,7 +63,6 @@
     list-style: none;
     gap: 25px;
     align-items: center;
-
 }
 
 .social_icons a {
@@ -76,4 +75,14 @@
 
 .social_icons a:hover {
     color: #4daf54;
+}
+
+@media (max-width: 768px) {
+    .social_icons {
+        display: none;
+    }
+
+    marquee{
+        display: none;
+    }
 }
