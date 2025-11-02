@@ -20,16 +20,68 @@ body {
 }
 
 .sidebar {
-    width: 20%;
-    padding: 40px 0;
-    color: black;
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    background: #FFFFFF;
-    border: 5px solid rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    text-align: center;
-    z-index: 10000;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #111;
+  text-align: center;
+}
+
+/* Đưa các phần tử con thành hàng ngang */
+.filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* nếu màn hình nhỏ, tự xuống hàng */
+  gap: 10px;
+}
+
+.filter-container > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Style nút và select đồng đều */
+.filter-container button,
+.filter-container select {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.filter-container button:hover,
+.filter-container select:hover {
+  border-color: #000;
+}
+
+.filter-container button {
+  background-color: #000;
+  color: #fff;
+  font-weight: 500;
+}
+
+.filter-container button:hover {
+  background-color: #333;
+}
+
+/* Giới hạn độ rộng cho select để căn đẹp hơn */
+.filter-container select {
+  min-width: 120px;
 }
 
 .container {

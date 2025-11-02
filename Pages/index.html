@@ -60,34 +60,41 @@
 
     <div class="main-wrapper">
 
-        <aside class="sidebar">
-            <h2>Bộ lọc</h2>
-            <div class="filter-bar">
-                <button class="filter-button active"> Tất cả bộ lọc</button>
-                <div class="filter-container">
-                    <button class="filter-button" onclick="toggleDropdown(this)">Loại <span class="arrow">▼</span></button>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item">Bàn phím</li>
-                        <li class="dropdown-item">Chuột</li>
-                        <li class="dropdown-item">Tai nghe</li>
-                        <li class="dropdown-item">CPU</li>
-                    </ul>
-                </div>
-                <div class="filter-container">
-                    <button class="filter-button" onclick="toggleDropdown(this)">Hãng <span class="arrow">▼</span></button>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item">Logitech</li>
-                        <li class="dropdown-item">Razer</li>
-                        <li class="dropdown-item">SteelSeries</li>
-                        <li class="dropdown-item">Corsair</li>
-                    </ul>
-                </div>
-            </div>
-        </aside>
+    <div class="main-content">
+    <aside class="sidebar">
+        <h2>Bộ lọc</h2>
+        <div class="filter-container">
+        <button onclick="renderProducts()">Tất cả bộ lọc</button>
 
-        <div class="container">
-            <div class="products-grid" id="productsContainer"></div>
+        <select id="typeSelect">
+            <option value="">Loại</option>
+            <option value="bàn phím">Bàn phím</option>
+            <option value="chuột">Chuột</option>
+            <option value="cpu">CPU</option>
+        </select>
+
+        <select id="brandSelect">
+            <option value="">Hãng</option>
+            <option value="Logitech">Logitech</option>
+            <option value="Razer">Razer</option>
+            <option value="Corsair">Corsair</option>
+            <option value="HyperX">HyperX</option>
+            <option value="Intel">Intel</option>
+        </select>
+
+        <button onclick="applyFilter()">Áp dụng</button>
         </div>
+    </aside>
+
+  <div id="productsContainer"></div>
+</div>
+
+
+
+    <div class="container">
+        <div class="products-grid" id="productsContainer"></div>
+    </div>
+
     </div>
 
     <script src="../src/Components/list_items.js"></script>
