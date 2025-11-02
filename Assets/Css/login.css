@@ -67,6 +67,7 @@
     padding: 0 10px;
     margin: 0 20px;
     transition: 0.2s ease;
+    pointer-events: none;
 }
 
 #container input:focus, #container input:valid{
@@ -160,6 +161,7 @@ input:focus + .labelline, input:valid + .labelline{
 
 .input-box input.touched:invalid + .labelline {
     color: red;
+    transform: translate(-15px, -40px) scale(0.88);
 }
 
 
@@ -168,4 +170,47 @@ input:focus + .labelline, input:valid + .labelline{
     transform: translate(-15px, -40px) scale(0.88);
     height: 25px;
     padding: 0 12px;
+}
+
+/* Ẩn cả 2 form mặc định */
+#loginForm,
+#registerForm,
+#forgetpwForm {
+  display: none;
+}
+
+/* Hiển thị khi có class .active */
+#loginForm.active,
+#registerForm.active,
+#forgetpwForm.active {
+  display: flex;
+}
+
+#userSection{
+    display: none;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.welcome h2 {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+}
+
+.btn-logout {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  background: #c82333;
 }
