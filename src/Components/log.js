@@ -1,13 +1,15 @@
 function showForm(type) {
   const loginForm = document.getElementById("loginForm");
   const registerForm = document.getElementById("registerForm");
+  const forgetpwForm = document.getElementById("forgetpwForm");
 
   // ẩn hết form trước
 loginForm.classList.remove("active");
 registerForm.classList.remove("active");
+forgetpwForm.classList.remove("active");
 
 // mở form được chọn
-const selectedForm = type === "login" ? loginForm : registerForm;
+const selectedForm = (type === "login") ? loginForm : ((type === "register") ? registerForm : forgetpwForm);
 selectedForm.classList.add("active");
 
   // click ra ngoài để tắt form
@@ -21,50 +23,6 @@ selectedForm.onclick = e => {
   };
 
   // Khi input mất focus thì thêm class "touched"
-selectedForm.querySelectorAll(".input-box input").forEach(input => {
-        input.addEventListener("blur", () => input.classList.add("touched"));
-    });
-}
-
-function switchForm(e, type) {
-    e.preventDefault();
-    showForm(type);
-}
-
-function handleLogin(e) {
-    e.preventDefault();
-    alert("Đăng nhập thành công (demo)");
-}
-
-function handleRegister(e) {
-    e.preventDefault();
-    alert("Tạo tài khoản thành công (demo)");
-}
-
-// Hiển thị form (giữ nguyên như trước)
-function showForm(type) {
-    const loginForm = document.getElementById("loginForm");
-    const registerForm = document.getElementById("registerForm");
-
-  // Ẩn hết trước
-    loginForm.classList.remove("active");
-    registerForm.classList.remove("active");
-
-  // Hiện form được chọn
-    const selectedForm = type === "login" ? loginForm : registerForm;
-    selectedForm.classList.add("active");
-
-  // Click ra ngoài để tắt
-    selectedForm.onclick = e => {
-    if (e.target === selectedForm) {
-        selectedForm.classList.add("closing");
-        setTimeout(() => {
-            selectedForm.classList.remove("active", "closing");
-      }, 400);
-    }
-  };
-
-  // Blur input -> thêm class "touched"
 selectedForm.querySelectorAll(".input-box input").forEach(input => {
         input.addEventListener("blur", () => input.classList.add("touched"));
     });
@@ -116,7 +74,7 @@ function handleRegister(e) {
 
 // Đăng nhập bằng tài khoản đã lưu
 function handleLogin(e) {
-     e.preventDefault();
+    e.preventDefault();
 
     const form = e.target;
     const username = form.querySelector("input[type='text']").value.trim();
@@ -136,10 +94,29 @@ function handleLogin(e) {
     }
 }
 
+function handleForgetpw(e){
+    e.preventDefault();
+    const form = e.target;
+    const email = form.querySelector("input[type='email").value.trim();
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const user = users.find(u => u.email === email);
+
+    if(user){
+        alert("Your password is: " + user.password);
+        closeAllForms();
+    }
+    else{
+        alert("Tài khoản không tồn tại!");
+    }
+}
+
 // Ẩn form sau khi đăng nhập
 function closeAllForms() {
     document.getElementById("loginForm").classList.remove("active");
     document.getElementById("registerForm").classList.remove("active");
+    document.getElementById("forgetpwForm").classList.remove("active");
 }
 
 //  Hiện nút Đăng xuất
