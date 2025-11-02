@@ -79,7 +79,7 @@
                 </div>
                     <div class="remember-forgot">
                     <label><input type="checkbox">Ghi nhớ tài khoản</label>
-                    <a href="#">Quên mật khẩu?</a>
+                    <a href="#" onclick="switchForm(event, 'forgetpw')">Quên mật khẩu?</a>
                 </div>
                     <button type="submit" class="btn">Đăng Nhập</button>
                     <div class="register-link">
@@ -119,7 +119,22 @@
                     </p>
                 </div>
             </form>
-            </div>
+        </div>
+        <div class="login" id = "forgetpwForm">
+            <form onsubmit="handleForgetpw(event)">
+                <h1>Nhập email</h1>
+                <div class="input-box">
+                    <input type = "email" required>
+                    <div class = "labelline">Email</div>
+                </div>
+                <button type = "submit" class = "btn">Get password</button>
+                <div class="register-link">
+                    <p>Không có tài khoản?
+                    <a href="#" onclick="switchForm(event, 'register')">Đăng ký</a>
+                    </p>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="main-wrapper">
