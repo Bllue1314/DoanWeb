@@ -15,6 +15,7 @@ img {
 }
 
 nav {
+    position: fixed;
     width: 100%;
     padding: 1rem;
     background: white;
@@ -23,6 +24,9 @@ nav {
     align-items: center;
     justify-content: space-between;
     margin-top: 0;
+    z-index: 12000;
+    top: 0;
+    left: 0;
 }
 
 .logo {
