@@ -97,7 +97,7 @@ function handleLogin(e) {
 function handleForgetpw(e){
     e.preventDefault();
     const form = e.target;
-    const email = form.querySelector("input[type='email").value.trim();
+    const email = form.querySelector("input[type='email']").value.trim();
 
     const users = JSON.parse(localStorage.getItem("users")) || [];
 

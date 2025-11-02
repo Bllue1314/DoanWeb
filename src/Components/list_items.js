@@ -129,3 +129,41 @@ function toggleDropdown(button) {
             });
         }
 });
+
+const openFilter = document.getElementById("Allfilter");
+const closeFilter = document.getElementById("closeFilter");
+const filterPanel = document.getElementById("filterPanel");
+const overlay = document.getElementById("overlay");
+
+openFilter.onclick = () => {
+  filterPanel.classList.add("show");
+  overlay.classList.add("show");
+}
+
+closeFilter.onclick = () => {
+  filterPanel.classList.remove("show");
+  overlay.classList.remove("show");
+}
+
+overlay.onclick = () => {
+  filterPanel.classList.remove("show");
+  overlay.classList.remove("show");
+}
+
+document.querySelectorAll(".filter-item").forEach(item => {
+  item.addEventListener("click", () => {
+    item.classList.toggle("active");
+  });
+});
+
+document.querySelectorAll(".filter-color span").forEach(color => {
+    color.addEventListener("click", (e) => {
+        if(e.target.classList.contains("selected")) {
+            e.target.classList.remove("selected");
+        }
+        else{
+            e.target.classList.add("selected");
+        }
+        e.stopPropagation();
+    });
+});

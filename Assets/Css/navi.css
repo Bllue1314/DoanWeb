@@ -15,6 +15,7 @@ img {
 }
 
 nav {
+    position: fixed;
     width: 100%;
     padding: 1rem;
     background: white;
@@ -23,6 +24,9 @@ nav {
     align-items: center;
     justify-content: space-between;
     margin-top: 0;
+    z-index: 10500;
+    top: 0;
+    left: 0;
 }
 
 .logo {
@@ -74,7 +78,8 @@ nav {
 
 .btns {
     display: flex;
-    color: black;
+    align-items: center;
+    gap: 10px;
 }
 
 .btn-login {
@@ -94,4 +99,43 @@ nav {
     background: #2980b9;
     color: white;
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-btn {
+    display: none;
+    font-size: 36px;
+    cursor: pointer;
+    padding: 5px;
+    user-select: none;
+}
+
+
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 64px;
+        right: -100%;
+        background: white;
+        width: 70%;
+        height: 100vh;
+        flex-direction: column;
+        padding-top: 2rem;
+        gap: 1.5rem;
+        transition: 0.4s ease;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+        z-index: 9999;
+    }
+
+    .nav-links.show {
+        right: 0;
+    }
+
+    .btns {
+        display: none;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
 }
