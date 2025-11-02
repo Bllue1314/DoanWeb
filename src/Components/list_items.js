@@ -1,59 +1,59 @@
 // Danh sách sản phẩm - Bạn có thể thêm/sửa/xóa sản phẩm ở đây
 const products = [
-  {
-    id: 1,
-    name: "Logitech Pro X Gaming",
-    brand: "Logitech",
-    description: "The Logitech Pro X Gaming is designed for professional gamers",
-    price: 99.99,
-    image: "https://images.unsplash.com/photo-1599669454699-248893623440?w=400",
-    colors: ["#000000", "#FFC0CB"]
-  },
-  {
-    id: 2,
-    name: "Razer BlackWidow V3",
-    brand: "Razer",
-    description: "Mechanical gaming keyboard with RGB lighting",
-    price: 139.99,
-    image: "https://images.unsplash.com/photo-1595225476474-87563907a212?w=400",
-    colors: ["#000000", "#00FF00"]
-  },
-  {
-    id: 3,
-    name: "SteelSeries Apex Pro",
-    brand: "SteelSeries",
-    description: "Adjustable mechanical switches for ultimate control",
-    price: 199.99,
-    image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400",
-    colors: ["#000000", "#FF0000"]
-  },
-  {
-    id: 4,
-    name: "Corsair K95 RGB",
-    brand: "Corsair",
-    description: "Premium gaming keyboard with Cherry MX switches",
-    price: 179.99,
-    image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400",
-    colors: ["#000000", "#FFD700"]
-  },
-  {
-    id: 5,
-    name: "HyperX Alloy FPS",
-    brand: "HyperX",
-    description: "Compact mechanical keyboard for FPS games",
-    price: 89.99,
-    image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400",
-    colors: ["#000000", "#FF4500"]
-  },
-  {
-    id: 6,
-    name: "Logitech G915",
-    brand: "Logitech",
-    description: "Wireless mechanical gaming keyboard",
-    price: 249.99,
-    image: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=400",
-    colors: ["#000000", "#FFFFFF"]
-  }
+    {
+        id: 1,
+        name: "Logitech Pro X Gaming",
+        brand: "Logitech",
+        description: "The Logitech Pro X Gaming is designed for professional gamers",
+        price: 99.99,
+        image: "https://images.unsplash.com/photo-1599669454699-248893623440?w=400",
+        colors: ["#000000", "#FFC0CB"]
+    },
+    {
+        id: 2,
+        name: "Razer BlackWidow V3",
+        brand: "Razer",
+        description: "Mechanical gaming keyboard with RGB lighting",
+        price: 139.99,
+        image: "https://images.unsplash.com/photo-1595225476474-87563907a212?w=400",
+        colors: ["#000000", "#00FF00"]
+    },
+    {
+        id: 3,
+        name: "SteelSeries Apex Pro",
+        brand: "SteelSeries",
+        description: "Adjustable mechanical switches for ultimate control",
+        price: 199.99,
+        image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400",
+        colors: ["#000000", "#FF0000"]
+    },
+    {
+        id: 4,
+        name: "Corsair K95 RGB",
+        brand: "Corsair",
+        description: "Premium gaming keyboard with Cherry MX switches",
+        price: 179.99,
+        image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400",
+        colors: ["#000000", "#FFD700"]
+    },
+    {
+        id: 5,
+        name: "HyperX Alloy FPS",
+        brand: "HyperX",
+        description: "Compact mechanical keyboard for FPS games",
+        price: 89.99,
+        image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400",
+        colors: ["#000000", "#FF4500"]
+    },
+    {
+        id: 6,
+        name: "Logitech G915",
+        brand: "Logitech",
+        description: "Wireless mechanical gaming keyboard",
+        price: 249.99,
+        image: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=400",
+        colors: ["#000000", "#FFFFFF"]
+    }
 ];
 
 // Hàm tạo HTML cho mỗi sản phẩm
@@ -136,24 +136,24 @@ const filterPanel = document.getElementById("filterPanel");
 const overlay = document.getElementById("overlay");
 
 openFilter.onclick = () => {
-  filterPanel.classList.add("show");
-  overlay.classList.add("show");
+    filterPanel.classList.add("show");
+    overlay.classList.add("show");
 }
 
 closeFilter.onclick = () => {
-  filterPanel.classList.remove("show");
-  overlay.classList.remove("show");
+    filterPanel.classList.remove("show");
+    overlay.classList.remove("show");
 }
 
 overlay.onclick = () => {
-  filterPanel.classList.remove("show");
-  overlay.classList.remove("show");
+    filterPanel.classList.remove("show");
+    overlay.classList.remove("show");
 }
 
 document.querySelectorAll(".filter-item").forEach(item => {
-  item.addEventListener("click", () => {
-    item.classList.toggle("active");
-  });
+    item.addEventListener("click", () => {
+        item.classList.toggle("active");
+    });
 });
 
 document.querySelectorAll(".filter-color span").forEach(color => {
