@@ -288,7 +288,7 @@ h3 {
   flex-direction: column;
   gap: 12px;
   padding: 16px;
-  background-color: #f9f9f9;
+  background-color: white;
   border-bottom: 1px solid #ddd;
 }
 
@@ -432,7 +432,7 @@ h3 {
 
 .reset {
   flex: 1;
-  background: #fff;
+  background: white;
   border: 2px solid #000;
   padding: 12px;
   border-radius: 999px;
@@ -457,7 +457,7 @@ h3 {
 }
 
 .filter-title::after {
-  content: "⌄";
+  content: "v";
   position: absolute;
   right: 0;
   font-size: 18px;
@@ -526,3 +526,38 @@ h3 {
     transform: scale(1.15);
 }
 
+.reset:hover{
+    transform: scale(1.05);
+}
+
+.apply:hover{
+    transform: scale(1.05);
+}
+
+/*phan trang*/
+.pagination {
+    margin-top: 40px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.page-btn {
+    padding: 10px 16px;
+    border: none;
+    background: grey;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.page-btn:hover {
+    background: #bdbdbd;
+}
+
+.page-btn.active {
+    background: #4daf54;
+    color: white;
+}
