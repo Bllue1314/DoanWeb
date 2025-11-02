@@ -79,13 +79,13 @@
             <div class="filter-item">
                 <div class="filter-title">Màu</div>
                     <div class="filter-color">
-                        <span style="background-color: #000000"></span>
-                        <span style="background-color: #FFC0CB"></span>
-                        <span style="background-color: #00FF00"></span>
-                        <span style="background-color: #FF0000"></span>
-                        <span style="background-color: #FFD700"></span>
-                        <span style="background-color: #FF4500"></span>
-                        <span style="background-color: #FFFFFF"></span>
+                        <span class="color-dot" data-type="color" data-value="#000000" style="background-color: #000000"></span>
+                        <span class="color-dot" data-type="color" data-value="#FFC0CB" style="background-color: #FFC0CB"></span>
+                        <span class="color-dot" data-type="color" data-value="#00FF00" style="background-color: #00FF00"></span>
+                        <span class="color-dot" data-type="color" data-value="#FF0000" style="background-color: #FF0000"></span>
+                        <span class="color-dot" data-type="color" data-value="#FFD700" style="background-color: #FFD700"></span>
+                        <span class="color-dot" data-type="color" data-value="#FF4500" style="background-color: #FF4500"></span>
+                        <span class="color-dot" data-type="color" data-value="#FFFFFF" style="background-color: #FFFFFF"></span>
                     </div>
             </div>
             <div class="filter-item">
@@ -104,12 +104,13 @@
                         <label><input type = "checkbox">Razer</label>
                         <label><input type = "checkbox">SteelSeries</label>
                         <label><input type = "checkbox">Corsair</label>
+                        <label><input type = "checkbox">HyperX</label>
                     </div>
             </div>
         </div>
 
         <div class="filter-footer">
-            <button class="apply">Xem các mục (1)</button>
+            <button class="apply">Xem các mục (0)</button>
             <button class="reset">Xóa</button>
         </div>
     </div>
@@ -194,22 +195,24 @@
                 <button class="filter-button active" id = "Allfilter"> Tất cả bộ lọc</button>
                 <div class="filter-container">
                     <button class="filter-button" onclick="toggleDropdown(this)">Loại <span class="arrow">▼</span></button>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item">Bàn phím</li>
-                        <li class="dropdown-item">Chuột</li>
-                        <li class="dropdown-item">Tai nghe</li>
-                        <li class="dropdown-item">CPU</li>
-                    </ul>
-                </div>
-                <div class="filter-container">
-                    <button class="filter-button" onclick="toggleDropdown(this)">Hãng <span class="arrow">▼</span></button>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item">Logitech</li>
-                        <li class="dropdown-item">Razer</li>
-                        <li class="dropdown-item">SteelSeries</li>
-                        <li class="dropdown-item">Corsair</li>
-                    </ul>
-                </div>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item" data-type="category" data-value="ban-phim">Bàn phím</li>
+                            <li class="dropdown-item" data-type="category" data-value="chuot">Chuột</li>
+                            <li class="dropdown-item" data-type="category" data-value="tai-nghe">Tai nghe</li>
+                            <li class="dropdown-item" data-type="category" data-value="cpu">CPU</li>
+                        </ul>
+                    </div>
+
+                    <div class="filter-container">
+                        <button class="filter-button" onclick="toggleDropdown(this)">Hãng <span class="arrow">▼</span></button>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item" data-type="brand" data-value="Logitech">Logitech</li>
+                            <li class="dropdown-item" data-type="brand" data-value="Razer">Razer</li>
+                            <li class="dropdown-item" data-type="brand" data-value="SteelSeries">SteelSeries</li>
+                            <li class="dropdown-item" data-type="brand" data-value="Corsair">Corsair</li>
+                            <li class="dropdown-item" data-type="brand" data-value="HyperX">HyperX</li>
+                        </ul>
+                    </div>
             </div>
         </aside>
 
@@ -217,6 +220,7 @@
             <div class="products-grid" id="productsContainer"></div>
         </div>
     </div>
+    <div id="pagination" class="pagination"></div>
 
     <script src="../src/Components/list_items.js"></script>
     <script src="../src/Components/cart-manager.js"></script>
