@@ -67,9 +67,10 @@
     padding: 0 10px;
     margin: 0 20px;
     transition: 0.2s ease;
+    pointer-events: none;
 }
 
-#container input:focus, #container input:valid{
+#containerLogin input:focus, #containerLogin input:valid{
     color: skyblue;
     border: 3px solid skyblue;
 }
@@ -160,6 +161,7 @@ input:focus + .labelline, input:valid + .labelline{
 
 .input-box input.touched:invalid + .labelline {
     color: red;
+    transform: translate(-15px, -40px) scale(0.88);
 }
 
 
@@ -169,3 +171,147 @@ input:focus + .labelline, input:valid + .labelline{
     height: 25px;
     padding: 0 12px;
 }
+
+/* Ẩn cả 2 form mặc định */
+#loginForm,
+#registerForm,
+#forgetpwForm {
+  display: none;
+}
+
+/* Hiển thị khi có class .active */
+#loginForm.active,
+#registerForm.active,
+#forgetpwForm.active {
+  display: flex;
+}
+/* _______________________________________-*/
+#userSection{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-right: 20px;
+}
+
+
+.userName {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.userBtn {
+    background: none;
+    border: none;
+    color: #2c3e50;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 6px 10px;
+}
+
+.userBtn:hover {
+    color: #007bff;
+}
+
+/* menu dropdown */
+.user-Menu {
+    display: none;
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    flex-direction: column;
+    z-index: 10;
+}
+
+.user-Menu button {
+    background: none;
+    border: none;
+    padding: 8px 14px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.user-Menu button:hover {
+    background: #f0f0f0;
+}
+
+/* popup chỉnh thông tin */
+.popupProfile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.popup-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 32px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    width: 320px;
+}
+
+.popup-content h2 {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.popup-content label {
+    display: block;
+    font-size: 14px;
+    margin-top: 10px;
+    color: #555;
+}
+
+.popup-content input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.form-actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+    background: #007bff;
+    color: white;
+}
+
+.form-actions button[type="submit"]:hover {
+    background: #0056b3;
+}
+
+.form-actions button[type="button"] {
+    background: #ccc;
+}
+
+.form-actions button[type="button"]:hover {
+    background: #aaa;
+}
+
