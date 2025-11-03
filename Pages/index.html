@@ -40,12 +40,16 @@
             </div>
             <!--Tên user + đăng xuất-->
             <div class="userName" id="userSection">
-                <h2 id="userName"></h2>
-                <button type="button" class="btn-logout" onclick="logout()">Đăng xuất</button>
+                <button id="userName" class="userBtn"></button>
+                <div id="userMenu" class="user-Menu">
+                    <button onclick="viewProfile()">Xem thông tin</button>
+                    <button onclick="logout()">Đăng xuất</button>
+                </div>
             </div>
         </div>
         <div class="menu-btn" id="menuBtn">☰</div>
     </nav>
+
     <header class="main_header">
         <form class="search_container">
             <button type="submit" class="search_button">
@@ -115,8 +119,36 @@
         </div>
     </div>
 
-    <div id = "container">
-        <div class="login" id="loginForm">
+    <!-- xem thông tin -->
+    <div id="profilePopup" class="popupProfile">
+        <div class="popup-content">
+            <h2>Thông tin tài khoản</h2>
+            <form id="profileForm" onsubmit="saveProfile(event)">
+                <label>Tên đăng nhập</label>
+                <input type="text" id="profileUsername" required>
+
+                <label>Email</label>
+                <input type="email" id="profileEmail" required>
+
+                <label>Mật khẩu mới (tùy chọn)</label>
+                <input type="password" id="profileNewPassword">
+
+                <label>Mật khẩu hiện tại</label>
+                <input type="password" id="profileCurrentPassword" required>
+
+                
+
+                <div class="form-actions">
+                    <button type="submit">Lưu</button>
+                    <button type="button" onclick="closeProfile()">Đóng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div id = "containerLogin">
+        <div class="login" id="loginForm"> <!--Đăng nhập-->
             <form onsubmit="handleLogin(event)">
                 <h1>Đăng Nhập</h1>
                 <div class="input-box">
@@ -139,7 +171,7 @@
                 </div>
             </form>
         </div>
-        <div class="login" id="registerForm">
+        <div class="login" id="registerForm"><!--Đăng ký-->
             <form onsubmit="handleRegister(event)">
                 <h1>Đăng Ký</h1>
                 <div class="input-box">
