@@ -101,6 +101,21 @@ function handleLogin(e) {
     else {
         alert("Sai tên đăng nhập hoặc mật khẩu!");
     }
+
+    // an toàn hơn: không lỗi dù checkbox không có
+    const rememberMeInput = form.querySelector("#rememberMe");
+    const rememberMe = rememberMeInput ? rememberMeInput.checked : false;
+
+    // chỉ lưu localStorage nếu có tick ghi nhớ
+    if (rememberMe) {
+        localStorage.setItem("loggedInUser", username);
+        sessionStorage.removeItem("loggedInUser"); // xoá session cũ (nếu có)
+    } else {
+        sessionStorage.setItem("loggedInUser", username);
+        localStorage.removeItem("loggedInUser"); // xoá local cũ (nếu có)
+    }
+
+
 }
 
 function handleForgetpw(e){
