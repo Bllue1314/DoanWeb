@@ -43,6 +43,7 @@ function handleRegister(e) {
     const password = form.querySelector("input[type='password']").value.trim();
     const confirmPassword = form.querySelectorAll("input[type='password']")[1].value.trim();
     const email = form.querySelector("input[type='email']").value.trim();
+    const phone = form.querySelector("input[type='number']").value.trim();
 
 // Kiểm tra hợp lệ
     if (password !== confirmPassword) {
@@ -63,9 +64,17 @@ function handleRegister(e) {
         alert("Tên đăng nhập đã tồn tại!");
         return;
     }
+    if (users.some(user => user.email === email)) {
+        alert("Email đã tồn tại!");
+        return;
+    }
+    if (users.some(user => user.phone === phone)) {
+        alert("Tên đăng nhập đã tồn tại!");
+        return;
+    }
 
 // Thêm user mới
-    users.push({ username, password, email });
+    users.push({ username, password, email, phone });
     localStorage.setItem("users", JSON.stringify(users));
 
     alert("Đăng ký thành công!");
@@ -141,18 +150,29 @@ function logout() {
 
 // Xử lý xem thông tin
 function viewProfile() {
-    const username = localStorage.getItem("loggedInUser");
-    const email = localStorage.getItem("email") || (username ? username + "@gmail.com" : "");
+    const menu = document.getElementById("userMenu");
+    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+    const username = localStorage.getItem("loggedInUser"); // username đang đăng nhập
+    let email = "";
+
+    if (username) {
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const currentUser = users.find(user => user.username === username);
+        if (currentUser) {
+            email = currentUser.email; // lấy email từ user
+        }
+    }
 
     document.getElementById("profileUsername").value = username || "";
-    document.getElementById("profileEmail").value = email;
+    document.getElementById("profileEmail").value = email || "";
 
-    // Reset mật khẩu mỗi khi mở form
+    // Reset mật khẩu
     document.getElementById("profileCurrentPassword").value = "";
     document.getElementById("profileNewPassword").value = "";
 
     document.getElementById("profilePopup").style.display = "flex";
 }
+
 
 // Lưu thay đổi
 function saveProfile(e) {
@@ -177,7 +197,6 @@ function saveProfile(e) {
 
     // Cập nhật thông tin vào localStorage
     localStorage.setItem("loggedInUser", username);
-    localStorage.setItem("email", email);
     localStorage.setItem("password", finalPassword);
 
     // nếu bạn đang lưu danh sách users

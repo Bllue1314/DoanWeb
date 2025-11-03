@@ -253,7 +253,7 @@ input:focus + .labelline, input:valid + .labelline{
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 200;
+    z-index: 11000;
 }
 
 .popup-content {
@@ -283,6 +283,10 @@ input:focus + .labelline, input:valid + .labelline{
     margin-top: 4px;
     border-radius: 6px;
     border: 1px solid #ccc;
+}
+
+#profileEmail{
+    background: grey;
 }
 
 .form-actions {
