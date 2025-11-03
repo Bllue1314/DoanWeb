@@ -126,7 +126,7 @@ function createProductCard(product) {
 }
 
 let currentPage = 1;
-const itemsPerPage = 9; // Mỗi trang 12 sản phẩm
+const itemsPerPage = 9; // Mỗi trang 9 sản phẩm
 
 
 // Render tất cả sản phẩm
@@ -137,6 +137,19 @@ function renderProducts(list) {
     const end = start + itemsPerPage;
 
     const productsToShow = list.slice(start, end);
+
+    container.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
+
+    renderPagination();
+}
+
+function renderProducts1() {
+    const container = document.getElementById('productsContainer');
+
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    const productsToShow = products.slice(start, end);
 
     container.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
 
@@ -157,7 +170,7 @@ function renderPagination() {
 
         btn.addEventListener("click", () => {
             currentPage = i;
-            renderProducts();
+            renderProducts1();
         });
 
         pagination.appendChild(btn);
