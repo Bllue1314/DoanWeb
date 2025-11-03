@@ -59,6 +59,26 @@ const products = [
         price: 249.99,
         image: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=400",
         colors: ["#000000", "#FFFFFF"]
+    },
+    {
+        id: 7,
+        name: "Intel Core i7",
+        brand: "Intel",
+        type: "cpu",
+        description: "High performance CPU for gaming and work",
+        price: 499.99,
+        image: "https://images.unsplash.com/photo-1757356747785-106e3c5f399a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW50ZWwlMjBjb3JlJTIwaTl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600",
+        colors: []
+    },
+    {
+        id: 8,
+        name: "Razer DeathAdder V2",
+        brand: "Razer",
+        type: "chuot",
+        description: "High precision gaming mouse with ergonomic design",
+        price: 79.99,
+        image: "https://images.unsplash.com/photo-1544966685-5bb6cc6cb6d6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
+        colors: ["#000000", "#FFFFFF"]
     }
 ];
 
@@ -106,7 +126,7 @@ function createProductCard(product) {
 }
 
 let currentPage = 1;
-const itemsPerPage = 12; // Mỗi trang 12 sản phẩm
+const itemsPerPage = 9; // Mỗi trang 9 sản phẩm
 
 
 // Render tất cả sản phẩm
@@ -117,6 +137,19 @@ function renderProducts(list) {
     const end = start + itemsPerPage;
 
     const productsToShow = list.slice(start, end);
+
+    container.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
+
+    renderPagination();
+}
+
+function renderProducts1() {
+    const container = document.getElementById('productsContainer');
+
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    const productsToShow = products.slice(start, end);
 
     container.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
 
@@ -137,7 +170,7 @@ function renderPagination() {
 
         btn.addEventListener("click", () => {
             currentPage = i;
-            renderProducts();
+            renderProducts1();
         });
 
         pagination.appendChild(btn);
@@ -197,6 +230,7 @@ const filterPanel = document.getElementById("filterPanel");
 const overlay = document.getElementById("overlay");
 const resetFilter = document.querySelector(".reset");
 const viewFilter = document.querySelector(".apply");
+let selectedColors = [];
 
 viewFilter.onclick = () => {
     filterPanel.classList.remove("show");
@@ -204,7 +238,12 @@ viewFilter.onclick = () => {
 }
 
 resetFilter.onclick = () => {
+    selectedColors = [];
+    document.querySelectorAll(".filter-color span.selected").forEach(span => {
+        span.classList.remove("selected");
+    });
     renderProducts(products);
+    updateButtonText(products);
 }
 
 openFilter.onclick = () => {
@@ -234,7 +273,7 @@ const applyBtn = document.querySelector(".apply")
 function updateButtonText(filtered) {
     applyBtn.textContent = `Xem các mục (${filtered.length})`;
 }
-let selectedColors = [];
+updateButtonText(products);
 
 document.querySelectorAll(".filter-color span").forEach(colorItem => {
     colorItem.addEventListener("click", (e) => {
@@ -254,10 +293,11 @@ document.querySelectorAll(".filter-color span").forEach(colorItem => {
         );
         if (selectedColors.length === 0) {
             renderProducts(products);
+            updateButtonText(products);
         } else {
             renderProducts(filtered);
+            updateButtonText(filtered);
         }
-        updateButtonText(filtered);
     });
 });
 
