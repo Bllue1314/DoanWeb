@@ -1,99 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang chu</title>
+
+    <title>Đang tải sản phẩm...</title>
+
     <link rel="stylesheet" href="../Assets/Css/navi.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../Assets/Css/list_items.css">
-    <link rel="stylesheet" href="../Assets/Css/header.css">
     <link rel="stylesheet" href="../Assets/Css/login.css">
     <link rel="stylesheet" href="../Assets/Css/cart.css">
     <link rel="stylesheet" href="../Assets/Css/playout.css">
-
 </head>
 
 <body>
-    <header class="main_header">
-        <form class="search_container">
-            <button type="submit" class="search_button">
-                <i class="fas fa-search"></i>
-            </button>
-            <input type="search" class="search_input" placeholder="Tìm kiếm...">
-        </form>
-        <marquee behavior="scroll" direction="left" scrollamount="15">
-            <h1>Ộ i i Gaming Store</h1>
-            <h3>Địa chỉ: 120 phố Yên lãng</h3>
-        </marquee>
-        <ul class="social_icons">
-            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-        </ul>
-    </header>
-    <nav>
+
+    <nav class="detail-view">
+        <a href="javascript:history.back()" id="navBackButton" class="nav-back-button" style="display: flex;">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <div class="logo">
             <img src="../Assets/img/conchobopc.png">
         </div>
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
+            <li><a href="../Pages/index.html">Home</a></li>
             <li><a href="#">Services</a></li>
             <li><a href="#">More info</a></li>
         </ul>
         <div class="btns">
-            <!-- THÊM ICON GIỎ HÀNG VÀO ĐÂY -->
             <a href="../Pages/cart.html" class="cart-icon" id="cartIcon">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count" id="cartCount">0</span>
             </a>
-            <button class="btn-login" id="showLogin">Login</button>
-            <button class="btn-login" id="showRegister">Sign up</button>
-        </div>
-    </nav>
-
-    <div id = "container"></div>
-
-    <div class="main-wrapper">
-
-        <aside class="sidebar">
-            <h2>Bộ lọc</h2>
-            <div class="filter-bar">
-                <button class="filter-button active"> Tất cả bộ lọc</button>
-                <div class="filter-container">
-                    <button class="filter-button" onclick="toggleDropdown(this)">Loại <span class="arrow">▼</span></button>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item">Bàn phím</li>
-                        <li class="dropdown-item">Chuột</li>
-                        <li class="dropdown-item">Tai nghe</li>
-                        <li class="dropdown-item">CPU</li>
-                    </ul>
-                </div>
-                <div class="filter-container">
-                    <button class="filter-button" onclick="toggleDropdown(this)">Hãng <span class="arrow">▼</span></button>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item">Logitech</li>
-                        <li class="dropdown-item">Razer</li>
-                        <li class="dropdown-item">SteelSeries</li>
-                        <li class="dropdown-item">Corsair</li>
-                    </ul>
+            <div id="logBtn">
+                <button class="btn-login" id="showLogin" onclick="showForm('login')">Đăng Nhập</button>
+                <button class="btn-login" id="showRegister" onclick="showForm('register')">Đăng Ký</button>
+            </div>
+            <div class="userName" id="userSection">
+                <button id="userName" class="userBtn"></button>
+                <div id="userMenu" class="user-Menu">
+                    <button onclick="viewProfile()">Xem thông tin</button>
+                    <button onclick="logout()">Đăng xuất</button>
                 </div>
             </div>
-        </aside>
-
-        <div class="container">
-            <div class="products-grid" id="productsContainer"></div>
         </div>
+        <div class="menu-btn" id="menuBtn">☰</div>
+    </nav>
+
+    <div id="playout-container">
     </div>
 
-    <script src="../src/Components/list_items.js"></script>
+    <div id="containerLogin">
+    </div>
+
     <script src="../src/Components/cart-manager.js"></script>
-    <scrip src="playout.js"></scrip>
+    <script src="../src/Components/log.js"></script>
+    <script src="../src/Components/playout.js"></script>
+
 </body>
 
 </html>
