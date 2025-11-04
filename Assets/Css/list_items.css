@@ -13,10 +13,9 @@
 body {
     min-height: 100vh;
     background: #f4f4f4;
-    font-family: 'Poppins', sans-serif;
+    font-family: sans-serif;
     display: flex;
     flex-direction: column;
-
 }
 
 .sidebar {
@@ -34,16 +33,18 @@ body {
 
 .container {
     width: 80%;
-    margin: 0;
+
     padding-left: 20px;
 }
 
 h1 {
-    text-align: center;
+    text-align: left;
     color: white;
     margin-bottom: 10px;
     font-size: 36px;
     font-family: 'Poppins', sans-serif;
+    pointer-events: none;
+    user-select: none;
 }
 
 h3 {
@@ -51,6 +52,8 @@ h3 {
     color: white;
     font-size: 18px;
     font-family: 'Poppins', sans-serif;
+    pointer-events: none;
+    user-select: none;
 }
 
 .main-wrapper {
@@ -89,7 +92,7 @@ h3 {
 .card_heart {
     font-size: 25px;
     position: absolute;
-    right: 15px;
+    left: 15px;
     top: 15px;
     cursor: pointer;
     transition: 0.5s;
@@ -103,22 +106,7 @@ h3 {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.card_cart {
-    font-size: 25px;
-    position: absolute;
-    cursor: pointer;
-    left: 15px;
-    top: 15px;
-    transition: 0.5s;
-    background-color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+
 
 .card_content {
     padding: 10px 15px;
@@ -145,11 +133,19 @@ h3 {
     font-weight: bold;
     text-align: left;
     margin: 8px 0;
+
 }
 
 .card_title {
     color: var(--primary-color);
 }
+
+.card_price {
+    color: black;
+}
+
+
+
 
 .card_description {
     font-size: 14px;
@@ -209,30 +205,24 @@ h3 {
     margin-top: 10px;
 }
 
+.card_heart .bx-heart {
+    display: block;
+}
+
+
 .card_heart .bxs-heart {
     display: none;
     color: red;
 }
 
-.card_cart .bxs-cart {
+
+.card_heart.liked .bx-heart {
     display: none;
-    color: var(--primary-color);
 }
 
-.card_heart:hover .bxs-heart {
+
+.card_heart.liked .bxs-heart {
     display: block;
-}
-
-.card_cart:hover .bxs-cart {
-    display: block;
-}
-
-.card_heart:hover .bx-heart {
-    display: none;
-}
-
-.card_cart:hover .bx-cart {
-    display: none;
 }
 
 .card_heart:hover {
@@ -240,10 +230,7 @@ h3 {
     transform: scale(1.1);
 }
 
-.card_cart:hover {
-    background-color: #e8f5e9;
-    transform: scale(1.1);
-}
+
 
 @media (max-width: 1024px) {
     .container {
@@ -284,40 +271,40 @@ h3 {
 /*nut loc*/
 
 .filter-bar {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  background-color: #f9f9f9;
-  border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
 }
 
 .filter-button {
-  padding: 10px 16px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: background-color 0.3s, border-color 0.3s;
+    padding: 10px 16px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 .filter-button:hover {
-  background-color: #f0f0f0;
-  border-color: #999;
+    background-color: #f0f0f0;
+    border-color: #999;
 }
 
 .filter-button.active {
-  background-color: #000;
-  color: white;
-  border-color: #000;
+    background-color: #000;
+    color: white;
+    border-color: #000;
 }
 
 .arrow {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 /*phan chon loc */
@@ -345,7 +332,7 @@ h3 {
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: none;
     min-width: 180px;
     z-index: 9999;
@@ -364,4 +351,200 @@ h3 {
 .dropdown-item.selected {
     font-weight: bold;
     color: #000;
+}
+
+/*Nền mờ*/
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+    z-index: 10725;
+}
+
+.overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/*trượt*/
+.filter-panel {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -36rem;
+    width: 26rem;
+    background: #fff;
+    padding: 20px;
+    overflow-y: auto;
+    transition: left 0.3s ease;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.15);
+    z-index: 10750;
+}
+
+.filter-panel.show {
+    left: 0;
+}
+
+/*header*/
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    font-size: 28px;
+    cursor: pointer;
+}
+
+/*footer*/
+.filter-footer {
+    display: flex;
+    gap: 10px;
+    padding-top: 20px;
+}
+
+.apply {
+    flex: 1;
+    background: #00ffc8;
+    padding: 12px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+}
+
+.reset {
+    flex: 1;
+    background: white;
+    border: 2px solid #000;
+    padding: 12px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+/*phan chon bo loc(tat ca)*/
+
+.filter-item {
+    border-bottom: 1px solid #ddd;
+    padding: 14px 0;
+    cursor: pointer;
+}
+
+.filter-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 600;
+    position: relative;
+    padding-right: 25px;
+}
+
+.filter-title::after {
+    content: "v";
+    position: absolute;
+    right: 0;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.filter-item.active .filter-title::after {
+    transform: rotate(180deg);
+}
+
+.filter-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    padding-left: 2px;
+    font-size: 15px;
+    margin-top: 6px;
+}
+
+.filter-color {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    padding-left: 2px;
+    font-size: 15px;
+    margin-top: 6px;
+}
+
+.filter-color span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0px 5px;
+    cursor: pointer;
+    border: 2px solid grey;
+    transition: border 0.3s;
+    margin-top: 3px;
+}
+
+.filter-item.active .filter-content {
+    max-height: 300px;
+}
+
+.filter-item.active .filter-color {
+    max-height: 100px;
+}
+
+.filter-content label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.filter-content input[type='checkbox'] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.filter-color span.selected {
+    border: 3px solid black;
+    transform: scale(1.15);
+}
+
+.reset:hover {
+    transform: scale(1.05);
+}
+
+.apply:hover {
+    transform: scale(1.05);
+}
+
+/*phan trang*/
+.pagination {
+    margin-top: 40px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.page-btn {
+    padding: 10px 16px;
+    border: none;
+    background: grey;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.page-btn:hover {
+    background: #bdbdbd;
+}
+
+.page-btn.active {
+    background: #4daf54;
+    color: white;
 }
