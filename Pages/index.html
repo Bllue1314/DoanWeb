@@ -14,16 +14,21 @@
     <link rel="stylesheet" href="../Assets/Css/header.css">
     <link rel="stylesheet" href="../Assets/Css/login.css">
     <link rel="stylesheet" href="../Assets/Css/cart.css">
+    <link rel="stylesheet" href="../Assets/Css/playout.css">
+
 
 </head>
 
 <body>
     <nav>
+        <a href="#" id="navBackButton" class="nav-back-button">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <div class="logo">
             <img src="../Assets/img/conchobopc.png">
         </div>
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
+            <li><a href="../Pages/index.html">Home</a></li>
             <li><a href="#">Services</a></li>
             <li><a href="#">More info</a></li>
         </ul>
@@ -73,7 +78,7 @@
 
     <div class="overlay" id="overlay"></div>
 
-        <div class="filter-panel" id="filterPanel">
+    <div class="filter-panel" id="filterPanel">
         <div class="filter-header">
             <h2>Bộ lọc</h2>
             <span id="closeFilter" class="close-btn">x</span>
@@ -160,13 +165,13 @@
                     <input type="password" required>
                     <div class="labelline">Mật khẩu</div>
                 </div>
-                    <div class="remember-forgot">
+                <div class="remember-forgot">
                     <label><input type="checkbox">Ghi nhớ tài khoản</label>
                     <a href="#" onclick="switchForm(event, 'forgetpw')">Quên mật khẩu?</a>
                 </div>
-                    <button type="submit" class="btn">Đăng Nhập</button>
-                    <div class="register-link">
-                    <p>Không có tài khoản? 
+                <button type="submit" class="btn">Đăng Nhập</button>
+                <div class="register-link">
+                    <p>Không có tài khoản?
                         <a href="#" onclick="switchForm(event, 'register')">Đăng ký</a>
                     </p>
                 </div>
@@ -203,17 +208,17 @@
                 </div>
             </form>
         </div>
-        <div class="login" id = "forgetpwForm">
+        <div class="login" id="forgetpwForm">
             <form onsubmit="handleForgetpw(event)">
                 <h1>Nhập email</h1>
                 <div class="input-box">
-                    <input type = "email" required>
-                    <div class = "labelline">Email</div>
+                    <input type="email" required>
+                    <div class="labelline">Email</div>
                 </div>
-                <button type = "submit" class = "btn">Get password</button>
+                <button type="submit" class="btn">Get password</button>
                 <div class="register-link">
                     <p>Không có tài khoản?
-                    <a href="#" onclick="switchForm(event, 'register')">Đăng ký</a>
+                        <a href="#" onclick="switchForm(event, 'register')">Đăng ký</a>
                     </p>
                 </div>
             </form>
@@ -225,28 +230,30 @@
         <aside class="sidebar">
             <h2>Bộ lọc</h2>
             <div class="filter-bar">
-                <button class="filter-button active" id = "Allfilter"> Tất cả bộ lọc</button>
+                <button class="filter-button active" id="Allfilter"> Tất cả bộ lọc</button>
                 <div class="filter-container">
-                    <button class="filter-button" onclick="toggleDropdown(this)">Loại <span class="arrow">▼</span></button>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item" data-type="category" data-value="ban-phim">Bàn phím</li>
-                            <li class="dropdown-item" data-type="category" data-value="chuot">Chuột</li>
-                            <li class="dropdown-item" data-type="category" data-value="tai-nghe">Tai nghe</li>
-                            <li class="dropdown-item" data-type="category" data-value="cpu">CPU</li>
-                        </ul>
-                    </div>
+                    <button class="filter-button" onclick="toggleDropdown(this)">Loại <span
+                            class="arrow">▼</span></button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item" data-type="category" data-value="ban-phim">Bàn phím</li>
+                        <li class="dropdown-item" data-type="category" data-value="chuot">Chuột</li>
+                        <li class="dropdown-item" data-type="category" data-value="tai-nghe">Tai nghe</li>
+                        <li class="dropdown-item" data-type="category" data-value="cpu">CPU</li>
+                    </ul>
+                </div>
 
-                    <div class="filter-container">
-                        <button class="filter-button" onclick="toggleDropdown(this)">Hãng <span class="arrow">▼</span></button>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item" data-type="brand" data-value="Logitech">Logitech</li>
-                            <li class="dropdown-item" data-type="brand" data-value="Razer">Razer</li>
-                            <li class="dropdown-item" data-type="brand" data-value="SteelSeries">SteelSeries</li>
-                            <li class="dropdown-item" data-type="brand" data-value="Corsair">Corsair</li>
-                            <li class="dropdown-item" data-type="brand" data-value="HyperX">HyperX</li>
-                            <li class="dropdown-item" data-type="brand" data-value="Intel">Intel</li>
-                        </ul>
-                    </div>
+                <div class="filter-container">
+                    <button class="filter-button" onclick="toggleDropdown(this)">Hãng <span
+                            class="arrow">▼</span></button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item" data-type="brand" data-value="Logitech">Logitech</li>
+                        <li class="dropdown-item" data-type="brand" data-value="Razer">Razer</li>
+                        <li class="dropdown-item" data-type="brand" data-value="SteelSeries">SteelSeries</li>
+                        <li class="dropdown-item" data-type="brand" data-value="Corsair">Corsair</li>
+                        <li class="dropdown-item" data-type="brand" data-value="HyperX">HyperX</li>
+                        <li class="dropdown-item" data-type="brand" data-value="Intel">Intel</li>
+                    </ul>
+                </div>
             </div>
         </aside>
 
@@ -259,6 +266,7 @@
     <script src="../src/Components/list_items.js"></script>
     <script src="../src/Components/cart-manager.js"></script>
     <script src="../src/Components/log.js"></script>
+    <script src="../src/Components/cart-display.js"></script>
 </body>
 
 </html>
