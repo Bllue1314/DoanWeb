@@ -1,29 +1,29 @@
 function showForm(type) {
-  const loginForm = document.getElementById("loginForm");
-  const registerForm = document.getElementById("registerForm");
-  const forgetpwForm = document.getElementById("forgetpwForm");
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const forgetpwForm = document.getElementById("forgetpwForm");
 
-  // ẩn hết form trước
-loginForm.classList.remove("active");
-registerForm.classList.remove("active");
-forgetpwForm.classList.remove("active");
+    // ẩn hết form trước
+    loginForm.classList.remove("active");
+    registerForm.classList.remove("active");
+    forgetpwForm.classList.remove("active");
 
-// mở form được chọn
-const selectedForm = (type === "login") ? loginForm : ((type === "register") ? registerForm : forgetpwForm);
-selectedForm.classList.add("active");
+    // mở form được chọn
+    const selectedForm = (type === "login") ? loginForm : ((type === "register") ? registerForm : forgetpwForm);
+    selectedForm.classList.add("active");
 
-  // click ra ngoài để tắt form
-selectedForm.onclick = e => {
-    if (e.target === selectedForm) {
-        selectedForm.classList.add("closing");
-        setTimeout(() => {
-            selectedForm.classList.remove("active", "closing");
-        }, 400);
-    }
-  };
+    // click ra ngoài để tắt form
+    selectedForm.onclick = e => {
+        if (e.target === selectedForm) {
+            selectedForm.classList.add("closing");
+            setTimeout(() => {
+                selectedForm.classList.remove("active", "closing");
+            }, 400);
+        }
+    };
 
-  // Khi input mất focus thì thêm class "touched"
-selectedForm.querySelectorAll(".input-box input").forEach(input => {
+    // Khi input mất focus thì thêm class "touched"
+    selectedForm.querySelectorAll(".input-box input").forEach(input => {
         input.addEventListener("blur", () => input.classList.add("touched"));
     });
 }
@@ -37,7 +37,7 @@ function switchForm(e, type) {
 function handleRegister(e) {
     e.preventDefault();
 
-// Lấy dữ liệu từ form
+    // Lấy dữ liệu từ form
     const form = e.target;
     const username = form.querySelector("input[type='text']").value.trim();
     const password = form.querySelector("input[type='password']").value.trim();
@@ -45,7 +45,7 @@ function handleRegister(e) {
     const email = form.querySelector("input[type='email']").value.trim();
     const phone = form.querySelector("input[type='number']").value.trim();
 
-// Kiểm tra hợp lệ
+    // Kiểm tra hợp lệ
     if (password !== confirmPassword) {
         alert("Mật khẩu nhập lại không khớp!");
         return;
@@ -56,10 +56,10 @@ function handleRegister(e) {
         return;
     }
 
-// Lấy danh sách user đã lưu
+    // Lấy danh sách user đã lưu
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
-// Kiểm tra trùng tên
+    // Kiểm tra trùng tên
     if (users.some(user => user.username === username)) {
         alert("Tên đăng nhập đã tồn tại!");
         return;
@@ -73,7 +73,7 @@ function handleRegister(e) {
         return;
     }
 
-// Thêm user mới
+    // Thêm user mới
     users.push({ username, password, email, phone });
     localStorage.setItem("users", JSON.stringify(users));
 
@@ -97,13 +97,13 @@ function handleLogin(e) {
         alert(`Xin chào, ${user.username}! Bạn đã đăng nhập thành công.`);
         closeAllForms();
         showLogoutButton(user.username);
-    } 
+    }
     else {
         alert("Sai tên đăng nhập hoặc mật khẩu!");
     }
 }
 
-function handleForgetpw(e){
+function handleForgetpw(e) {
     e.preventDefault();
     const form = e.target;
     const email = form.querySelector("input[type='email']").value.trim();
@@ -112,11 +112,11 @@ function handleForgetpw(e){
 
     const user = users.find(u => u.email === email);
 
-    if(user){
+    if (user) {
         alert("Your password is: " + user.password);
         closeAllForms();
     }
-    else{
+    else {
         alert("Tài khoản không tồn tại!");
     }
 }
@@ -129,6 +129,7 @@ function closeAllForms() {
 }
 
 // Hiện user + menu
+// Thay thế hàm này trong log.js
 function showLogoutButton(username) {
     document.getElementById("logBtn").style.display = "none";
 
@@ -139,13 +140,17 @@ function showLogoutButton(username) {
     userBtn.textContent = username;
 
     localStorage.setItem("loggedInUser", username);
-}
 
+    // THÊM MỚI: Hiển thị icon giỏ hàng
+    document.getElementById('cartIcon').style.display = 'flex';
+}
 // Xử lý đăng xuất
 function logout() {
     localStorage.removeItem("loggedInUser");
     document.getElementById("userSection").style.display = "none";
     document.getElementById("logBtn").style.display = "flex";
+
+    document.getElementById('cartIcon').style.display = 'none';
 }
 
 // Xử lý xem thông tin
@@ -241,6 +246,7 @@ window.addEventListener("DOMContentLoaded", () => {
     } else {
         document.getElementById("userSection").style.display = "none";
         document.getElementById("logBtn").style.display = "flex";
+        document.getElementById('cartIcon').style.display = 'none';
     }
 });
 

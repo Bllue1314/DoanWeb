@@ -81,7 +81,7 @@ const products = [
         colors: ["#000000", "#FFFFFF"]
     }
 ];
-
+localStorage.setItem('products', JSON.stringify(products));
 // Hàm tạo HTML cho mỗi sản phẩm
 function createProductCard(product) {
     const colorSpans = product.colors.map(color =>
@@ -89,14 +89,10 @@ function createProductCard(product) {
     ).join('');
 
     return `
-        <div class="card">
+        <div class="card" data-product-id="${product.id}">
             <div class="card_heart">
                 <i class='bx bx-heart'></i>
                 <i class='bx bxs-heart'></i>
-            </div>
-            <div class="card_cart">
-                <i class='bx bx-cart'></i>
-                <i class='bx bxs-cart'></i>
             </div>
             <div class="card_img">
                 <img src="${product.image}" alt="${product.name}">
@@ -112,13 +108,8 @@ function createProductCard(product) {
                 <div class="card_description">
                     ${product.description}
                 </div>
-                <div class="card_buy">
-                    <div class="card_price">
-                        ${product.price}$
-                    </div>
-                    <div class="card_action" onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
-                        <button onclick="buyProduct('${product.name}')">Buy Now</button>
-                    </div>
+                <div class="card_price">
+                    ${product.price}$
                 </div>
             </div>
         </div>
@@ -127,10 +118,12 @@ function createProductCard(product) {
 
 let currentPage = 1;
 const itemsPerPage = 9; // Mỗi trang 9 sản phẩm
-
+let currentProductList = products;
 
 // Render tất cả sản phẩm
 function renderProducts(list) {
+    currentProductList = list; // *** CẬP NHẬT: Lưu lại danh sách đang xem
+    currentPage = 1;
     const container = document.getElementById('productsContainer');
 
     const start = (currentPage - 1) * itemsPerPage;
@@ -139,26 +132,29 @@ function renderProducts(list) {
     const productsToShow = list.slice(start, end);
 
     container.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
-
+    addClickEventsToCards();
+    addClickEventsToHearts();
     renderPagination();
+
 }
 
-function renderProducts1() {
+function renderCurrentPage() {
     const container = document.getElementById('productsContainer');
-
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-
-    const productsToShow = products.slice(start, end);
+    const productsToShow = currentProductList.slice(start, end); // Dùng danh sách hiện tại
 
     container.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
 
+    addClickEventsToCards();
+    addClickEventsToHearts();
     renderPagination();
 }
 
 function renderPagination() {
     const pagination = document.getElementById("pagination");
-    const totalPages = Math.ceil(products.length / itemsPerPage);
+    // *** THAY ĐỔI: Tính toán trang dựa trên danh sách hiện tại (currentProductList) ***
+    const totalPages = Math.ceil(currentProductList.length / itemsPerPage);
 
     pagination.innerHTML = "";
 
@@ -170,7 +166,8 @@ function renderPagination() {
 
         btn.addEventListener("click", () => {
             currentPage = i;
-            renderProducts1();
+            // *** THAY ĐỔI: Gọi renderCurrentPage() thay vì renderProducts1() ***
+            renderCurrentPage();
         });
 
         pagination.appendChild(btn);
@@ -213,13 +210,26 @@ function toggleDropdown(button) {
         dropdown.style.display = "block";
     }
 }
+function addClickEventsToHearts() {
+    const heartIcons = document.querySelectorAll('#productsContainer .card_heart');
 
-window.addEventListener("click", function(e) {
+    heartIcons.forEach(icon => {
+        icon.addEventListener('click', (event) => {
+            // Dừng sự kiện click lan ra thẻ .card (để tránh mở chi tiết)
+            // Ghi chú: Logic trong addClickEventsToCards đã xử lý việc này,
+            // nhưng thêm ở đây để đảm bảo an toàn.
+            event.stopPropagation();
+            // Bật/tắt class 'liked' trên chính icon đó
+            icon.classList.toggle('liked');
+        });
+    });
+}
+window.addEventListener("click", function (e) {
     if (!e.target.closest(".filter-container")) {
-            document.querySelectorAll(".dropdown-menu").forEach(d => {
+        document.querySelectorAll(".dropdown-menu").forEach(d => {
             d.style.display = "none";
-            });
-        }
+        });
+    }
 });
 
 /*phan js cho bo loc tat ca*/
@@ -266,9 +276,10 @@ document.querySelectorAll(".filter-item").forEach(item => {
         item.classList.toggle("active");
     });
 });
+//dropdown
 
 
-const applyBtn = document.querySelector(".apply") 
+const applyBtn = document.querySelector(".apply")
 
 function updateButtonText(filtered) {
     applyBtn.textContent = `Xem các mục (${filtered.length})`;
@@ -288,7 +299,7 @@ document.querySelectorAll(".filter-color span").forEach(colorItem => {
         }
         e.stopPropagation();
         //Loc
-        const filtered = products.filter(p => 
+        const filtered = products.filter(p =>
             p.colors.some(c => selectedColors.includes(c))
         );
         if (selectedColors.length === 0) {
@@ -300,4 +311,28 @@ document.querySelectorAll(".filter-color span").forEach(colorItem => {
         }
     });
 });
+// (Tìm hàm này)
+function addClickEventsToCards() {
+    const container = document.getElementById('productsContainer');
+    container.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', (event) => {
+            // Ngăn việc chuyển trang nếu bấm vào icon 'heart', 'cart' hoặc 'button'
+            if (event.target.closest('.card_heart') ||
+                event.target.closest('.card_cart') ||
+                event.target.closest('.card_action')) {
+                return;
+            }
+
+            event.preventDefault();
+
+            // Lấy ID sản phẩm
+            const productId = card.dataset.productId;
+
+            // --- THAY ĐỔI CHÍNH LÀ Ở ĐÂY ---
+            // Chuyển sang trang playout.html và truyền ID qua URL
+            window.location.href = `playout.html?id=${productId}`;
+            // --- KẾT THÚC THAY ĐỔI ---
+        });
+    });
+}
 

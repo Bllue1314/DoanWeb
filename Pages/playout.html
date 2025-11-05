@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Đang tải sản phẩm...</title>
+
+    <link rel="stylesheet" href="../Assets/Css/navi.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../Assets/Css/login.css">
+    <link rel="stylesheet" href="../Assets/Css/cart.css">
+    <link rel="stylesheet" href="../Assets/Css/playout.css">
+</head>
+
+<body>
+
+    <nav class="detail-view">
+        <a href="javascript:history.back()" id="navBackButton" class="nav-back-button" style="display: flex;">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="logo">
+            <img src="../Assets/img/conchobopc.png">
+        </div>
+        <ul class="nav-links">
+            <li><a href="../Pages/index.html">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">More info</a></li>
+        </ul>
+        <div class="btns">
+            <a href="../Pages/cart.html" class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </a>
+            <div id="logBtn">
+                <button class="btn-login" id="showLogin" onclick="showForm('login')">Đăng Nhập</button>
+                <button class="btn-login" id="showRegister" onclick="showForm('register')">Đăng Ký</button>
+            </div>
+            <div class="userName" id="userSection">
+                <button id="userName" class="userBtn"></button>
+                <div id="userMenu" class="user-Menu">
+                    <button onclick="viewProfile()">Xem thông tin</button>
+                    <button onclick="logout()">Đăng xuất</button>
+                </div>
+            </div>
+        </div>
+        <div class="menu-btn" id="menuBtn">☰</div>
+    </nav>
+
+    <div id="playout-container">
+    </div>
+
+    <div id="containerLogin">
+    </div>
+
+    <script src="../src/Components/cart-manager.js"></script>
+    <script src="../src/Components/log.js"></script>
+    <script src="../src/Components/playout.js"></script>
+
+</body>
+
+</html>
