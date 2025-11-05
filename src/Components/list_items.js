@@ -276,6 +276,7 @@ document.querySelectorAll(".filter-item").forEach(item => {
         item.classList.toggle("active");
     });
 });
+//dropdown
 
 
 const applyBtn = document.querySelector(".apply")

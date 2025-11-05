@@ -13,6 +13,7 @@
     font-family: 'Poppins', sans-serif;
     flex-direction: row;
     height: 100px;
+    margin-bottom: 2rem;
 }
 
 .search_container {
@@ -26,6 +27,7 @@
     position: absolute;
     top: 25px;
     left: 35px;
+    z-index: 100;
 }
 
 .search_input {
@@ -62,7 +64,6 @@
     list-style: none;
     gap: 25px;
     align-items: center;
-
 }
 
 .social_icons a {
@@ -75,4 +76,41 @@
 
 .social_icons a:hover {
     color: #4daf54;
+}
+
+.marquee {
+    width: 100%;
+    overflow: hidden;
+    background: transparent;
+    color: white;
+    font-size: 18px;
+    padding: 8px 0;
+    white-space: nowrap;
+    position: relative;
+    }
+
+.marquee-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 12s linear infinite;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .social_icons {
+        display: none;
+    }
+
+    .marquee{
+        display: none;
+    }
 }
