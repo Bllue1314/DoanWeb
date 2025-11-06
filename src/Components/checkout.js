@@ -1,35 +1,3 @@
-// Cập nhật /src/Components/checkout.js
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    // 1. Tự động điền thông tin nếu đã đăng nhập
-    prefillUserInfo();
-
-    // 2. Hiển thị tóm tắt đơn hàng
-    displayOrderSummary();
-
-    // 3. Xử lý form
-    const paymentForm = document.getElementById('paymentForm');
-    paymentForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        // Lấy dữ liệu form
-        const formData = new FormData(paymentForm);
-        const name = formData.get('fullName');
-
-        alert(`Cảm ơn, ${name}! Đơn hàng của bạn đã được đặt thành công.`);
-
-        // Xóa giỏ hàng sau khi đặt
-        cartManager.items = []; // Xóa trực tiếp
-        cartManager.saveToStorage(); // Lưu giỏ hàng rỗng
-        cartManager.updateCartCount(); // Cập nhật lại số lượng (về 0)
-
-        // Chuyển về trang chủ sau khi đặt hàng
-        window.location.href = 'index.html';
-    });
-
-});
-
 function displayOrderSummary() {
     const items = cartManager.getItems();
     const total = cartManager.getTotal();
