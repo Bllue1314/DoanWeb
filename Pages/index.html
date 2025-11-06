@@ -100,21 +100,27 @@
             <div class="filter-item">
                 <div class="filter-title">Loại</div>
                     <div class="filter-content">
-                        <label><input type = "checkbox">Bàn phím</label>
-                        <label><input type = "checkbox">Chuột</label>
-                        <label><input type = "checkbox">Tai nghe</label>
-                        <label><input type = "checkbox">CPU</label>
+                        <label><input type = "checkbox" data-type="loai" data-value="ban-phim">Bàn phím</label>
+                        <label><input type = "checkbox" data-type="loai" data-value="chuot">Chuột</label>
+                        <label><input type = "checkbox" data-type="loai" data-value="tai-nghe">Tai nghe</label>
+                        <label><input type = "checkbox" data-type="loai" data-value="cpu">CPU</label>
                     </div>
             </div>
             <div class="filter-item">
                 <div class="filter-title">Hãng</div>
                     <div class="filter-content">
-                        <label><input type = "checkbox">Logitech</label>
-                        <label><input type = "checkbox">Razer</label>
-                        <label><input type = "checkbox">SteelSeries</label>
-                        <label><input type = "checkbox">Corsair</label>
-                        <label><input type = "checkbox">HyperX</label>
-                        <label><input type = "checkbox">Intel</label>
+                        <label><input type = "checkbox" data-type="hang" data-value="Logitech">Logitech</label>
+                        <label><input type = "checkbox" data-type="hang" data-value="Razer">Razer</label>
+                        <label><input type = "checkbox" data-type="hang" data-value="SteelSeries">SteelSeries</label>
+                        <label><input type = "checkbox" data-type="hang" data-value="Corsair">Corsair</label>
+                        <label><input type = "checkbox" data-type="hang" data-value="Hyperx">HyperX</label>
+                        <label><input type = "checkbox" data-type="hang" data-value="Intel">Intel</label>
+                    </div>
+            </div>
+            <div class="filter-item">
+                <div class="filter-title">Yêu thích</div>
+                    <div class="filter-content">
+                        <label><input type="checkbox" data-type="yeu-thich" data-value="1">Sản phẩm yêu thích</label>
                     </div>
             </div>
         </div>
@@ -253,6 +259,10 @@
                         <li class="dropdown-item" data-type="brand" data-value="HyperX">HyperX</li>
                         <li class="dropdown-item" data-type="brand" data-value="Intel">Intel</li>
                     </ul>
+                </div>
+                <div class="filter-container">
+                    <button class="filter-button delete-button" onclick="Delete()">Xóa <span
+                            class="arrow">X</span></button>
                 </div>
             </div>
         </aside>
