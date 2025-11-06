@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../Assets/Css/login.css">
     <link rel="stylesheet" href="../Assets/Css/cart.css">
     <link rel="stylesheet" href="../Assets/Css/playout.css">
+    <link rel="stylesheet" href="../Assets/Css/HistoryOrder.css">
 
 
 </head>
@@ -34,6 +35,9 @@
         </ul>
         <div class="btns">
             <!-- THÊM ICON GIỎ HÀNG VÀO ĐÂY -->
+            <a href="#" class="history-order-icon" id="btnHistoryOrder">
+                <i class="fas fa-list"></i>
+            </a>
             <a href="../Pages/cart.html" class="cart-icon" id="cartIcon">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count" id="cartCount">0</span>
@@ -78,6 +82,24 @@
 
     <div class="overlay" id="overlay"></div>
 
+    <div class="table_container" id="historyPopup">
+        <table>
+            <caption>Lịch Sử Đơn Hàng</caption>
+            <thead id = "historyhead">
+                <tr>
+                    <th>Mã Đơn Hàng</th>
+                    <th>Ngày Đặt (DD-MM-YYYY)</th>
+                    <th>Địa Chỉ Giao Hàng</th>
+                    <th>Trạng Thái</th>
+                    <th>Tổng Tiền</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody id = "historybody">
+            </tbody>
+        </table>
+    </div>
+
     <div class="filter-panel" id="filterPanel">
         <div class="filter-header">
             <h2>Bộ lọc</h2>
@@ -120,7 +142,7 @@
             <div class="filter-item">
                 <div class="filter-title">Yêu thích</div>
                     <div class="filter-content">
-                        <label><input type="checkbox" data-type="yeu-thich" data-value="1">Sản phẩm yêu thích</label>
+                        <label><input type="checkbox" data-type="yeu-thich">Sản phẩm yêu thích</label>
                     </div>
             </div>
         </div>
