@@ -84,13 +84,16 @@ const products = [
 localStorage.setItem('products', JSON.stringify(products));
 // Hàm tạo HTML cho mỗi sản phẩm
 function createProductCard(product) {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const isLiked = favorites.includes(String(product.id)) ? "liked" : "";
+
     const colorSpans = product.colors.map(color =>
         `<span style="background-color: ${color}"></span>`
     ).join('');
 
     return `
         <div class="card" data-product-id="${product.id}">
-            <div class="card_heart">
+            <div class="card_heart ${isLiked}">
                 <i class='bx bx-heart'></i>
                 <i class='bx bxs-heart'></i>
             </div>
@@ -192,9 +195,22 @@ document.querySelectorAll(".dropdown-item").forEach(item => {
             const filtered = products.filter(p => p.brand === value);
             renderProducts(filtered);
         }
+        document.querySelectorAll(".dropdown-menu").forEach(d => {
+            d.style.display = "none";
+        });
+        document.querySelectorAll(".delete-button").forEach(d => {
+            d.style.display = "block";
+        });
+        
     });
 });
 //dropdown
+
+function Delete() {
+    renderProducts(products);
+    document.querySelector(".delete-button").style.display = "none";
+}
+
 
 function toggleDropdown(button) {
     const dropdown = button.nextElementSibling; // Lấy menu tương ứng
@@ -210,20 +226,33 @@ function toggleDropdown(button) {
         dropdown.style.display = "block";
     }
 }
+
 function addClickEventsToHearts() {
     const heartIcons = document.querySelectorAll('#productsContainer .card_heart');
 
     heartIcons.forEach(icon => {
         icon.addEventListener('click', (event) => {
-            // Dừng sự kiện click lan ra thẻ .card (để tránh mở chi tiết)
-            // Ghi chú: Logic trong addClickEventsToCards đã xử lý việc này,
-            // nhưng thêm ở đây để đảm bảo an toàn.
             event.stopPropagation();
-            // Bật/tắt class 'liked' trên chính icon đó
-            icon.classList.toggle('liked');
+
+            const card = icon.closest('.card');
+            const productId = card.dataset.productId;
+
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+            // Nếu đã thích rồi → Bỏ thích
+            if (favorites.includes(productId)) {
+                favorites = favorites.filter(id => id !== productId);
+                icon.classList.remove('liked');
+            } else {
+                favorites.push(productId);
+                icon.classList.add('liked');
+            }
+
+            localStorage.setItem('favorites', JSON.stringify(favorites));
         });
     });
 }
+
 window.addEventListener("click", function (e) {
     if (!e.target.closest(".filter-container")) {
         document.querySelectorAll(".dropdown-menu").forEach(d => {
@@ -286,10 +315,17 @@ function updateButtonText(filtered) {
 }
 updateButtonText(products);
 
+const checkboxes = document.querySelectorAll("input[type='checkbox']");
+checkboxes.forEach(cb => {
+    cb.addEventListener("change", () => {
+        applyFilters();
+    });
+});
+
 document.querySelectorAll(".filter-color span").forEach(colorItem => {
     colorItem.addEventListener("click", (e) => {
         const color = colorItem.dataset.value;
-        //Chon mau
+
         if (colorItem.classList.contains("selected")) {
             colorItem.classList.remove("selected");
             selectedColors = selectedColors.filter(c => c !== color);
@@ -297,20 +333,50 @@ document.querySelectorAll(".filter-color span").forEach(colorItem => {
             colorItem.classList.add("selected");
             selectedColors.push(color);
         }
+
         e.stopPropagation();
-        //Loc
-        const filtered = products.filter(p =>
-            p.colors.some(c => selectedColors.includes(c))
-        );
-        if (selectedColors.length === 0) {
-            renderProducts(products);
-            updateButtonText(products);
-        } else {
-            renderProducts(filtered);
-            updateButtonText(filtered);
-        }
+        applyFilters();
     });
 });
+
+function applyFilters() {
+    const selectedLoai = Array.from(document.querySelectorAll("input[data-type='loai']:checked"))
+        .map(c => c.dataset.value);
+
+    const selectedHang = Array.from(document.querySelectorAll("input[data-type='hang']:checked"))
+        .map(c => c.dataset.value);
+
+    let filtered = products;
+
+    // Lọc loại
+    if (selectedLoai.length > 0) {
+        filtered = filtered.filter(p => selectedLoai.includes(p.type));
+    }
+
+    // Lọc hãng
+    if (selectedHang.length > 0) {
+        filtered = filtered.filter(p => selectedHang.includes(p.brand));
+    }
+
+    // Lọc màu
+    if (selectedColors.length > 0) {
+        filtered = filtered.filter(p => p.colors && p.colors.some(c => selectedColors.includes(c)));
+    }
+
+    const selectedFavorite = document.querySelector("input[data-type='yeu-thich']:checked");
+
+    if (selectedFavorite) {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        filtered = filtered.filter(p => favorites.includes(String(p.id)));
+    }
+
+    renderProducts(filtered);
+    updateButtonText(filtered);
+}
+
+
+
+
 // (Tìm hàm này)
 function addClickEventsToCards() {
     const container = document.getElementById('productsContainer');
