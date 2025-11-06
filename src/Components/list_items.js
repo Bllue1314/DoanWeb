@@ -411,3 +411,30 @@ overlay.onclick = () => {
     historyPopup.classList.remove("show");
 };
 
+function renderHistory() {
+    const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
+    const tbody = document.getElementById("historybody");
+
+    if (history.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align:center; padding: 12px;">
+                    Chưa có đơn hàng nào.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = history.map(order => `
+        <tr>
+            <td>${order.orderId}</td>
+            <td>${order.date}</td>
+            <td>${order.address}</td>
+            <td>${order.status}</td>
+            <td>${order.total.toLocaleString('en-US')} $</td>
+        </tr>
+    `).join('');
+}
+
+document.addEventListener("DOMContentLoaded", renderHistory);

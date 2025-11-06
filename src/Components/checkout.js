@@ -122,6 +122,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         alert(`Cảm ơn, ${name}! Đơn hàng của bạn đã được đặt thành công.`);
 
+        //HistoryOder
+        const orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+
+        const newOrder = {
+            orderId: "DH" + Date.now(),           
+            date: new Date().toLocaleDateString(),
+            address: formData.get('address'),     
+            status: "Đang xử lý",                 
+            total: cartManager.getTotal(),        
+            items: cartManager.getItems()
+        };
+
+        orderHistory.push(newOrder);
+        localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
+
+
         // Xóa giỏ hàng sau khi đặt
         cartManager.items = []; // Xóa trực tiếp
         cartManager.saveToStorage(); // Lưu giỏ hàng rỗng
