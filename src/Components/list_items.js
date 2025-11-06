@@ -239,7 +239,6 @@ function addClickEventsToHearts() {
 
             let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-            // Nếu đã thích rồi → Bỏ thích
             if (favorites.includes(productId)) {
                 favorites = favorites.filter(id => id !== productId);
                 icon.classList.remove('liked');
@@ -340,11 +339,9 @@ document.querySelectorAll(".filter-color span").forEach(colorItem => {
 });
 
 function applyFilters() {
-    const selectedLoai = Array.from(document.querySelectorAll("input[data-type='loai']:checked"))
-        .map(c => c.dataset.value);
+    const selectedLoai = Array.from(document.querySelectorAll("input[data-type='loai']:checked")).map(c => c.dataset.value);
 
-    const selectedHang = Array.from(document.querySelectorAll("input[data-type='hang']:checked"))
-        .map(c => c.dataset.value);
+    const selectedHang = Array.from(document.querySelectorAll("input[data-type='hang']:checked")).map(c => c.dataset.value);
 
     let filtered = products;
 
@@ -382,7 +379,6 @@ function addClickEventsToCards() {
     const container = document.getElementById('productsContainer');
     container.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', (event) => {
-            // Ngăn việc chuyển trang nếu bấm vào icon 'heart', 'cart' hoặc 'button'
             if (event.target.closest('.card_heart') ||
                 event.target.closest('.card_cart') ||
                 event.target.closest('.card_action')) {
@@ -394,11 +390,24 @@ function addClickEventsToCards() {
             // Lấy ID sản phẩm
             const productId = card.dataset.productId;
 
-            // --- THAY ĐỔI CHÍNH LÀ Ở ĐÂY ---
-            // Chuyển sang trang playout.html và truyền ID qua URL
             window.location.href = `playout.html?id=${productId}`;
-            // --- KẾT THÚC THAY ĐỔI ---
         });
     });
 }
+
+//HistoryOrder
+const btnHistoryOrder = document.getElementById("btnHistoryOrder");
+const historyPopup = document.getElementById("historyPopup");
+
+// Mở popup
+btnHistoryOrder.onclick = () => {
+    overlay.classList.add("show");
+    historyPopup.classList.add("show");
+};
+
+// Tắt popup khi bấm overlay
+overlay.onclick = () => {
+    overlay.classList.remove("show");
+    historyPopup.classList.remove("show");
+};
 

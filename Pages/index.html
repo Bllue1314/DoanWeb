@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../Assets/Css/login.css">
     <link rel="stylesheet" href="../Assets/Css/cart.css">
     <link rel="stylesheet" href="../Assets/Css/playout.css">
+    <link rel="stylesheet" href="../Assets/Css/HistoryOrder.css">
 
 
 </head>
@@ -34,7 +35,7 @@
         </ul>
         <div class="btns">
             <!-- THÊM ICON GIỎ HÀNG VÀO ĐÂY -->
-            <a href="../Pages/HistoryOrder.html" class="history-order-icon" id="historyOrderIcon">
+            <a href="#" class="history-order-icon" id="btnHistoryOrder">
                 <i class="fas fa-list"></i>
             </a>
             <a href="../Pages/cart.html" class="cart-icon" id="cartIcon">
@@ -80,6 +81,44 @@
     </header>
 
     <div class="overlay" id="overlay"></div>
+
+    <div class="table_container" id="historyPopup">
+        <table>
+            <caption>Lịch Sử Đơn Hàng</caption>
+            <thead>
+                <tr>
+                    <th>Mã Đơn Hàng</th>
+                    <th>Ngày Đặt (DD-MM-YYYY)</th>
+                    <th>Địa Chỉ Giao Hàng</th>
+                    <th>Trạng Thái</th>
+                    <th>Tổng Tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>DH001</td>
+                    <td>15-05-2024</td>
+                    <td>123 Đường ABC, Quận 1</td>
+                    <td class="status done">Đã Giao</td>
+                    <td>500,000 VND</td>
+                </tr>
+                <tr>
+                    <td>DH002</td>
+                    <td>20-05-2024</td>
+                    <td>456 Đường XYZ, Quận 3</td>
+                    <td class="status shipping">Đang Vận Chuyển</td>
+                    <td>750,000 VND</td>
+                </tr>
+                <tr>
+                    <td>DH003</td>
+                    <td>25-05-2024</td>
+                    <td>789 Đường DEF, Quận 5</td>
+                    <td class="status canceled">Đã Hủy</td>
+                    <td>300,000 VND</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div class="filter-panel" id="filterPanel">
         <div class="filter-header">
