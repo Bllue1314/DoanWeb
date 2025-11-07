@@ -76,7 +76,7 @@ function renderProductDetails(product) {
                 <div class="product-colors">
                     <h3>Màu sắc:</h3>
                     <div class="color-options">
-                        ${product.colors.map(c => `<span class="color-dot" style="background-color: ${c}"></span>`).join('')}
+                        ${product.colors.map(c => `<span class="color-dot" data-color="${c}" style="background-color: ${c}"></span>`).join('')}
                     </div>
                 </div>
                 ` : ''}
@@ -100,6 +100,31 @@ function renderProductDetails(product) {
     `;
 
     playoutContainer.innerHTML = detailHTML;
+    const colorOptions = playoutContainer.querySelector('.color-options');
+    // Mặc định chọn màu đầu tiên nếu có
+    let selectedColor = product.colors.length > 0 ? product.colors[0] : null;
+
+    function updateColorSelectionVisual() {
+        if (!colorOptions) return;
+        colorOptions.querySelectorAll('.color-dot').forEach(dot => {
+            if (dot.dataset.color === selectedColor) {
+                dot.classList.add('selected'); // Chỉ thêm class
+            } else {
+                dot.classList.remove('selected'); // Chỉ xóa class
+            }
+        });
+    }
+
+    if (colorOptions) {
+        colorOptions.querySelectorAll('.color-dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                selectedColor = dot.dataset.color; // Cập nhật màu đã chọn
+                updateColorSelectionVisual(); // Cập nhật giao diện
+            });
+        });
+    }
+
+    updateColorSelectionVisual();
     //Them vao gio
     const quantitySelect = playoutContainer.querySelector('.quantity-select');
     const btnAddCart = playoutContainer.querySelector('.btn-add-cart');
@@ -112,8 +137,8 @@ function renderProductDetails(product) {
             return;
         }
         const quantity = parseInt(quantitySelect.value, 10);
-        addItemToCart(product, quantity);
-        cartManager.showAddToCartMessage(product.name);
+        addItemToCart(product, quantity, selectedColor);
+        cartManager.showAddToCartMessage(product.name, selectedColor);
     });
 
     // --- Sự kiện cho nút "Mua ngay" (Mới) ---
@@ -131,11 +156,13 @@ function renderProductDetails(product) {
         // --- Logic "Mua Ngay" ---
         // 1. Xóa sạch giỏ hàng hiện tại
         cartManager.items = [];
-
+        const cartItemId = selectedColor ? `${product.id}-${selectedColor}` : `${product.id}-default`;
         // 2. Tạo item mới với đúng số lượng đã chọn
         const buyNowItem = {
             ...product,
-            quantity: quantity
+            quantity: quantity,
+            selectedColor: selectedColor, // Thêm màu đã chọn
+            cartItemId: cartItemId
         };
 
         // 3. Thêm duy nhất item này vào giỏ hàng (đang rỗng)
@@ -160,14 +187,14 @@ function renderError(message) {
         errorContainer.innerHTML = `<h1 style="text-align: center; color: red; margin-top: 100px;">${message}</h1>`;
     }
 }
-function addItemToCart(product, quantity) {
+function addItemToCart(product, quantity, color) {
     if (!cartManager) {
         console.error("CartManager không tồn tại!");
         return;
     }
-
+    const cartItemId = color ? `${product.id}-${color}` : `${product.id}-default`;
     // Kiểm tra sản phẩm đã có trong giỏ chưa
-    const existingItem = cartManager.items.find(item => item.id === product.id);
+    const existingItem = cartManager.items.find(item => item.cartItemId === cartItemId);
 
     if (existingItem) {
         // Nếu có, cộng dồn số lượng
@@ -176,7 +203,9 @@ function addItemToCart(product, quantity) {
         // Nếu chưa, thêm mới với số lượng
         cartManager.items.push({
             ...product,
-            quantity: quantity
+            quantity: quantity,
+            selectedColor: color, // Lưu màu đã chọn
+            cartItemId: cartItemId
         });
     }
 
