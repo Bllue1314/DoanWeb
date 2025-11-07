@@ -10,30 +10,31 @@ class CartManager {
         return this.items || [];
     }
 
-    // Thêm sản phẩm vào giỏ hàng
     addItem(product) {
         if (!this.items) this.items = [];
-        
-        // Kiểm tra sản phẩm đã có trong giỏ chưa
-        const existingItem = this.items.find(item => item.id === product.id);
-        
+        const cartItemId = `${product.id}-default`;
+
+        const existingItem = this.items.find(item => item.cartItemId === cartItemId);
+
         if (existingItem) {
             existingItem.quantity += 1;
         } else {
             this.items.push({
                 ...product,
-                quantity: 1
+                quantity: 1,
+                selectedColor: null, // Không có màu
+                cartItemId: cartItemId // ID mặc định
             });
         }
-        
+
         this.saveToStorage();
         this.updateCartCount();
         this.showAddToCartMessage(product.name);
     }
 
     // Xóa sản phẩm khỏi giỏ hàng
-    removeItem(productId) {
-        this.items = this.items.filter(item => item.id !== productId);
+    removeItem(cartId) {
+        this.items = this.items.filter(item => item.cartItemId !== cartId);
         this.saveToStorage();
         this.updateCartCount();
     }
@@ -57,7 +58,23 @@ class CartManager {
     loadFromStorage() {
         try {
             const saved = localStorage.getItem('cart');
-            return saved ? JSON.parse(saved) : [];
+            const items = saved ? JSON.parse(saved) : [];
+            const migratedItems = items.map(item => {
+                // Nếu item đã có cartItemId (hàng mới), giữ nguyên
+                if (item.cartItemId) {
+                    return item;
+                }
+
+                // tự tạo một cái 'default' cho nó
+                return {
+                    ...item,
+                    selectedColor: null, // Hàng cũ không có màu
+                    cartItemId: `${item.id}-default` // Tạo ID mặc định
+                };
+            });
+
+            return migratedItems; // Trả về mảng đã được "nâng cấp"
+
         } catch (error) {
             return [];
         }
@@ -81,9 +98,9 @@ class CartManager {
 const cartManager = new CartManager();
 
 // Thêm sự kiện cho nút "Thêm vào giỏ hàng"
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Hàm này sẽ được gọi từ list_items.js khi sản phẩm được hiển thị
-    window.addToCart = function(product) {
+    window.addToCart = function (product) {
         cartManager.addItem(product);
     };
 });
