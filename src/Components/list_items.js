@@ -120,7 +120,7 @@ function createProductCard(product) {
 }
 
 let currentPage = 1;
-const itemsPerPage = 9; // Mỗi trang 9 sản phẩm
+const itemsPerPage = 6; // Mỗi trang 6 sản phẩm
 let currentProductList = products;
 
 // Render tất cả sản phẩm
@@ -201,7 +201,7 @@ document.querySelectorAll(".dropdown-item").forEach(item => {
         document.querySelectorAll(".delete-button").forEach(d => {
             d.style.display = "block";
         });
-        
+
     });
 });
 //dropdown
@@ -295,8 +295,15 @@ closeFilter.onclick = () => {
 }
 
 overlay.onclick = () => {
-    filterPanel.classList.remove("show");
     overlay.classList.remove("show");
+    historyPopup.classList.remove("show");
+    filterPanel.classList.remove("show");
+
+    // Thêm logic đóng popup chi tiết (nếu tồn tại)
+    const detailPopup = document.getElementById("historyDetailPopup");
+    if (detailPopup) {
+        detailPopup.classList.remove("show");
+    }
 }
 
 document.querySelectorAll(".filter-item").forEach(item => {
@@ -371,6 +378,17 @@ function applyFilters() {
     updateButtonText(filtered);
 }
 
+document.querySelectorAll("#filterPanel input[type='checkbox']").forEach(cb => {
+    cb.addEventListener("click", function(e) {
+        e.stopPropagation();
+    });
+});
+
+document.querySelectorAll("#filterPanel label").forEach(label => {
+    label.addEventListener("click", function(e) {
+        e.stopPropagation();
+    });
+});
 
 
 
@@ -380,7 +398,6 @@ function addClickEventsToCards() {
     container.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', (event) => {
             if (event.target.closest('.card_heart') ||
-                event.target.closest('.card_cart') ||
                 event.target.closest('.card_action')) {
                 return;
             }
@@ -405,12 +422,6 @@ btnHistoryOrder.onclick = () => {
     historyPopup.classList.add("show");
 };
 
-// Tắt popup khi bấm overlay
-overlay.onclick = () => {
-    overlay.classList.remove("show");
-    historyPopup.classList.remove("show");
-};
-
 function renderHistory() {
     const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
     const tbody = document.getElementById("historybody");
@@ -433,8 +444,71 @@ function renderHistory() {
             <td>${order.address}</td>
             <td>${order.status}</td>
             <td>${order.total.toLocaleString('en-US')} $</td>
+            <td><a href="#" class="history-detail-icon" onclick="showHistoryDetail('${order.orderId}'); return false;"><i class="fas fa-list"></i></a></td>
         </tr>
     `).join('');
 }
+function showHistoryDetail(orderId) {
+    const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
+    const order = history.find(o => o.orderId === orderId);
 
-document.addEventListener("DOMContentLoaded", renderHistory);
+    if (!order) {
+        alert("Không tìm thấy đơn hàng!");
+        return;
+    }
+
+    const detailBody = document.getElementById("historyDetailBody");
+    const detailCaption = document.getElementById("historyDetailCaption");
+
+    // Cập nhật tiêu đề popup
+    detailCaption.textContent = `Chi tiết Đơn hàng: ${orderId}`;
+
+    // Đổ dữ liệu item vào bảng (đã sửa để hiện màu)
+    detailBody.innerHTML = order.items.map(item => `
+        <tr>
+            <td>
+                <div class="item-info">
+                    <img src="${item.image}" alt="${item.name}">
+                    <span>${item.name}</span>
+                </div>
+            </td>
+            <td>
+                ${item.selectedColor ?
+            `<span class="item-color-dot" 
+                           style="background-color: ${item.selectedColor}; 
+                                  width: 20px; height: 20px; 
+                                  border-radius: 50%; 
+                                  display: inline-block;
+                                  border: 1px solid #ccc;">
+                     </span>`
+            : 'N/A'}
+            </td>
+            <td>${item.price.toLocaleString('en-US')} $</td>
+            <td>${item.quantity}</td>
+            <td>${(item.price * item.quantity).toLocaleString('en-US')} $</td>
+        </tr>
+    `).join('');
+
+    // Hiển thị popup chi tiết
+    document.getElementById("historyPopup").classList.add("faded");
+    document.getElementById("historyDetailPopup").classList.add("show");
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderHistory();
+    //đóng popup detail
+    const closeDetailPopup = document.getElementById('closeDetailPopup');
+    if (closeDetailPopup) {
+        closeDetailPopup.onclick = () => {
+            document.getElementById("historyDetailPopup").classList.remove("show");
+            document.getElementById("historyPopup").classList.remove("faded");
+        };
+    }
+    const closeHistoryPopup = document.getElementById('closeHistoryPopup');
+    if (closeHistoryPopup) {
+        closeHistoryPopup.onclick = () => {
+            document.getElementById("historyPopup").classList.remove("show");
+            overlay.classList.remove("show");
+        };
+    }
+});
