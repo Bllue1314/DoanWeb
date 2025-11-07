@@ -1,11 +1,13 @@
 // cart-display.js - Hiển thị giỏ hàng
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const cartItemsContainer = document.getElementById('cartItems');
     const totalAmountElement = document.getElementById('totalAmount');
-
+    ////
+    const checkoutButton = document.querySelector('.checkout-btn');
+    ///
     function displayCart() {
         const items = cartManager.getItems();
-        
+
         if (items.length === 0) {
             cartItemsContainer.innerHTML = '<p class="empty-cart">Giỏ hàng trống</p>';
             totalAmountElement.textContent = '0';
@@ -37,10 +39,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Các hàm toàn cục để gọi từ HTML
-    window.updateQuantity = function(productId, change) {
+    window.updateQuantity = function (productId, change) {
         const items = cartManager.getItems();
         const item = items.find(i => i.id === productId);
-        
+
         if (item) {
             item.quantity += change;
             if (item.quantity <= 0) {
@@ -52,10 +54,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    window.removeFromCart = function(productId) {
+    window.removeFromCart = function (productId) {
         cartManager.removeItem(productId);
         displayCart();
     };
 
+    ///
+    if (checkoutButton) {
+        checkoutButton.addEventListener('click', function (event) {
+            if (cartManager.getTotalItems() === 0) {
+                //hàm có sẵn ngăn chặn chuyển trang
+                event.preventDefault();
+                alert("Vui lòng chọn sản phẩm để thanh toán.");
+            }
+        });
+    }
+    ///
     displayCart();
 });

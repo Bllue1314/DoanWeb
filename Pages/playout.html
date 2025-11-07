@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Đang tải sản phẩm...</title>
+
+    <link rel="stylesheet" href="../Assets/Css/navi.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../Assets/Css/login.css">
+    <link rel="stylesheet" href="../Assets/Css/cart.css">
+    <link rel="stylesheet" href="../Assets/Css/playout.css">
+</head>
+
+<body>
+
+    <nav class="detail-view">
+        <a href="javascript:history.back()" id="navBackButton" class="nav-back-button" style="display: flex;">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div class="logo">
+            <img src="../Assets/img/conchobopc.png">
+        </div>
+        <ul class="nav-links">
+            <li><a href="../Pages/index.html">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">More info</a></li>
+        </ul>
+        <div class="btns">
+            <a href="../Pages/cart.html" class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </a>
+            <div id="logBtn">
+                <button class="btn-login" id="showLogin" onclick="showForm('login')">Đăng Nhập</button>
+                <button class="btn-login" id="showRegister" onclick="showForm('register')">Đăng Ký</button>
+            </div>
+            <div class="userName" id="userSection">
+                <button id="userName" class="userBtn"></button>
+                <div id="userMenu" class="user-Menu">
+                    <button onclick="viewProfile()">Xem thông tin</button>
+                    <button onclick="logout()">Đăng xuất</button>
+                </div>
+            </div>
+        </div>
+        <div class="menu-btn" id="menuBtn">☰</div>
+    </nav>
+
+    <div id = "containerLogin">
+        <div class="login" id="loginForm"> <!--Đăng nhập-->
+            <form onsubmit="handleLogin(event)">
+                <h1>Đăng Nhập</h1>
+                <div class="input-box">
+                    <input type="text" required>
+                    <div class="labelline">Tên đăng nhập</div>
+                </div>
+                <div class="input-box">
+                    <input type="password" required>
+                    <div class="labelline">Mật khẩu</div>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox">Ghi nhớ tài khoản</label>
+                    <a href="#" onclick="switchForm(event, 'forgetpw')">Quên mật khẩu?</a>
+                </div>
+                <button type="submit" class="btn">Đăng Nhập</button>
+                <div class="register-link">
+                    <p>Không có tài khoản?
+                        <a href="#" onclick="switchForm(event, 'register')">Đăng ký</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="login" id="registerForm"><!--Đăng ký-->
+            <form onsubmit="handleRegister(event)">
+                <h1>Đăng Ký</h1>
+                <div class="input-box">
+                    <input type="text" required>
+                    <div class="labelline">Tên đăng nhập</div>
+                </div>
+                <div class="input-box">
+                    <input type="password" required>
+                    <div class="labelline">Mật khẩu</div>
+                </div>
+                <div class="input-box">
+                    <input type="password" required>
+                    <div class="labelline">Nhập lại mật khẩu</div>
+                </div>
+                <div class="input-box">
+                    <input type="email" required id="email">
+                    <div class="labelline">Email</div>
+                </div>
+                <div class="input-box">
+                    <input type="number" required>
+                    <div class="labelline">Số điện thoại</div>
+                </div>
+                    <button type="submit" class="btn">Tạo tài khoản</button>
+                    <div class="register-link">
+                    <p>Đã có tài khoản?
+                        <a href="#" onclick="switchForm(event, 'login')">Đăng nhập</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="login" id="forgetpwForm">
+            <form onsubmit="handleForgetpw(event)">
+                <h1>Nhập email</h1>
+                <div class="input-box">
+                    <input type="email" required>
+                    <div class="labelline">Email</div>
+                </div>
+                <button type="submit" class="btn">Get password</button>
+                <div class="register-link">
+                    <p>Không có tài khoản?
+                        <a href="#" onclick="switchForm(event, 'register')">Đăng ký</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="containerLogin">
+        <div class="login" id="loginForm"> <!--Đăng nhập-->
+            <form onsubmit="handleLogin(event)">
+                <h1>Đăng Nhập</h1>
+                <div class="input-box">
+                    <input type="text" required>
+                    <div class="labelline">Tên đăng nhập</div>
+                </div>
+                <div class="input-box">
+                    <input type="password" required>
+                    <div class="labelline">Mật khẩu</div>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox">Ghi nhớ tài khoản</label>
+                    <a href="#" onclick="switchForm(event, 'forgetpw')">Quên mật khẩu?</a>
+                </div>
+                <button type="submit" class="btn">Đăng Nhập</button>
+                <div class="register-link">
+                    <p>Không có tài khoản?
+                        <a href="#" onclick="switchForm(event, 'register')">Đăng ký</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="login" id="registerForm"><!--Đăng ký-->
+            <form onsubmit="handleRegister(event)">
+                <h1>Đăng Ký</h1>
+                <div class="input-box">
+                    <input type="text" required>
+                    <div class="labelline">Tên đăng nhập</div>
+                </div>
+                <div class="input-box">
+                    <input type="password" required>
+                    <div class="labelline">Mật khẩu</div>
+                </div>
+                <div class="input-box">
+                    <input type="password" required>
+                    <div class="labelline">Nhập lại mật khẩu</div>
+                </div>
+                <div class="input-box">
+                    <input type="email" required id="email">
+                    <div class="labelline">Email</div>
+                </div>
+                <div class="input-box">
+                    <input type="number" required>
+                    <div class="labelline">Số điện thoại</div>
+                </div>
+                <button type="submit" class="btn">Tạo tài khoản</button>
+                <div class="register-link">
+                    <p>Đã có tài khoản?
+                        <a href="#" onclick="switchForm(event, 'login')">Đăng nhập</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="login" id="forgetpwForm">
+            <form onsubmit="handleForgetpw(event)">
+                <h1>Nhập email</h1>
+                <div class="input-box">
+                    <input type="email" required>
+                    <div class="labelline">Email</div>
+                </div>
+                <button type="submit" class="btn">Get password</button>
+                <div class="register-link">
+                    <p>Không có tài khoản?
+                        <a href="#" onclick="switchForm(event, 'register')">Đăng ký</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../src/Components/cart-manager.js"></script>
+    <script src="../src/Components/log.js"></script>
+    <script src="../src/Components/playout.js"></script>
+
+</body>
+
+</html>

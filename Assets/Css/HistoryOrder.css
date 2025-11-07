@@ -1,56 +1,59 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-caption {
+.table_container caption {
     caption-side: top;
     font-size: 24px;
     font-weight: bold;
-    color: greenyellow;
+    color: black;
     padding: 10px;
     text-align: center;
 }
 
 .table_container {
-    width: 80%;               /* nhỏ hơn toàn trang */
-    max-width: 1100px;
-    margin:10rem auto ;
-    background: rgba(0,0,0,0.7);
-    border: 2px solid greenyellow;
-    border-radius: 10px;
-    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%) scale(0.9);
+    transition: 0.3s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 11000;
+    background: white;
+    border-radius: 12px;
 }
 
-table {
+.table_container.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.table_container table {
     width: 100%;              /* bảng đầy trong container */
     border-collapse: collapse;
 }
 
-h1{
+.table_container h1{
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    color: greenyellow;
+    color: black;
 }
 
-tr{
-    color: greenyellow;
-    border-top: 1px solid greenyellow;
+.table_container tr{
+    color: black;
+    border-top: 1px solid black;
 }
 
-tr:hover {
+.table_container tr:hover {
     background-color: rgba(0, 255, 0, 0.1);
     transition: 0.3s;
 }
 
-td {
+.table_container td {
     text-align: center;
-    color: greenyellow;
-    border-top: 1px solid greenyellow;
+    color: black;
+    border-top: 1px solid black;
 }
-table th, table td{
+.table_container table th, .table_container table td{
     text-align: center;
     padding: 12px 15px;
 }
