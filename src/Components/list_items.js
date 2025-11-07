@@ -84,13 +84,16 @@ const products = [
 localStorage.setItem('products', JSON.stringify(products));
 // Hàm tạo HTML cho mỗi sản phẩm
 function createProductCard(product) {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const isLiked = favorites.includes(String(product.id)) ? "liked" : "";
+
     const colorSpans = product.colors.map(color =>
         `<span style="background-color: ${color}"></span>`
     ).join('');
 
     return `
         <div class="card" data-product-id="${product.id}">
-            <div class="card_heart">
+            <div class="card_heart ${isLiked}">
                 <i class='bx bx-heart'></i>
                 <i class='bx bxs-heart'></i>
             </div>
@@ -192,9 +195,22 @@ document.querySelectorAll(".dropdown-item").forEach(item => {
             const filtered = products.filter(p => p.brand === value);
             renderProducts(filtered);
         }
+        document.querySelectorAll(".dropdown-menu").forEach(d => {
+            d.style.display = "none";
+        });
+        document.querySelectorAll(".delete-button").forEach(d => {
+            d.style.display = "block";
+        });
+        
     });
 });
 //dropdown
+
+function Delete() {
+    renderProducts(products);
+    document.querySelector(".delete-button").style.display = "none";
+}
+
 
 function toggleDropdown(button) {
     const dropdown = button.nextElementSibling; // Lấy menu tương ứng
@@ -210,20 +226,32 @@ function toggleDropdown(button) {
         dropdown.style.display = "block";
     }
 }
+
 function addClickEventsToHearts() {
     const heartIcons = document.querySelectorAll('#productsContainer .card_heart');
 
     heartIcons.forEach(icon => {
         icon.addEventListener('click', (event) => {
-            // Dừng sự kiện click lan ra thẻ .card (để tránh mở chi tiết)
-            // Ghi chú: Logic trong addClickEventsToCards đã xử lý việc này,
-            // nhưng thêm ở đây để đảm bảo an toàn.
             event.stopPropagation();
-            // Bật/tắt class 'liked' trên chính icon đó
-            icon.classList.toggle('liked');
+
+            const card = icon.closest('.card');
+            const productId = card.dataset.productId;
+
+            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+            if (favorites.includes(productId)) {
+                favorites = favorites.filter(id => id !== productId);
+                icon.classList.remove('liked');
+            } else {
+                favorites.push(productId);
+                icon.classList.add('liked');
+            }
+
+            localStorage.setItem('favorites', JSON.stringify(favorites));
         });
     });
 }
+
 window.addEventListener("click", function (e) {
     if (!e.target.closest(".filter-container")) {
         document.querySelectorAll(".dropdown-menu").forEach(d => {
@@ -286,10 +314,17 @@ function updateButtonText(filtered) {
 }
 updateButtonText(products);
 
+const checkboxes = document.querySelectorAll("input[type='checkbox']");
+checkboxes.forEach(cb => {
+    cb.addEventListener("change", () => {
+        applyFilters();
+    });
+});
+
 document.querySelectorAll(".filter-color span").forEach(colorItem => {
     colorItem.addEventListener("click", (e) => {
         const color = colorItem.dataset.value;
-        //Chon mau
+
         if (colorItem.classList.contains("selected")) {
             colorItem.classList.remove("selected");
             selectedColors = selectedColors.filter(c => c !== color);
@@ -297,26 +332,53 @@ document.querySelectorAll(".filter-color span").forEach(colorItem => {
             colorItem.classList.add("selected");
             selectedColors.push(color);
         }
+
         e.stopPropagation();
-        //Loc
-        const filtered = products.filter(p =>
-            p.colors.some(c => selectedColors.includes(c))
-        );
-        if (selectedColors.length === 0) {
-            renderProducts(products);
-            updateButtonText(products);
-        } else {
-            renderProducts(filtered);
-            updateButtonText(filtered);
-        }
+        applyFilters();
     });
 });
+
+function applyFilters() {
+    const selectedLoai = Array.from(document.querySelectorAll("input[data-type='loai']:checked")).map(c => c.dataset.value);
+
+    const selectedHang = Array.from(document.querySelectorAll("input[data-type='hang']:checked")).map(c => c.dataset.value);
+
+    let filtered = products;
+
+    // Lọc loại
+    if (selectedLoai.length > 0) {
+        filtered = filtered.filter(p => selectedLoai.includes(p.type));
+    }
+
+    // Lọc hãng
+    if (selectedHang.length > 0) {
+        filtered = filtered.filter(p => selectedHang.includes(p.brand));
+    }
+
+    // Lọc màu
+    if (selectedColors.length > 0) {
+        filtered = filtered.filter(p => p.colors && p.colors.some(c => selectedColors.includes(c)));
+    }
+
+    const selectedFavorite = document.querySelector("input[data-type='yeu-thich']:checked");
+
+    if (selectedFavorite) {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        filtered = filtered.filter(p => favorites.includes(String(p.id)));
+    }
+
+    renderProducts(filtered);
+    updateButtonText(filtered);
+}
+
+
+
+
 // (Tìm hàm này)
 function addClickEventsToCards() {
     const container = document.getElementById('productsContainer');
     container.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', (event) => {
-            // Ngăn việc chuyển trang nếu bấm vào icon 'heart', 'cart' hoặc 'button'
             if (event.target.closest('.card_heart') ||
                 event.target.closest('.card_cart') ||
                 event.target.closest('.card_action')) {
@@ -328,11 +390,51 @@ function addClickEventsToCards() {
             // Lấy ID sản phẩm
             const productId = card.dataset.productId;
 
-            // --- THAY ĐỔI CHÍNH LÀ Ở ĐÂY ---
-            // Chuyển sang trang playout.html và truyền ID qua URL
             window.location.href = `playout.html?id=${productId}`;
-            // --- KẾT THÚC THAY ĐỔI ---
         });
     });
 }
 
+//HistoryOrder
+const btnHistoryOrder = document.getElementById("btnHistoryOrder");
+const historyPopup = document.getElementById("historyPopup");
+
+// Mở popup
+btnHistoryOrder.onclick = () => {
+    overlay.classList.add("show");
+    historyPopup.classList.add("show");
+};
+
+// Tắt popup khi bấm overlay
+overlay.onclick = () => {
+    overlay.classList.remove("show");
+    historyPopup.classList.remove("show");
+};
+
+function renderHistory() {
+    const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
+    const tbody = document.getElementById("historybody");
+
+    if (history.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align:center; padding: 12px;">
+                    Chưa có đơn hàng nào.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = history.map(order => `
+        <tr>
+            <td>${order.orderId}</td>
+            <td>${order.date}</td>
+            <td>${order.address}</td>
+            <td>${order.status}</td>
+            <td>${order.total.toLocaleString('en-US')} $</td>
+        </tr>
+    `).join('');
+}
+
+document.addEventListener("DOMContentLoaded", renderHistory);

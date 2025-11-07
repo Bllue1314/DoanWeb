@@ -143,6 +143,7 @@ function showLogoutButton(username) {
 
     // THÊM MỚI: Hiển thị icon giỏ hàng
     document.getElementById('cartIcon').style.display = 'flex';
+    document.getElementById('btnHistoryOrder').style.display = 'flex';
 }
 // Xử lý đăng xuất
 function logout() {
@@ -151,6 +152,7 @@ function logout() {
     document.getElementById("logBtn").style.display = "flex";
 
     document.getElementById('cartIcon').style.display = 'none';
+    document.getElementById('btnHistoryOrder').style.display = 'none';
 }
 
 // Xử lý xem thông tin

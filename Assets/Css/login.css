@@ -60,15 +60,17 @@
     padding-left: 10px;
 }
 
-.labelline{
+.labelline {
     position: absolute;
-    top: 5px;
-    font-size: 1.6em;
-    padding: 0 10px;
-    margin: 0 20px;
-    transition: 0.2s ease;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 1.3em;
+    color: rgba(255, 255, 255, 0.7);
+    transition: 0.3s ease;
     pointer-events: none;
 }
+
 
 #containerLogin input:focus, #containerLogin input:valid{
     color: skyblue;
@@ -78,7 +80,7 @@
 input:focus + .labelline, input:valid + .labelline{
     color: skyblue;
     height: 25px;
-    transform: translate(-15px, -40px) scale(0.88);
+    transform: translate(-15px, -50px) scale(0.88);
     z-index: 1111;
     padding: 0 12px;
 }
@@ -161,13 +163,13 @@ input:focus + .labelline, input:valid + .labelline{
 
 .input-box input.touched:invalid + .labelline {
     color: red;
-    transform: translate(-15px, -40px) scale(0.88);
+    transform: translate(-12px, -50px) scale(0.88);
 }
 
 
 .input-box input:invalid:focus + .labelline,
 .input-box input:invalid:valid + .labelline {
-    transform: translate(-15px, -40px) scale(0.88);
+    transform: translate(-12px, -50px) scale(0.88);
     height: 25px;
     padding: 0 12px;
 }

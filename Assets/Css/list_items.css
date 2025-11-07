@@ -320,6 +320,9 @@ h3 {
     width: 100%;
     justify-content: space-between;
 }
+.delete-button{
+    display: none;
+}
 
 
 .dropdown-menu {

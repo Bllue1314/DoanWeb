@@ -47,14 +47,14 @@ function createPlayout() {
 
 
 function renderProductDetails(product) {
-    // Cập nhật tiêu đề trang (trên tab trình duyệt)
+    // Cập nhật tiêu đề trang
     document.title = `Sản phẩm | ${product.name}`;
 
     // Lấy vùng chứa
     const playoutContainer = document.getElementById('playout-container');
     if (!playoutContainer) return;
 
-    // Tạo HTML (Giống hệt code trong `showProductDetail` cũ của bạn)
+    // Tạo HTML
     const detailHTML = `
     <div class="playout-wrapper">
         <div class="product-detail-container">
@@ -99,31 +99,20 @@ function renderProductDetails(product) {
     </div>
     `;
 
-    // "Nhét" HTML vào trang
     playoutContainer.innerHTML = detailHTML;
-
-    // Thêm sự kiện cho nút "Thêm vào giỏ"
-    // (Logic y hệt code cũ của bạn)
+    //Them vao gio
     const quantitySelect = playoutContainer.querySelector('.quantity-select');
     const btnAddCart = playoutContainer.querySelector('.btn-add-cart');
     const btnBuyNow = playoutContainer.querySelector('.btn-buy-now');
-
-    // --- Sự kiện cho nút "Thêm vào Giỏ hàng" (Đã sửa) ---
     btnAddCart.addEventListener('click', () => {
         const loggedInUser = localStorage.getItem("loggedInUser");
         if (!loggedInUser) {
             alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng.");
-            showForm('login'); // Đây là hàm từ log.js
+            showForm('login');
             return;
         }
-
-        // Lấy số lượng từ dropdown
         const quantity = parseInt(quantitySelect.value, 10);
-
-        // Gọi hàm hỗ trợ (chúng ta sẽ tạo ở Bước 2)
         addItemToCart(product, quantity);
-
-        // Hiển thị thông báo (dùng hàm có sẵn từ cart-manager.js)
         cartManager.showAddToCartMessage(product.name);
     });
 
