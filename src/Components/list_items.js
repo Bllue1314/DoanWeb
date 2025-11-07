@@ -297,6 +297,7 @@ closeFilter.onclick = () => {
 overlay.onclick = () => {
     filterPanel.classList.remove("show");
     overlay.classList.remove("show");
+    historyPopup.classList.remove("show");
 }
 
 document.querySelectorAll(".filter-item").forEach(item => {
@@ -371,6 +372,17 @@ function applyFilters() {
     updateButtonText(filtered);
 }
 
+document.querySelectorAll("#filterPanel input[type='checkbox']").forEach(cb => {
+    cb.addEventListener("click", function(e) {
+        e.stopPropagation();
+    });
+});
+
+document.querySelectorAll("#filterPanel label").forEach(label => {
+    label.addEventListener("click", function(e) {
+        e.stopPropagation();
+    });
+});
 
 
 
@@ -403,12 +415,6 @@ const historyPopup = document.getElementById("historyPopup");
 btnHistoryOrder.onclick = () => {
     overlay.classList.add("show");
     historyPopup.classList.add("show");
-};
-
-// Tắt popup khi bấm overlay
-overlay.onclick = () => {
-    overlay.classList.remove("show");
-    historyPopup.classList.remove("show");
 };
 
 function renderHistory() {
