@@ -150,7 +150,6 @@ function logout() {
     localStorage.removeItem("loggedInUser");
     document.getElementById("userSection").style.display = "none";
     document.getElementById("logBtn").style.display = "flex";
-
     document.getElementById('cartIcon').style.display = 'none';
     document.getElementById('btnHistoryOrder').style.display = 'none';
 }
@@ -161,7 +160,9 @@ function viewProfile() {
     menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
     const username = localStorage.getItem("loggedInUser"); // username đang đăng nhập
     let email = "";
-
+    
+    //lấy địa chỉ khách hàng từ localstorage
+    let address=localStorage.getItem("address");
     if (username) {
         const users = JSON.parse(localStorage.getItem("users")) || [];
         const currentUser = users.find(user => user.username === username);
@@ -169,7 +170,7 @@ function viewProfile() {
             email = currentUser.email; // lấy email từ user
         }
     }
-
+    document.getElementById("address").value=address||"";
     document.getElementById("profileUsername").value = username || "";
     document.getElementById("profileEmail").value = email || "";
 
@@ -189,7 +190,7 @@ function saveProfile(e) {
     const email = document.getElementById("profileEmail").value.trim();
     const currentPassword = document.getElementById("profileCurrentPassword").value.trim();
     const newPassword = document.getElementById("profileNewPassword").value.trim();
-
+    const newaddress=document.getElementById("address").value.trim();
     const storedPassword = localStorage.getItem("password");
     const loggedInUser = localStorage.getItem("loggedInUser");
 
@@ -205,7 +206,7 @@ function saveProfile(e) {
     // Cập nhật thông tin vào localStorage
     localStorage.setItem("loggedInUser", username);
     localStorage.setItem("password", finalPassword);
-
+    localStorage.setItem("address",newaddress);
     // nếu bạn đang lưu danh sách users
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const index = users.findIndex(u => u.username === loggedInUser);

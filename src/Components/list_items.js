@@ -120,7 +120,7 @@ function createProductCard(product) {
 }
 
 let currentPage = 1;
-const itemsPerPage = 9; // Mỗi trang 9 sản phẩm
+const itemsPerPage = 6; // Mỗi trang 6 sản phẩm
 let currentProductList = products;
 
 // Render tất cả sản phẩm
@@ -398,7 +398,6 @@ function addClickEventsToCards() {
     container.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', (event) => {
             if (event.target.closest('.card_heart') ||
-                event.target.closest('.card_cart') ||
                 event.target.closest('.card_action')) {
                 return;
             }
