@@ -286,3 +286,18 @@ body {
 .cart-summary {
     margin-top: 0;
 }
+
+.summary-item-info .item-color {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.summary-item-info .item-color-dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
