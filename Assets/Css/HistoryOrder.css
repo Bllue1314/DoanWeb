@@ -20,6 +20,7 @@
     border-radius: 12px;
 }
 
+
 .table_container.show {
     opacity: 1;
     pointer-events: auto;
@@ -27,18 +28,18 @@
 }
 
 .table_container table {
-    width: 100%;              /* bảng đầy trong container */
+    width: 100%;
     border-collapse: collapse;
 }
 
-.table_container h1{
+.table_container h1 {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
     color: black;
 }
 
-.table_container tr{
+.table_container tr {
     color: black;
     border-top: 1px solid black;
 }
@@ -53,7 +54,9 @@
     color: black;
     border-top: 1px solid black;
 }
-.table_container table th, .table_container table td{
+
+.table_container table th,
+.table_container table td {
     text-align: center;
     padding: 12px 15px;
 }
@@ -72,4 +75,128 @@
 .status.canceled {
     color: #ff4444;
     font-weight: bold;
+}
+
+#historyDetailPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%) scale(0.9);
+    transition: 0.3s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 11000;
+    background: white;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 800px;
+    padding: 10px;
+    z-index: 110001;
+}
+
+#historyDetailPopup.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#historyDetailPopup table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#historyDetailPopup caption {
+    caption-side: top;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    padding: 10px;
+    text-align: center;
+}
+
+#historyDetailPopup tr {
+    color: black;
+    border-top: 1px solid #ddd;
+    background-color: #ffffff;
+}
+
+#historyDetailPopup td,
+#historyDetailPopup th {
+    text-align: left;
+    color: black;
+    padding: 10px 12px;
+}
+
+#historyDetailPopup th {
+    background-color: #f9f9f9;
+}
+
+#historyDetailPopup img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+#historyDetailPopup .item-info {
+    display: flex;
+    align-items: center;
+}
+
+#closeDetailPopup {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+#closeDetailPopup:hover {
+    color: #000;
+}
+
+.history-detail-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+    /* Cỡ icon */
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.history-detail-icon:hover {
+    background: #f0f0f0;
+    color: #3498db;
+}
+
+#closeHistoryPopup {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 10;
+}
+
+#closeHistoryPopup:hover {
+    color: #000;
+}
+
+.table_container.faded {
+    opacity: 0.3;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
