@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý sản phẩm</title>
+  <link rel="stylesheet" href="manager.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="conchobopc.png" alt="Logo">
+        </div>
+
+        <form class="search">
+            <input type="search" class="search_input" placeholder="Tìm kiếm...">
+        </form>
+
+        <ul class="nav">
+            <li><a href="#" id="tab-products">Sản phẩm</a></li>
+            <li><a href="#" id="tab-users">Khách hàng</a></li>
+            <li><a href="#">Đơn hàng</a></li>
+        </ul>
+    </header>
+
+    <div class="container">
+        <!-- DANH SÁCH SẢN PHẨM -->
+        <div id="productSection">
+            <div class="section-header">
+                <h1>Danh sách sản phẩm</h1>
+                <button class="add-btn" onclick="openAddModal()">+ Thêm sản phẩm</button>
+            </div>
+            <div id="productsContainer"></div>
+        </div>
+
+
+        <!-- DANH SÁCH KHÁCH HÀNG -->
+        <div id="userSection" class="hidden">
+            <h1>Danh sách khách hàng</h1>
+            <div id="usersContainer" class="users-table"></div>
+        </div>
+    </div>
+
+    <!-- Popup sửa sản phẩm -->
+        <div id="editModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Chỉnh sửa sản phẩm</h2>
+                <form id="editForm">
+                    <label>Tên sản phẩm</label>
+                    <input type="text" id="editName" required>
+
+                    <label>Hãng</label>
+                    <input type="text" id="editBrand">
+
+                    <label>Loại</label>
+                    <input type="text" id="editType">
+
+                    <label>Giá</label>
+                    <input type="number" id="editPrice" step="0.01">
+
+                    <label>Mô tả</label>
+                    <textarea id="editDescription" rows="3"></textarea>
+
+                    <label>Link ảnh</label>
+                    <input type="text" id="editImage">
+
+                    <div class="btn-group">
+                        <button type="submit" class="save-btn">Lưu</button>
+                        <button type="button" class="cancel-btn" onclick="closeModal()">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+  <script src="manager-product.js"></script>
+  <script src="manager-user.js"></script>
+  <script src="manager-tab.js"></script>
+</body>
+</html>
+
