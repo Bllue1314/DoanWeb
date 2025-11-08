@@ -60,11 +60,13 @@ function prefillUserInfo() {
             // 3. Điền thông tin vào form
             const fullNameInput = document.getElementById('fullName');
             const phoneInput = document.getElementById('phone');
-            const emailInput = document.getElementById('email');
+            const emailInput = document.getElementById('email1');
+            const addressInput = document.getElementById('address');
 
-            if (fullNameInput) fullNameInput.value = currentUser.username;
-            if (phoneInput && currentUser.phone) phoneInput.value = currentUser.phone;
-            if (emailInput && currentUser.email) emailInput.value = currentUser.email;
+            if (fullNameInput) fullNameInput.value = currentUser.username || "";
+            if (phoneInput) phoneInput.value = currentUser.phone || "";
+            if (emailInput) emailInput.value = currentUser.email || "";
+            if (addressInput) addressInput.value = currentUser.address || "";
         }
 
     } else {

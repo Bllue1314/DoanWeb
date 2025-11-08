@@ -51,7 +51,7 @@ function handleRegister(e) {
         return;
     }
 
-    if (!username || !password || !email) {
+    if (!username || !password || !email || !phone) {
         alert("Vui lòng nhập đầy đủ thông tin!");
         return;
     }
@@ -69,12 +69,12 @@ function handleRegister(e) {
         return;
     }
     if (users.some(user => user.phone === phone)) {
-        alert("Tên đăng nhập đã tồn tại!");
+        alert("Số điện thoại đã tồn tại!");
         return;
     }
 
     // Thêm user mới
-    users.push({ username, password, email, phone });
+    users.push({ username, password, email, address: null, phone });
     localStorage.setItem("users", JSON.stringify(users));
 
     alert("Đăng ký thành công!");
@@ -214,13 +214,15 @@ function saveProfile(e) {
 
     // Nếu không nhập mật khẩu mới thì giữ mật khẩu cũ
     const finalPassword = newPassword || storedPassword;
+    const phoneNumber = users[index].phone;
 
     // Cập nhật user
     users[index] = { 
         username: username, 
         password: finalPassword, 
         email: email,
-        address: newaddress
+        address: newaddress,
+        phone: phoneNumber
     };
 
     // Lưu lại vào localStorage
