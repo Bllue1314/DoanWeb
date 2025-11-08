@@ -26,6 +26,16 @@ function showForm(type) {
     selectedForm.querySelectorAll(".input-box input").forEach(input => {
         input.addEventListener("blur", () => input.classList.add("touched"));
     });
+    document.getElementById("phone").addEventListener("input", function() {
+        const phone = this.value.trim();
+
+        // Regex: bắt đầu bằng 0 + 9 số phía sau = tổng 10 số
+        const isValid = /^0\d{9}$/.test(phone);
+
+        // Nếu hợp lệ → xóa invalid, nếu sai → set invalid
+        this.setCustomValidity(isValid ? "" : "Số điện thoại phải có 10 số và bắt đầu bằng 0");
+    });
+
 }
 
 function switchForm(e, type) {
