@@ -125,7 +125,7 @@ function createProductCard(product) {
 
 }
 let currentPage = 1;
-const itemsPerPage = 9; // Mỗi trang 9 sản phẩm
+const itemsPerPage = 6; // Mỗi trang 6 sản phẩm
 let currentProductList = products;
 
 function addClickEventsToBuyNow() {
@@ -325,6 +325,23 @@ window.addEventListener("click", function (e) {
     }
 });
 
+
+
+
+/* Search */
+function search(e) {
+  e.preventDefault();
+  const searchValue = document.getElementById("search-input").value.trim().toLowerCase();
+
+  const infsearch = products.filter(p => 
+    p.name.toLowerCase().includes(searchValue)
+  );
+
+  renderProducts(infsearch);
+}
+
+
+
 /*phan js cho bo loc tat ca*/
 
 const openFilter = document.getElementById("Allfilter");
@@ -360,8 +377,15 @@ closeFilter.onclick = () => {
 }
 
 overlay.onclick = () => {
-    filterPanel.classList.remove("show");
     overlay.classList.remove("show");
+    historyPopup.classList.remove("show");
+    filterPanel.classList.remove("show");
+
+    // Thêm logic đóng popup chi tiết (nếu tồn tại)
+    const detailPopup = document.getElementById("historyDetailPopup");
+    if (detailPopup) {
+        detailPopup.classList.remove("show");
+    }
 }
 
 document.querySelectorAll(".filter-item").forEach(item => {
@@ -436,6 +460,17 @@ function applyFilters() {
     updateButtonText(filtered);
 }
 
+document.querySelectorAll("#filterPanel input[type='checkbox']").forEach(cb => {
+    cb.addEventListener("click", function(e) {
+        e.stopPropagation();
+    });
+});
+
+document.querySelectorAll("#filterPanel label").forEach(label => {
+    label.addEventListener("click", function(e) {
+        e.stopPropagation();
+    });
+});
 
 
 
@@ -445,7 +480,6 @@ function addClickEventsToCards() {
     container.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', (event) => {
             if (event.target.closest('.card_heart') ||
-                event.target.closest('.card_cart') ||
                 event.target.closest('.card_action')) {
                 return;
             }
@@ -470,12 +504,6 @@ btnHistoryOrder.onclick = () => {
     historyPopup.classList.add("show");
 };
 
-// Tắt popup khi bấm overlay
-overlay.onclick = () => {
-    overlay.classList.remove("show");
-    historyPopup.classList.remove("show");
-};
-
 function renderHistory() {
     const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
     const tbody = document.getElementById("historybody");
@@ -498,8 +526,199 @@ function renderHistory() {
             <td>${order.address}</td>
             <td>${order.status}</td>
             <td>${order.total.toLocaleString('en-US')} $</td>
+            <td><a href="#" class="history-detail-icon" onclick="showHistoryDetail('${order.orderId}'); return false;"><i class="fas fa-list"></i></a></td>
         </tr>
     `).join('');
 }
+function showHistoryDetail(orderId) {
+    const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
+    const order = history.find(o => o.orderId === orderId);
 
-document.addEventListener("DOMContentLoaded", renderHistory);
+    if (!order) {
+        alert("Không tìm thấy đơn hàng!");
+        return;
+    }
+
+    const detailBody = document.getElementById("historyDetailBody");
+    const detailCaption = document.getElementById("historyDetailCaption");
+
+    // Cập nhật tiêu đề popup
+    detailCaption.textContent = `Chi tiết Đơn hàng: ${orderId}`;
+
+    // Đổ dữ liệu item vào bảng (đã sửa để hiện màu)
+    detailBody.innerHTML = order.items.map(item => `
+        <tr>
+            <td>
+                <div class="item-info">
+                    <img src="${item.image}" alt="${item.name}">
+                    <span>${item.name}</span>
+                </div>
+            </td>
+            <td>
+                ${item.selectedColor ?
+            `<span class="item-color-dot" 
+                           style="background-color: ${item.selectedColor}; 
+                                  width: 20px; height: 20px; 
+                                  border-radius: 50%; 
+                                  display: inline-block;
+                                  border: 1px solid #ccc;">
+                     </span>`
+            : 'N/A'}
+            </td>
+            <td>${item.price.toLocaleString('en-US')} $</td>
+            <td>${item.quantity}</td>
+            <td>${(item.price * item.quantity).toLocaleString('en-US')} $</td>
+        </tr>
+    `).join('');
+
+    // Hiển thị popup chi tiết
+    document.getElementById("historyPopup").classList.add("faded");
+    document.getElementById("historyDetailPopup").classList.add("show");
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderHistory();
+    //đóng popup detail
+    const closeDetailPopup = document.getElementById('closeDetailPopup');
+    if (closeDetailPopup) {
+        closeDetailPopup.onclick = () => {
+            document.getElementById("historyDetailPopup").classList.remove("show");
+            document.getElementById("historyPopup").classList.remove("faded");
+        };
+    }
+    const closeHistoryPopup = document.getElementById('closeHistoryPopup');
+    if (closeHistoryPopup) {
+        closeHistoryPopup.onclick = () => {
+            document.getElementById("historyPopup").classList.remove("show");
+            overlay.classList.remove("show");
+        };
+    }
+});
+
+
+
+
+/* More info */
+
+document.addEventListener("DOMContentLoaded", function () {
+    var closeSupportButton = document.getElementById("closeSupportPopup");
+    var supportPopup = document.getElementById("supportPopup");
+    var aboutLink = document.getElementById("aboutLink");
+
+    closeSupportButton.addEventListener("click", function () {
+        supportPopup.style.display = "none";
+        document.body.classList.remove("popup-open");
+    });
+
+    aboutLink.addEventListener("click", function () {
+        // Hiển thị popup
+        supportPopup.style.display = "block";
+        document.body.classList.add("popup-open");
+
+        // Điều chỉnh nội dung chi tiết của trang hỗ trợ
+        var supportContent = document.getElementById("supportContent");
+        supportContent.innerHTML = `
+        <div class="about-popup">
+            <div class="header-popup">
+                <h1>Hỗ Trợ Khách Hàng - Bo PC</h1>
+            </div>
+
+            <div class="nav-popup">
+                <a href="#faq">Câu hỏi thường gặp</a>
+                <a href="#shipping">Vận chuyển</a>
+                <a href="#returns">Đổi trả và hoàn tiền</a>
+                <a href="#contact">Liên hệ chúng tôi</a>
+            </div>        
+        </div>
+
+        <section id="faq">
+            <h2 class="heading">Câu hỏi thường gặp</h2>
+            <p class="desc">
+                <strong>1. Làm thế nào để đặt hàng?</strong><br />
+                Để đặt hàng, hãy thêm sản phẩm vào giỏ hàng và nhấp vào nút
+                "Thanh toán".
+            </p>
+            <p class="desc">
+                <strong>2. Làm thế nào để kiểm tra trạng thái đơn hàng?</strong
+                ><br />
+                Bạn có thể kiểm tra trạng thái đơn hàng trong tài khoản của bạn
+                hoặc liên hệ với chúng tôi qua trang Liên hệ.
+            </p>
+            <p class="desc">
+                <strong>3. Làm thế nào để thay đổi thông tin cá nhân?</strong
+                ><br />
+                Bạn có thể cập nhật thông tin cá nhân trong phần Tài khoản của
+                bạn.
+            </p>
+            <!-- Thêm các câu hỏi thường gặp khác -->
+        </section>
+
+        <section id="shipping">
+            <h2 class="heading">Thông tin Vận chuyển</h2>
+            <p class="desc">
+                Chúng tôi cung cấp các tùy chọn vận chuyển nhanh chóng và đáng
+                tin cậy. Chi phí vận chuyển và thời gian giao hàng cụ thể sẽ
+                hiển thị trong quá trình thanh toán.
+            </p>
+            <p class="desc">
+                <strong>Phí Vận chuyển:</strong> Phí vận chuyển được tính dựa
+                trên địa chỉ giao hàng của bạn.
+            </p>
+            <p class="desc">
+                <strong>Thời Gian Giao Hàng:</strong> Thời gian giao hàng ước
+                tính sẽ được hiển thị trong quá trình thanh toán.
+            </p>
+            <!-- Thêm thông tin về vận chuyển -->
+        </section>
+
+        <section id="returns">
+            <h2 class="heading">Chính sách Đổi trả và Hoàn tiền</h2>
+            <p class="desc">
+                Chúng tôi chấp nhận đổi trả trong vòng 30 ngày kể từ ngày mua.
+                Để đổi trả, vui lòng liên hệ với chúng tôi qua trang Liên hệ.
+            </p>
+            <p class="desc">
+                <strong>Điều Kiện Đổi Trả:</strong> Sản phẩm phải còn nguyên
+                vẹn, chưa sử dụng và có các nhãn mác gốc.
+            </p>
+            <p class="desc">
+                <strong>Hoàn Tiền:</strong> Hoàn tiền sẽ được xử lý trong vòng
+                7-10 ngày làm việc sau khi nhận được sản phẩm đổi trả.
+            </p>
+            <!-- Thêm hướng dẫn đổi trả và hoàn tiền -->
+        </section>
+
+        <section id="contact">
+            <h2 class="heading">Liên hệ chúng tôi</h2>
+            <p class="desc">
+                Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, hãy liên hệ với chúng
+                tôi qua email:
+                <a href="mailto:support@example.com">boPC@gmail.com</a>
+            </p>
+            <p class="desc">
+                Hoặc gọi đến số điện thoại hỗ trợ của chúng tôi:
+                <strong>(012)036-3636</strong>.
+            </p>
+            <p class="desc">
+                Chúng tôi cũng có thể được liên hệ qua mạng xã hội:
+                <a href="#">Facebook</a>, <a href="#">Twitter</a>.
+            </p>
+            <!-- Thêm thông tin liên hệ khác nếu cần -->
+        </section>
+
+        <div class="fixed-footer">
+            <div class="footer-popup">
+                <p class="title">&copy; 2025 BoPc company. All rights reserved.</p>
+            </div>
+        </div>
+        `;
+    });
+
+    // Đóng popup khi người dùng nhấp chuột bên ngoài nó
+    window.addEventListener("click", function (event) {
+        if (event.target === supportPopup) {
+            supportPopup.style.display = "none";
+            document.body.classList.remove("popup-open");
+        }
+    });
+});

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../Assets/Css/cart.css">
     <link rel="stylesheet" href="../Assets/Css/login.css">
-
 </head>
 
 <body>
@@ -59,7 +58,35 @@
         </div>
         <div class="cart-total">
             <h3>Tổng cộng: <span id="totalAmount">0</span> $</h3>
-            <a href="checkout.html" class="checkout-btn">Thanh toán</a>
+            <a href="../Pages/checkout.html" class="checkout-btn">Thanh toán</a>
+        </div>
+    </div>
+     <div id="profilePopup" class="popupProfile">
+        <div class="popup-content">
+            <h2>Thông tin tài khoản</h2>
+            <form id="profileForm" onsubmit="saveProfile(event)">
+                <label>Tên đăng nhập</label>
+                <input type="text" id="profileUsername" required>
+
+                <label>Email</label>
+                <input type="email" id="profileEmail" required readonly>
+                
+                <label>Địa chỉ</label>
+                <input type="text" id="address">
+
+                <label>Mật khẩu mới (tùy chọn)</label>
+                <input type="password" id="profileNewPassword">
+
+                <label>Mật khẩu hiện tại</label>
+                <input type="password" id="profileCurrentPassword" required>
+
+
+
+                <div class="form-actions">
+                    <button type="submit">Lưu</button>
+                    <button type="button" onclick="closeProfile()">Đóng</button>
+                </div>
+            </form>
         </div>
     </div>
 

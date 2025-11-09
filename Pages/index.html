@@ -30,8 +30,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="../Pages/index.html">Home</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">More info</a></li>
+            <li id = "aboutLink"><a href="#">More info</a></li>
         </ul>
         <div class="btns">
             <!-- THÊM ICON GIỎ HÀNG VÀO ĐÂY -->
@@ -60,11 +59,11 @@
     </nav>
 
     <header class="main_header">
-        <form class="search_container">
+        <form class="search_container" onsubmit = "search(event)">
             <button type="submit" class="search_button">
                 <i class="fas fa-search"></i>
             </button>
-            <input type="search" class="search_input" placeholder="Tìm kiếm...">
+            <input type="search" id = "search-input" class="search_input" placeholder="Tìm kiếm...">
         </form>
         <div class="marquee">
             <div class="marquee-content">
@@ -83,9 +82,10 @@
     <div class="overlay" id="overlay"></div>
 
     <div class="table_container" id="historyPopup">
+        <button id="closeHistoryPopup">x</button>
         <table>
             <caption>Lịch Sử Đơn Hàng</caption>
-            <thead id = "historyhead">
+            <thead id="historyhead">
                 <tr>
                     <th>Mã Đơn Hàng</th>
                     <th>Ngày Đặt (DD-MM-YYYY)</th>
@@ -95,9 +95,41 @@
                     <th>Chi tiết</th>
                 </tr>
             </thead>
-            <tbody id = "historybody">
+            <tbody id="historybody">
             </tbody>
         </table>
+    </div>
+    <div class="table_container" id="historyDetailPopup">
+        <button id="closeDetailPopup">x</button>
+        <table>
+            <caption id="historyDetailCaption">Chi tiết Đơn Hàng</caption>
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Màu</th>
+                    <th>Giá</th>
+                    <th>SL</th>
+                    <th>Tổng</th>
+                </tr>
+            </thead>
+            <tbody id="historyDetailBody">
+            </tbody>
+        </table>
+    </div>
+
+    </div>
+
+     <!-- Popup hỗ trợ -->
+        <div id="supportPopup" class="popup" style="visibility: visible; animation-name: backgroundeffect1;"> 
+            <div class="popup-content"  >
+                <div class="close" id="closeSupportPopup">X</div>
+                    <!-- Thêm nội dung chi tiết của trang hỗ trợ -->
+                    <div id="supportContent">
+
+                    </div>
+            </div>             
+        </div>
+        
     </div>
 
     <div class="filter-panel" id="filterPanel">
@@ -109,41 +141,48 @@
         <div class="filter-section">
             <div class="filter-item">
                 <div class="filter-title">Màu</div>
-                    <div class="filter-color">
-                        <span class="color-dot" data-type="color" data-value="#000000" style="background-color: #000000"></span>
-                        <span class="color-dot" data-type="color" data-value="#FFC0CB" style="background-color: #FFC0CB"></span>
-                        <span class="color-dot" data-type="color" data-value="#00FF00" style="background-color: #00FF00"></span>
-                        <span class="color-dot" data-type="color" data-value="#FF0000" style="background-color: #FF0000"></span>
-                        <span class="color-dot" data-type="color" data-value="#FFD700" style="background-color: #FFD700"></span>
-                        <span class="color-dot" data-type="color" data-value="#FF4500" style="background-color: #FF4500"></span>
-                        <span class="color-dot" data-type="color" data-value="#FFFFFF" style="background-color: #FFFFFF"></span>
-                    </div>
+                <div class="filter-color">
+                    <span class="color-dot" data-type="color" data-value="#000000"
+                        style="background-color: #000000"></span>
+                    <span class="color-dot" data-type="color" data-value="#FFC0CB"
+                        style="background-color: #FFC0CB"></span>
+                    <span class="color-dot" data-type="color" data-value="#00FF00"
+                        style="background-color: #00FF00"></span>
+                    <span class="color-dot" data-type="color" data-value="#FF0000"
+                        style="background-color: #FF0000"></span>
+                    <span class="color-dot" data-type="color" data-value="#FFD700"
+                        style="background-color: #FFD700"></span>
+                    <span class="color-dot" data-type="color" data-value="#FF4500"
+                        style="background-color: #FF4500"></span>
+                    <span class="color-dot" data-type="color" data-value="#FFFFFF"
+                        style="background-color: #FFFFFF"></span>
+                </div>
             </div>
             <div class="filter-item">
                 <div class="filter-title">Loại</div>
-                    <div class="filter-content">
-                        <label><input type = "checkbox" data-type="loai" data-value="ban-phim">Bàn phím</label>
-                        <label><input type = "checkbox" data-type="loai" data-value="chuot">Chuột</label>
-                        <label><input type = "checkbox" data-type="loai" data-value="tai-nghe">Tai nghe</label>
-                        <label><input type = "checkbox" data-type="loai" data-value="cpu">CPU</label>
-                    </div>
+                <div class="filter-content">
+                    <label><input type="checkbox" data-type="loai" data-value="ban-phim">Bàn phím</label>
+                    <label><input type="checkbox" data-type="loai" data-value="chuot">Chuột</label>
+                    <label><input type="checkbox" data-type="loai" data-value="tai-nghe">Tai nghe</label>
+                    <label><input type="checkbox" data-type="loai" data-value="cpu">CPU</label>
+                </div>
             </div>
             <div class="filter-item">
                 <div class="filter-title">Hãng</div>
-                    <div class="filter-content">
-                        <label><input type = "checkbox" data-type="hang" data-value="Logitech">Logitech</label>
-                        <label><input type = "checkbox" data-type="hang" data-value="Razer">Razer</label>
-                        <label><input type = "checkbox" data-type="hang" data-value="SteelSeries">SteelSeries</label>
-                        <label><input type = "checkbox" data-type="hang" data-value="Corsair">Corsair</label>
-                        <label><input type = "checkbox" data-type="hang" data-value="Hyperx">HyperX</label>
-                        <label><input type = "checkbox" data-type="hang" data-value="Intel">Intel</label>
-                    </div>
+                <div class="filter-content">
+                    <label><input type="checkbox" data-type="hang" data-value="Logitech">Logitech</label>
+                    <label><input type="checkbox" data-type="hang" data-value="Razer">Razer</label>
+                    <label><input type="checkbox" data-type="hang" data-value="SteelSeries">SteelSeries</label>
+                    <label><input type="checkbox" data-type="hang" data-value="Corsair">Corsair</label>
+                    <label><input type="checkbox" data-type="hang" data-value="Hyperx">HyperX</label>
+                    <label><input type="checkbox" data-type="hang" data-value="Intel">Intel</label>
+                </div>
             </div>
             <div class="filter-item">
                 <div class="filter-title">Yêu thích</div>
-                    <div class="filter-content">
-                        <label><input type="checkbox" data-type="yeu-thich">Sản phẩm yêu thích</label>
-                    </div>
+                <div class="filter-content">
+                    <label><input type="checkbox" data-type="yeu-thich">Sản phẩm yêu thích</label>
+                </div>
             </div>
         </div>
 
@@ -163,6 +202,9 @@
 
                 <label>Email</label>
                 <input type="email" id="profileEmail" required readonly>
+                
+                <label>Địa chỉ</label>
+                <input type="text" id="address">
 
                 <label>Mật khẩu mới (tùy chọn)</label>
                 <input type="password" id="profileNewPassword">
@@ -170,7 +212,7 @@
                 <label>Mật khẩu hiện tại</label>
                 <input type="password" id="profileCurrentPassword" required>
 
-                
+
 
                 <div class="form-actions">
                     <button type="submit">Lưu</button>
@@ -181,7 +223,7 @@
     </div>
 
 
-    <div id = "containerLogin">
+    <div id="containerLogin">
         <div class="login" id="loginForm"> <!--Đăng nhập-->
             <form onsubmit="handleLogin(event)">
                 <h1>Đăng Nhập</h1>
@@ -225,11 +267,11 @@
                     <div class="labelline">Email</div>
                 </div>
                 <div class="input-box">
-                    <input type="number" required>
+                    <input type="number" required id = "phone">
                     <div class="labelline">Số điện thoại</div>
                 </div>
-                    <button type="submit" class="btn">Tạo tài khoản</button>
-                    <div class="register-link">
+                <button type="submit" class="btn">Tạo tài khoản</button>
+                <div class="register-link">
                     <p>Đã có tài khoản?
                         <a href="#" onclick="switchForm(event, 'login')">Đăng nhập</a>
                     </p>
@@ -294,6 +336,35 @@
         </div>
     </div>
     <div id="pagination" class="pagination"></div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <h3>Liên hệ chúng tôi</h3>
+                <p>Email: <br> boPC@gmail.com</p>
+                <p>Điện thoại: <br> 012 036 3636</p>
+                <p>Địa chỉ: <br> 120 Yên Lãng, Hà Nội</p>
+            </div>
+            <div class="footer-content">
+                <h3>Liên kết</h3>
+                <ul class="footer-link-list">
+                    <li><a href="">Trang chủ</a></li>
+                    <li><a href="">Về chúng tôi</a></li>
+                    <li><a href="">Sản phẩm</a></li>
+                </ul>
+            </div>
+            <div class="footer-content">
+                <h3>Theo dõi chúng tôi</h3>
+                <ul class="social-icons">
+                    <li><a href=""><i class="fab fa-facebook"></i></a></li>
+                    <li><a href=""><i class="fab fa-instagram"></i></a></li>
+                    <li><a href=""><i class="fab fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom-bar">
+                <p>&copy; 2025 BoPc company. All rights reserved</p>
+        </div>
+    </footer>
 
     <script src="../src/Components/list_items.js"></script>
     <script src="../src/Components/cart-manager.js"></script>
