@@ -1,23 +1,28 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Đang tải sản phẩm...</title>
-
+    <title>Trang chu</title>
     <link rel="stylesheet" href="../Assets/Css/navi.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../Assets/Css/list_items.css">
+    <link rel="stylesheet" href="../Assets/Css/header.css">
     <link rel="stylesheet" href="../Assets/Css/login.css">
     <link rel="stylesheet" href="../Assets/Css/cart.css">
     <link rel="stylesheet" href="../Assets/Css/playout.css">
+    <link rel="stylesheet" href="../Assets/Css/HistoryOrder.css">
+
+
 </head>
 
 <body>
-
-    <nav class="detail-view">
-        <a href="javascript:history.back()" id="navBackButton" class="nav-back-button" style="display: flex;">
+    <nav>
+        <a href="#" id="navBackButton" class="nav-back-button">
             <i class="fas fa-arrow-left"></i>
         </a>
         <div class="logo">
@@ -25,16 +30,24 @@
         </div>
         <ul class="nav-links">
             <li><a href="../Pages/index.html">Home</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">More info</a></li>
         </ul>
         <div class="btns">
+            <!-- THÊM ICON GIỎ HÀNG VÀO ĐÂY -->
+            <a href="#" class="history-order-icon" id="btnHistoryOrder">
+                <i class="fas fa-list"></i>
+            </a>
             <a href="../Pages/cart.html" class="cart-icon" id="cartIcon">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count" id="cartCount">0</span>
             </a>
+            <!--Log button-->
             <div id="logBtn">
                 <button class="btn-login" id="showLogin" onclick="showForm('login')">Đăng Nhập</button>
                 <button class="btn-login" id="showRegister" onclick="showForm('register')">Đăng Ký</button>
             </div>
+            <!--Tên user + đăng xuất-->
             <div class="userName" id="userSection">
                 <button id="userName" class="userBtn"></button>
                 <div id="userMenu" class="user-Menu">
@@ -46,77 +59,154 @@
         <div class="menu-btn" id="menuBtn">☰</div>
     </nav>
 
-    <div id = "containerLogin">
-        <div class="login" id="loginForm"> <!--Đăng nhập-->
-            <form onsubmit="handleLogin(event)">
-                <h1>Đăng Nhập</h1>
-                <div class="input-box">
-                    <input type="text" required>
-                    <div class="labelline">Tên đăng nhập</div>
-                </div>
-                <div class="input-box">
-                    <input type="password" required>
-                    <div class="labelline">Mật khẩu</div>
-                </div>
-                <div class="remember-forgot">
-                    <label><input type="checkbox">Ghi nhớ tài khoản</label>
-                    <a href="#" onclick="switchForm(event, 'forgetpw')">Quên mật khẩu?</a>
-                </div>
-                <button type="submit" class="btn">Đăng Nhập</button>
-                <div class="register-link">
-                    <p>Không có tài khoản?
-                        <a href="#" onclick="switchForm(event, 'register')">Đăng ký</a>
-                    </p>
-                </div>
-            </form>
+    <header class="main_header">
+        <form class="search_container">
+            <button type="submit" class="search_button">
+                <i class="fas fa-search"></i>
+            </button>
+            <input type="search" class="search_input" placeholder="Tìm kiếm...">
+        </form>
+        <div class="marquee">
+            <div class="marquee-content">
+                <h1>Ộ i i Gaming Store</h1>
+                <h3>Địa chỉ: 120 phố Yên lãng</h3>
+            </div>
         </div>
-        <div class="login" id="registerForm"><!--Đăng ký-->
-            <form onsubmit="handleRegister(event)">
-                <h1>Đăng Ký</h1>
-                <div class="input-box">
-                    <input type="text" required>
-                    <div class="labelline">Tên đăng nhập</div>
-                </div>
-                <div class="input-box">
-                    <input type="password" required>
-                    <div class="labelline">Mật khẩu</div>
-                </div>
-                <div class="input-box">
-                    <input type="password" required>
-                    <div class="labelline">Nhập lại mật khẩu</div>
-                </div>
-                <div class="input-box">
-                    <input type="email" required id="email">
-                    <div class="labelline">Email</div>
-                </div>
-                <div class="input-box">
-                    <input type="number" required>
-                    <div class="labelline">Số điện thoại</div>
-                </div>
-                    <button type="submit" class="btn">Tạo tài khoản</button>
-                    <div class="register-link">
-                    <p>Đã có tài khoản?
-                        <a href="#" onclick="switchForm(event, 'login')">Đăng nhập</a>
-                    </p>
-                </div>
-            </form>
+        <ul class="social_icons">
+            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+        </ul>
+    </header>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="table_container" id="historyPopup">
+        <button id="closeHistoryPopup">x</button>
+        <table>
+            <caption>Lịch Sử Đơn Hàng</caption>
+            <thead id="historyhead">
+                <tr>
+                    <th>Mã Đơn Hàng</th>
+                    <th>Ngày Đặt (DD-MM-YYYY)</th>
+                    <th>Địa Chỉ Giao Hàng</th>
+                    <th>Trạng Thái</th>
+                    <th>Tổng Tiền</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+            <tbody id="historybody">
+            </tbody>
+        </table>
+    </div>
+    <div class="table_container" id="historyDetailPopup">
+        <button id="closeDetailPopup">x</button>
+        <table>
+            <caption id="historyDetailCaption">Chi tiết Đơn Hàng</caption>
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Màu</th>
+                    <th>Giá</th>
+                    <th>SL</th>
+                    <th>Tổng</th>
+                </tr>
+            </thead>
+            <tbody id="historyDetailBody">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="filter-panel" id="filterPanel">
+        <div class="filter-header">
+            <h2>Bộ lọc</h2>
+            <span id="closeFilter" class="close-btn">x</span>
         </div>
-        <div class="login" id="forgetpwForm">
-            <form onsubmit="handleForgetpw(event)">
-                <h1>Nhập email</h1>
-                <div class="input-box">
-                    <input type="email" required>
-                    <div class="labelline">Email</div>
+
+        <div class="filter-section">
+            <div class="filter-item">
+                <div class="filter-title">Màu</div>
+                <div class="filter-color">
+                    <span class="color-dot" data-type="color" data-value="#000000"
+                        style="background-color: #000000"></span>
+                    <span class="color-dot" data-type="color" data-value="#FFC0CB"
+                        style="background-color: #FFC0CB"></span>
+                    <span class="color-dot" data-type="color" data-value="#00FF00"
+                        style="background-color: #00FF00"></span>
+                    <span class="color-dot" data-type="color" data-value="#FF0000"
+                        style="background-color: #FF0000"></span>
+                    <span class="color-dot" data-type="color" data-value="#FFD700"
+                        style="background-color: #FFD700"></span>
+                    <span class="color-dot" data-type="color" data-value="#FF4500"
+                        style="background-color: #FF4500"></span>
+                    <span class="color-dot" data-type="color" data-value="#FFFFFF"
+                        style="background-color: #FFFFFF"></span>
                 </div>
-                <button type="submit" class="btn">Get password</button>
-                <div class="register-link">
-                    <p>Không có tài khoản?
-                        <a href="#" onclick="switchForm(event, 'register')">Đăng ký</a>
-                    </p>
+            </div>
+            <div class="filter-item">
+                <div class="filter-title">Loại</div>
+                <div class="filter-content">
+                    <label><input type="checkbox" data-type="loai" data-value="ban-phim">Bàn phím</label>
+                    <label><input type="checkbox" data-type="loai" data-value="chuot">Chuột</label>
+                    <label><input type="checkbox" data-type="loai" data-value="tai-nghe">Tai nghe</label>
+                    <label><input type="checkbox" data-type="loai" data-value="cpu">CPU</label>
+                </div>
+            </div>
+            <div class="filter-item">
+                <div class="filter-title">Hãng</div>
+                <div class="filter-content">
+                    <label><input type="checkbox" data-type="hang" data-value="Logitech">Logitech</label>
+                    <label><input type="checkbox" data-type="hang" data-value="Razer">Razer</label>
+                    <label><input type="checkbox" data-type="hang" data-value="SteelSeries">SteelSeries</label>
+                    <label><input type="checkbox" data-type="hang" data-value="Corsair">Corsair</label>
+                    <label><input type="checkbox" data-type="hang" data-value="Hyperx">HyperX</label>
+                    <label><input type="checkbox" data-type="hang" data-value="Intel">Intel</label>
+                </div>
+            </div>
+            <div class="filter-item">
+                <div class="filter-title">Yêu thích</div>
+                <div class="filter-content">
+                    <label><input type="checkbox" data-type="yeu-thich">Sản phẩm yêu thích</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-footer">
+            <button class="apply">Xem các mục (0)</button>
+            <button class="reset">Xóa</button>
+        </div>
+    </div>
+
+    <!-- xem thông tin -->
+    <div id="profilePopup" class="popupProfile">
+        <div class="popup-content">
+            <h2>Thông tin tài khoản</h2>
+            <form id="profileForm" onsubmit="saveProfile(event)">
+                <label>Tên đăng nhập</label>
+                <input type="text" id="profileUsername" required>
+
+                <label>Email</label>
+                <input type="email" id="profileEmail" required readonly>
+                <label>Address</label>
+                <input type="text" id="profileAddress">
+
+                <label>Mật khẩu mới (tùy chọn)</label>
+                <input type="password" id="profileNewPassword">
+
+                <label>Mật khẩu hiện tại</label>
+                <input type="password" id="profileCurrentPassword" required>
+
+
+
+                <div class="form-actions">
+                    <button type="submit">Lưu</button>
+                    <button type="button" onclick="closeProfile()">Đóng</button>
                 </div>
             </form>
         </div>
     </div>
+
 
     <div id="containerLogin">
         <div class="login" id="loginForm"> <!--Đăng nhập-->
@@ -189,39 +279,53 @@
             </form>
         </div>
     </div>
-    <div id="playout-container"></div>
-     <div id="profilePopup" class="popupProfile">
-        <div class="popup-content">
-            <h2>Thông tin tài khoản</h2>
-            <form id="profileForm" onsubmit="saveProfile(event)">
-                <label>Tên đăng nhập</label>
-                <input type="text" id="profileUsername" required>
 
-                <label>Email</label>
-                <input type="email" id="profileEmail" required readonly>
-                
-                <label>Địa chỉ</label>
-                <input type="text" id="address">
+    <div class="main-wrapper">
 
-                <label>Mật khẩu mới (tùy chọn)</label>
-                <input type="password" id="profileNewPassword">
-
-                <label>Mật khẩu hiện tại</label>
-                <input type="password" id="profileCurrentPassword" required>
-
-
-
-                <div class="form-actions">
-                    <button type="submit">Lưu</button>
-                    <button type="button" onclick="closeProfile()">Đóng</button>
+        <aside class="sidebar">
+            <h2>Bộ lọc</h2>
+            <div class="filter-bar">
+                <button class="filter-button active" id="Allfilter"> Tất cả bộ lọc</button>
+                <div class="filter-container">
+                    <button class="filter-button" onclick="toggleDropdown(this)">Loại <span
+                            class="arrow">▼</span></button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item" data-type="category" data-value="ban-phim">Bàn phím</li>
+                        <li class="dropdown-item" data-type="category" data-value="chuot">Chuột</li>
+                        <li class="dropdown-item" data-type="category" data-value="tai-nghe">Tai nghe</li>
+                        <li class="dropdown-item" data-type="category" data-value="cpu">CPU</li>
+                    </ul>
                 </div>
-            </form>
+
+                <div class="filter-container">
+                    <button class="filter-button" onclick="toggleDropdown(this)">Hãng <span
+                            class="arrow">▼</span></button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-item" data-type="brand" data-value="Logitech">Logitech</li>
+                        <li class="dropdown-item" data-type="brand" data-value="Razer">Razer</li>
+                        <li class="dropdown-item" data-type="brand" data-value="SteelSeries">SteelSeries</li>
+                        <li class="dropdown-item" data-type="brand" data-value="Corsair">Corsair</li>
+                        <li class="dropdown-item" data-type="brand" data-value="HyperX">HyperX</li>
+                        <li class="dropdown-item" data-type="brand" data-value="Intel">Intel</li>
+                    </ul>
+                </div>
+                <div class="filter-container">
+                    <button class="filter-button delete-button" onclick="Delete()">Xóa <span
+                            class="arrow">X</span></button>
+                </div>
+            </div>
+        </aside>
+
+        <div class="container">
+            <div class="products-grid" id="productsContainer"></div>
         </div>
     </div>
+    <div id="pagination" class="pagination"></div>
+
+    <script src="../src/Components/list_items.js"></script>
     <script src="../src/Components/cart-manager.js"></script>
     <script src="../src/Components/log.js"></script>
-    <script src="../src/Components/playout.js"></script>
-
+    <script src="../src/Components/cart-display.js"></script>
 </body>
 
 </html>
