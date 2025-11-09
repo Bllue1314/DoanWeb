@@ -79,6 +79,16 @@ const products = [
         price: 79.99,
         image: "https://images.unsplash.com/photo-1544966685-5bb6cc6cb6d6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
         colors: ["#000000", "#FFFFFF"]
+    },
+    {
+        id: 19,
+        name: "Intel Core i7-12700K",
+        brand: "Intel",
+        type: "cpu",
+        description: "CPU mạnh mẽ cho gaming và dựng phim.",
+        price: 349.99,
+        image: "https://via.placeholder.com/300x200?text=Intel+i7-12700K",
+        colors: ["#C0C0C0"],
     }
 ];
 localStorage.setItem('products', JSON.stringify(products));
