@@ -60,11 +60,11 @@
     </nav>
 
     <header class="main_header">
-        <form class="search_container">
+        <form class="search_container" onsubmit = "search(event)">
             <button type="submit" class="search_button">
                 <i class="fas fa-search"></i>
             </button>
-            <input type="search" class="search_input" placeholder="Tìm kiếm...">
+            <input type="search" id = "search-input" class="search_input" placeholder="Tìm kiếm...">
         </form>
         <div class="marquee">
             <div class="marquee-content">
