@@ -335,7 +335,7 @@ function initializeFilters() {
     const color=[...new Set(products.flatMap(p => p.colors || []))];
     // Cập nhật select danh mục
     const typeSelect = document.getElementById("filterType");
-    typeSelect.innerHTML = '<option value="">Tất cả danh mục</option>' +
+    typeSelect.innerHTML = '<option value="">Tất cả loại</option>' +
         type.map(cat => `<option value="${cat}">${cat}</option>`).join('');
     // Cập nhật select thương hiệu
     const brandSelect = document.getElementById("filterBrand");
