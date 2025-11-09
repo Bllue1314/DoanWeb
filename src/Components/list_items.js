@@ -1,87 +1,5 @@
 // Danh sách sản phẩm - Bạn có thể thêm/sửa/xóa sản phẩm ở đây
-const products = [
-    {
-        id: 1,
-        name: "Logitech Pro X Gaming",
-        brand: "Logitech",
-        type: "tai-nghe",
-        description: "The Logitech Pro X Gaming is designed for professional gamers",
-        price: 99.99,
-        image: "https://images.unsplash.com/photo-1599669454699-248893623440?w=400",
-        colors: ["#000000", "#FFC0CB"]
-    },
-    {
-        id: 2,
-        name: "Razer BlackWidow V3",
-        brand: "Razer",
-        type: "ban-phim",
-        description: "Mechanical gaming keyboard with RGB lighting",
-        price: 139.99,
-        image: "https://images.unsplash.com/photo-1595225476474-87563907a212?w=400",
-        colors: ["#000000", "#00FF00"]
-    },
-    {
-        id: 3,
-        name: "SteelSeries Apex Pro",
-        brand: "SteelSeries",
-        type: "ban-phim",
-        description: "Adjustable mechanical switches for ultimate control",
-        price: 199.99,
-        image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400",
-        colors: ["#000000", "#FF0000"]
-    },
-    {
-        id: 4,
-        name: "Corsair K95 RGB",
-        brand: "Corsair",
-        type: "ban-phim",
-        description: "Premium gaming keyboard with Cherry MX switches",
-        price: 179.99,
-        image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400",
-        colors: ["#000000", "#FFD700"]
-    },
-    {
-        id: 5,
-        name: "HyperX Alloy FPS",
-        brand: "HyperX",
-        type: "ban-phim",
-        description: "Compact mechanical keyboard for FPS games",
-        price: 89.99,
-        image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=400",
-        colors: ["#000000", "#FF4500"]
-    },
-    {
-        id: 6,
-        name: "Logitech G915",
-        brand: "Logitech",
-        type: "ban-phim",
-        description: "Wireless mechanical gaming keyboard",
-        price: 249.99,
-        image: "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=400",
-        colors: ["#000000", "#FFFFFF"]
-    },
-    {
-        id: 7,
-        name: "Intel Core i7",
-        brand: "Intel",
-        type: "cpu",
-        description: "High performance CPU for gaming and work",
-        price: 499.99,
-        image: "https://images.unsplash.com/photo-1757356747785-106e3c5f399a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aW50ZWwlMjBjb3JlJTIwaTl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=600",
-        colors: []
-    },
-    {
-        id: 8,
-        name: "Razer DeathAdder V2",
-        brand: "Razer",
-        type: "chuot",
-        description: "High precision gaming mouse with ergonomic design",
-        price: 79.99,
-        image: "https://images.unsplash.com/photo-1544966685-5bb6cc6cb6d6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170",
-        colors: ["#000000", "#FFFFFF"]
-    }
-];
-localStorage.setItem('products', JSON.stringify(products));
+const products = JSON.parse(localStorage.getItem('products'));
 // Hàm tạo HTML cho mỗi sản phẩm
 function createProductCard(product) {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -111,17 +29,80 @@ function createProductCard(product) {
                 <div class="card_description">
                     ${product.description}
                 </div>
-                <div class="card_price">
-                    ${product.price}$
+                <div class="card_buy">
+                    <div class="card_price">
+                        ${product.price}$
+                    </div>
+                    <div class="card_action">
+                        <button>Buy Now</button>
+                    </div>
                 </div>
             </div>
         </div>
     `;
-}
 
+}
 let currentPage = 1;
 const itemsPerPage = 6; // Mỗi trang 6 sản phẩm
 let currentProductList = products;
+
+function addClickEventsToBuyNow() {
+    const buyButtons = document.querySelectorAll('#productsContainer .card_action button');
+
+    buyButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            // Ngăn sự kiện click của thẻ (card) chạy
+            event.stopPropagation();
+
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) {
+                alert("Vui lòng đăng nhập để mua hàng.");
+                // Giả sử bạn có hàm showForm() ở global
+                if (typeof showForm === 'function') {
+                    showForm('login');
+                }
+                return;
+            }
+
+            // Lấy ID sản phẩm từ card cha
+            const card = button.closest('.card');
+            const productId = card.dataset.productId;
+
+            // Tìm thông tin sản phẩm đầy đủ từ mảng 'products'
+            const product = products.find(p => String(p.id) === productId);
+            if (!product) return;
+
+            // ---- Logic "Buy Now" ----
+            // Giả sử cartManager đã được định nghĩa ở đâu đó
+
+            // 1. Lấy màu mặc định (màu đầu tiên)
+            const selectedColor = (product.colors && product.colors.length > 0) ? product.colors[0] : null;
+
+            // 2. Số lượng mặc định là 1 (vì không có ô chọn ở trang chính)
+            const quantity = 1;
+
+            // 3. Xóa sạch giỏ hàng hiện tại
+            cartManager.items = [];
+
+            // 4. Tạo item mới với màu và số lượng
+            const buyNowItem = {
+                ...product,
+                quantity: quantity,
+                selectedColor: selectedColor // Thêm màu đã chọn
+            };
+
+            // 5. Thêm duy nhất item này vào giỏ hàng
+            cartManager.items.push(buyNowItem);
+
+            // 6. Lưu giỏ hàng và cập nhật icon
+            cartManager.saveToStorage();
+            cartManager.updateCartCount();
+
+            // 7. Chuyển hướng sang trang thanh toán
+            window.location.href = 'checkout.html';
+        });
+    });
+}
 
 // Render tất cả sản phẩm
 function renderProducts(list) {
@@ -137,6 +118,7 @@ function renderProducts(list) {
     container.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
     addClickEventsToCards();
     addClickEventsToHearts();
+    addClickEventsToBuyNow();
     renderPagination();
 
 }
@@ -151,6 +133,7 @@ function renderCurrentPage() {
 
     addClickEventsToCards();
     addClickEventsToHearts();
+    addClickEventsToBuyNow();
     renderPagination();
 }
 
@@ -530,130 +513,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
-
-
-/* More info */
-
-document.addEventListener("DOMContentLoaded", function () {
-    var closeSupportButton = document.getElementById("closeSupportPopup");
-    var supportPopup = document.getElementById("supportPopup");
-    var aboutLink = document.getElementById("aboutLink");
-
-    closeSupportButton.addEventListener("click", function () {
-        supportPopup.style.display = "none";
-        document.body.classList.remove("popup-open");
-    });
-
-    aboutLink.addEventListener("click", function () {
-        // Hiển thị popup
-        supportPopup.style.display = "block";
-        document.body.classList.add("popup-open");
-
-        // Điều chỉnh nội dung chi tiết của trang hỗ trợ
-        var supportContent = document.getElementById("supportContent");
-        supportContent.innerHTML = `
-        <div class="about-popup">
-            <div class="header-popup">
-                <h1>Hỗ Trợ Khách Hàng - Bo PC</h1>
-            </div>
-
-            <div class="nav-popup">
-                <a href="#faq">Câu hỏi thường gặp</a>
-                <a href="#shipping">Vận chuyển</a>
-                <a href="#returns">Đổi trả và hoàn tiền</a>
-                <a href="#contact">Liên hệ chúng tôi</a>
-            </div>        
-        </div>
-
-        <section id="faq">
-            <h2 class="heading">Câu hỏi thường gặp</h2>
-            <p class="desc">
-                <strong>1. Làm thế nào để đặt hàng?</strong><br />
-                Để đặt hàng, hãy thêm sản phẩm vào giỏ hàng và nhấp vào nút
-                "Thanh toán".
-            </p>
-            <p class="desc">
-                <strong>2. Làm thế nào để kiểm tra trạng thái đơn hàng?</strong
-                ><br />
-                Bạn có thể kiểm tra trạng thái đơn hàng trong tài khoản của bạn
-                hoặc liên hệ với chúng tôi qua trang Liên hệ.
-            </p>
-            <p class="desc">
-                <strong>3. Làm thế nào để thay đổi thông tin cá nhân?</strong
-                ><br />
-                Bạn có thể cập nhật thông tin cá nhân trong phần Tài khoản của
-                bạn.
-            </p>
-            <!-- Thêm các câu hỏi thường gặp khác -->
-        </section>
-
-        <section id="shipping">
-            <h2 class="heading">Thông tin Vận chuyển</h2>
-            <p class="desc">
-                Chúng tôi cung cấp các tùy chọn vận chuyển nhanh chóng và đáng
-                tin cậy. Chi phí vận chuyển và thời gian giao hàng cụ thể sẽ
-                hiển thị trong quá trình thanh toán.
-            </p>
-            <p class="desc">
-                <strong>Phí Vận chuyển:</strong> Phí vận chuyển được tính dựa
-                trên địa chỉ giao hàng của bạn.
-            </p>
-            <p class="desc">
-                <strong>Thời Gian Giao Hàng:</strong> Thời gian giao hàng ước
-                tính sẽ được hiển thị trong quá trình thanh toán.
-            </p>
-            <!-- Thêm thông tin về vận chuyển -->
-        </section>
-
-        <section id="returns">
-            <h2 class="heading">Chính sách Đổi trả và Hoàn tiền</h2>
-            <p class="desc">
-                Chúng tôi chấp nhận đổi trả trong vòng 30 ngày kể từ ngày mua.
-                Để đổi trả, vui lòng liên hệ với chúng tôi qua trang Liên hệ.
-            </p>
-            <p class="desc">
-                <strong>Điều Kiện Đổi Trả:</strong> Sản phẩm phải còn nguyên
-                vẹn, chưa sử dụng và có các nhãn mác gốc.
-            </p>
-            <p class="desc">
-                <strong>Hoàn Tiền:</strong> Hoàn tiền sẽ được xử lý trong vòng
-                7-10 ngày làm việc sau khi nhận được sản phẩm đổi trả.
-            </p>
-            <!-- Thêm hướng dẫn đổi trả và hoàn tiền -->
-        </section>
-
-        <section id="contact">
-            <h2 class="heading">Liên hệ chúng tôi</h2>
-            <p class="desc">
-                Nếu bạn có bất kỳ câu hỏi hoặc cần hỗ trợ, hãy liên hệ với chúng
-                tôi qua email:
-                <a href="mailto:support@example.com">boPC@gmail.com</a>
-            </p>
-            <p class="desc">
-                Hoặc gọi đến số điện thoại hỗ trợ của chúng tôi:
-                <strong>(012)036-3636</strong>.
-            </p>
-            <p class="desc">
-                Chúng tôi cũng có thể được liên hệ qua mạng xã hội:
-                <a href="#">Facebook</a>, <a href="#">Twitter</a>.
-            </p>
-            <!-- Thêm thông tin liên hệ khác nếu cần -->
-        </section>
-
-        <div class="fixed-footer">
-            <div class="footer-popup">
-                <p class="title">&copy; 2025 BoPc company. All rights reserved.</p>
-            </div>
-        </div>
-        `;
-    });
-
-    // Đóng popup khi người dùng nhấp chuột bên ngoài nó
-    window.addEventListener("click", function (event) {
-        if (event.target === supportPopup) {
-            supportPopup.style.display = "none";
-            document.body.classList.remove("popup-open");
-        }
-    });
-});

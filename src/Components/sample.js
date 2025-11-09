@@ -2,282 +2,448 @@
 
 // Danh sách sản phẩm mẫu (khai báo trước khi ghi vào localStorage)
 const sampleProducts = [
-  // Laptops - Dell
+  // Laptops - 5 sản phẩm
   {
     id: 1,
-    name: "Dell XPS 13",
-    brand: "Dell",
-    category: "laptop",
-    price: 1299.99,
-    colors: ["#000000", "#FFFFFF", "#C0C0C0"],
-    image: "https://via.placeholder.com/300x200?text=Dell+XPS+13",
-    description: "Laptop cao cấp màn hình 13 inch, mỏng nhẹ.",
-      stock: 15,
-      quantity: 15,
-    specifications: { cpu: "Intel Core i7", ram: "16GB", storage: "512GB SSD", display: "13.4 inch FHD" }
+    name: "Asus ROG Zephyrus G14 (2024)",
+    brand: "Asus",
+    type: "laptop",
+    price: 1899.99,
+    colors: ["#FFFFFF", "#000000"],
+    image: "../Assets/img/Asus-rog-zephyrus-g14.png",
+    description: "Laptop gaming 14 inch mỏng nhẹ, màn hình OLED 3K 120Hz.",
+    stock: 10,
+    quantity: 10
   },
   {
     id: 2,
-    name: "Dell Inspiron 15",
-    brand: "Dell",
-    category: "laptop",
-    price: 799.99,
-    colors: ["#000000", "#2F4F4F"],
-    image: "https://via.placeholder.com/300x200?text=Dell+Inspiron+15",
-    description: "Laptop phổ thông cho công việc văn phòng.",
-      stock: 22,
-      quantity: 22,
-    specifications: { cpu: "Intel Core i5", ram: "8GB", storage: "256GB SSD", display: "15.6 inch FHD" }
+    name: "Lenovo Legion Pro 5i (Gen 9)",
+    brand: "Lenovo",
+    type: "laptop",
+    price: 2099.99,
+    colors: ["#A9A9A9", "#000000"],
+    image: "../Assets/img/lenovo-legion-pro-5.png",
+    description: "Laptop gaming hiệu năng cao, chip AI, tản nhiệt ColdFront.",
+    stock: 8,
+    quantity: 8
   },
-  // HP
   {
     id: 3,
-    name: "HP Spectre x360",
-    brand: "HP",
-    category: "laptop",
+    name: "MSI Katana 15 B13VFK",
+    brand: "MSI",
+    type: "laptop",
     price: 1399.99,
-    colors: ["#000000", "#B22222"],
-    image: "https://via.placeholder.com/300x200?text=HP+Spectre+x360",
-    description: "Laptop 2-in-1 màn hình cảm ứng, thiết kế sang trọng.",
-      stock: 10,
-      quantity: 10,
-    specifications: { cpu: "Intel Core i7", ram: "16GB", storage: "1TB SSD", display: "13.3 inch 4K" }
+    colors: ["#000000"],
+    image: "../Assets/img/MSI-Katana-15.png",
+    description: "Laptop gaming tầm trung, tản nhiệt Cooler Boost 5.",
+    stock: 15,
+    quantity: 15
   },
   {
     id: 4,
-    name: "HP Pavilion 14",
-    brand: "HP",
-    category: "laptop",
-    price: 649.99,
-    colors: ["#FFFFFF", "#000080"],
-    image: "https://via.placeholder.com/300x200?text=HP+Pavilion+14",
-    description: "Laptop tầm trung, hiệu năng tốt cho học tập.",
-      stock: 18,
-      quantity: 18,
-    specifications: { cpu: "Intel Core i5", ram: "8GB", storage: "512GB SSD", display: "14 inch FHD" }
+    name: "Acer Predator Helios 16",
+    brand: "Acer",
+    type: "laptop",
+    price: 2399.99,
+    colors: ["#000000"],
+    image: "../Assets/img/Acer-Predator-Helios.png",
+    description: "Laptop gaming cao cấp, màn hình Mini LED 250Hz, tản nhiệt 3D AeroBlade.",
+    stock: 7,
+    quantity: 7
   },
-  // Asus
   {
     id: 5,
-    name: "Asus ZenBook 14",
-    brand: "Asus",
-    category: "laptop",
-    price: 1099.99,
-    colors: ["#000000", "#D3D3D3"],
-    image: "https://via.placeholder.com/300x200?text=Asus+ZenBook+14",
-    description: "Laptop mỏng nhẹ, pin lâu.",
-      stock: 12,
-      quantity: 12,
-    specifications: { cpu: "Intel Core i7", ram: "16GB", storage: "512GB SSD", display: "14 inch FHD" }
+    name: "Dell G16 7630",
+    brand: "Dell",
+    type: "laptop",
+    price: 1599.99,
+    colors: ["#000000", "#C0C0C0"],
+    image: "../Assets/img/Dell-gaming-16.png",
+    description: "Laptop gaming bền bỉ, màn hình 16:10, hiệu năng ổn định.",
+    stock: 12,
+    quantity: 12
   },
+  // Gear - Mouse (5 sản phẩm)
   {
     id: 6,
-    name: "Asus ROG Strix",
-    brand: "Asus",
-    category: "laptop",
-    price: 1799.99,
-    colors: ["#000000", "#FF0000"],
-    image: "https://via.placeholder.com/300x200?text=Asus+ROG+Strix",
-    description: "Laptop gaming hiệu năng cao.",
-      stock: 7,
-      quantity: 7,
-    specifications: { cpu: "Intel Core i9", ram: "32GB", storage: "1TB SSD", display: "15.6 inch 240Hz" }
+    name: "Logitech G Pro X Superlight 2",
+    brand: "Logitech",
+    type: "chuot",
+    price: 159.99,
+    colors: ["#000000", "#FFFFFF", "#FFC0CB"],
+    image: "../Assets/img/logitech-g-pro-x-superlight-2.png",
+    description: "Chuột gaming không dây siêu nhẹ, mắt đọc Hero 2, switch Lightforce.",
+    stock: 50,
+    quantity: 50
   },
-  // Acer
   {
     id: 7,
-    name: "Acer Swift 3",
-    brand: "Acer",
-    category: "laptop",
-    price: 699.99,
-    colors: ["#000000", "#A9A9A9"],
-    image: "https://via.placeholder.com/300x200?text=Acer+Swift+3",
-    description: "Laptop mỏng, phù hợp di chuyển.",
-      stock: 20,
-      quantity: 20,
-    specifications: { cpu: "AMD Ryzen 5", ram: "8GB", storage: "512GB SSD", display: "14 inch FHD" }
+    name: "Razer DeathAdder V3 Pro",
+    brand: "Razer",
+    type: "chuot",
+    price: 149.99,
+    colors: ["#000000", "#FFFFFF"],
+    image: "../Assets/img/Razer-deathadder-v3-pro.png",
+    description: "Chuột gaming công thái học không dây, siêu nhẹ 63g.",
+    stock: 45,
+    quantity: 45
   },
   {
     id: 8,
-    name: "Acer Predator Helios",
-    brand: "Acer",
-    category: "laptop",
-    price: 1499.99,
+    name: "SteelSeries Aerox 5 Wireless",
+    brand: "SteelSeries",
+    type: "chuot",
+    price: 139.99,
     colors: ["#000000"],
-    image: "https://via.placeholder.com/300x200?text=Acer+Predator+Helios",
-    description: "Laptop gaming chuyên nghiệp.",
-      stock: 5,
-      quantity: 5,
-    specifications: { cpu: "Intel Core i7", ram: "16GB", storage: "1TB SSD", display: "15.6 inch 144Hz" }
+    image: "../Assets/img/Steelseries-aerox-5.png",
+    description: "Chuột gaming không dây thiết kế lỗ, 9 nút, siêu nhẹ 74g.",
+    stock: 30,
+    quantity: 30
   },
-  // Lenovo
   {
     id: 9,
-    name: "Lenovo ThinkPad X1",
-    brand: "Lenovo",
-    category: "laptop",
-    price: 1599.99,
-    colors: ["#000000"],
-    image: "https://via.placeholder.com/300x200?text=Lenovo+ThinkPad+X1",
-    description: "Laptop doanh nhân bền bỉ.",
-      stock: 9,
-      quantity: 9,
-    specifications: { cpu: "Intel Core i7", ram: "16GB", storage: "512GB SSD", display: "14 inch FHD" }
+    name: "Pulsar X2V2 Wireless",
+    brand: "Pulsar",
+    type: "chuot",
+    price: 99.99,
+    colors: ["#000000", "#FFFFFF", "#FF0000"],
+    image: "../Assets/img/Pulsal-x2.png",
+    description: "Chuột gaming đối xứng siêu nhẹ, mắt đọc 3395, click quang học.",
+    stock: 25,
+    quantity: 25
   },
   {
     id: 10,
-    name: "Lenovo IdeaPad 3",
-    brand: "Lenovo",
-    category: "laptop",
-    price: 499.99,
-    colors: ["#FFFFFF", "#000000"],
-    image: "https://via.placeholder.com/300x200?text=Lenovo+IdeaPad+3",
-    description: "Laptop giá rẻ cho học sinh sinh viên.",
-      stock: 30,
-      quantity: 30,
-    specifications: { cpu: "Intel Core i3", ram: "8GB", storage: "256GB SSD", display: "15.6 inch FHD" }
+    name: "Glorious Model O 2 Wireless",
+    brand: "Glorious",
+    type: "chuot",
+    price: 99.99,
+    colors: ["#000000", "#FFFFFF"],
+    image: "../Assets/img/Glorious-model-O-wireless-2.png",
+    description: "Chuột gaming không dây đối xứng, thiết kế lỗ, nhẹ 68g.",
+    stock: 20,
+    quantity: 20
   },
-  // MSI
+  // Gear - Keyboard (5 sản phẩm)
   {
     id: 11,
-    name: "MSI GP66",
-    brand: "MSI",
-    category: "laptop",
-    price: 1899.99,
+    name: "Razer BlackWidow V4 Pro",
+    brand: "Razer",
+    type: "ban-phim",
+    price: 229.99,
     colors: ["#000000"],
-    image: "https://via.placeholder.com/300x200?text=MSI+GP66",
-    description: "Laptop gaming mạnh mẽ, tản nhiệt tốt.",
-      stock: 6,
-      quantity: 6,
-    specifications: { cpu: "Intel Core i9", ram: "32GB", storage: "1TB SSD", display: "15.6 inch 240Hz" }
+    image: "../Assets/img/Razer-blackwidow-v4-pro.png", // <-- CHƯA CÓ ẢNH
+    description: "Bàn phím cơ gaming fullsize, Razer Green switch, LED RGB, Command Dial.",
+    stock: 15,
+    quantity: 15
   },
-  // Accessories - Mouse
   {
     id: 12,
-    name: "Logitech MX Master 3",
-    brand: "Logitech",
-    category: "mouse",
-    price: 99.99,
-    colors: ["#000000", "#B0C4DE"],
-    image: "https://via.placeholder.com/300x200?text=Logitech+MX+Master+3",
-    description: "Chuột cao cấp cho công việc văn phòng.",
-      stock: 45,
-      quantity: 45,
-    specifications: { connectivity: "Wireless", dpi: "4000" }
+    name: "Corsair K70 MAX RGB",
+    brand: "Corsair",
+    type: "ban-phim",
+    price: 229.99,
+    colors: ["#000000"],
+    image: "../Assets/img/Cosair-k70-pro.png",
+    description: "Bàn phím cơ gaming, switch từ tính MGX, Rapid Trigger.",
+    stock: 10,
+    quantity: 10
   },
   {
     id: 13,
-    name: "Razer DeathAdder V2",
-    brand: "Razer",
-    category: "mouse",
-    price: 69.99,
-    colors: ["#000000", "#00FF00"],
-    image: "https://via.placeholder.com/300x200?text=Razer+DeathAdder+V2",
-    description: "Chuột gaming chính xác cao.",
-      stock: 40,
-      quantity: 40,
-    specifications: { dpi: "20000", switches: "Optical" }
+    name: "Logitech G913 TKL Lightspeed",
+    brand: "Logitech",
+    type: "ban-phim",
+    price: 199.99,
+    colors: ["#000000", "#FFFFFF"],
+    image: "../Assets/img/Logitech-g913-tkl-lightspeed.png",
+    description: "Bàn phím cơ không dây TKL low-profile, siêu mỏng.",
+    stock: 18,
+    quantity: 18
   },
-  // Keyboard
   {
     id: 14,
-    name: "Keychron K2",
-    brand: "Keychron",
-    category: "keyboard",
-    price: 79.99,
-    colors: ["#FFFFFF", "#000000"],
-    image: "https://via.placeholder.com/300x200?text=Keychron+K2",
-    description: "Bàn phím cơ không dây compact.",
-      stock: 25,
-      quantity: 25,
-    specifications: { switches: "Gateron Red", layout: "75%" }
+    name: "Akko 5075S (Cream Yellow)",
+    brand: "Akko",
+    type: "ban-phim",
+    price: 99.99,
+    colors: ["#F5F5DC", "#000000"],
+    image: "../Assets/img/Akko-5075B-plus.png",
+    description: "Bàn phím cơ 75% Hotswap, Gasket Mount, switch Akko CS.",
+    stock: 30,
+    quantity: 30
   },
-  // Headset
   {
     id: 15,
-    name: "HyperX Cloud II",
-    brand: "HyperX",
-    category: "headset",
-    price: 99.99,
-    // corrected color value: '#RED' is not a valid hex; use '#FF0000'
-    colors: ["#000000", "#FF0000"],
-    image: "https://via.placeholder.com/300x200?text=HyperX+Cloud+II",
-    description: "Tai nghe gaming thoải mái, mic tốt.",
-      stock: 35,
-      quantity: 35,
-    specifications: { connectivity: "Wired", mic: "Detachable" }
+    name: "Keychron Q1 Pro",
+    brand: "Keychron",
+    type: "ban-phim",
+    price: 199.99,
+    colors: ["#000000", "#C0C0C0"],
+    image: "../Assets/img/Keychron-Q1-pro.png",
+    description: "Bàn phím cơ custom không dây 75%, vỏ nhôm CNC, Gasket Mount.",
+    stock: 22,
+    quantity: 22
   },
-  // Monitor
+  // Gear - tai-nghe (4 sản phẩm)
   {
     id: 16,
-    name: "Dell UltraSharp 27",
-    brand: "Dell",
-    category: "monitor",
-    price: 329.99,
-    colors: ["#000000"],
-    image: "https://via.placeholder.com/300x200?text=Dell+UltraSharp+27",
-    description: "Màn hình 27 inch cho đồ họa và văn phòng.",
-      stock: 12,
-      quantity: 12,
-    specifications: { size: "27 inch", resolution: "2560x1440" }
+    name: "HyperX Cloud III Wireless",
+    brand: "HyperX",
+    type: "tai-nghe",
+    price: 169.99,
+    colors: ["#000000", "#FF0000"],
+    image: "../Assets/img/HP-hyperX-cloud-III.png",
+    description: "Tai nghe gaming không dây, pin 120 giờ, DTS Headphone:X.",
+    stock: 25,
+    quantity: 25
   },
-  // RAM
   {
     id: 17,
-    name: "Corsair Vengeance 16GB",
-    brand: "Corsair",
-    category: "ram",
-    price: 89.99,
-    colors: ["#000000", "#FF0000"],
-    image: "https://via.placeholder.com/300x200?text=Corsair+Vengeance+16GB",
-    description: "RAM hiệu năng cao cho chơi game và render.",
-      stock: 60,
-      quantity: 60,
-    specifications: { speed: "3200MHz", type: "DDR4" }
+    name: "Razer BlackShark V2 Pro (2023)",
+    brand: "Razer",
+    type: "tai-nghe",
+    price: 199.99,
+    colors: ["#FFFFFF", "#000000"],
+    image: "../Assets/img/Razer-black-shark-v2-pro.png", // <-- CHƯA CÓ ẢNH
+    description: "Tai nghe E-sports không dây, mic HyperClear Super Wideband.",
+    stock: 20,
+    quantity: 20
   },
-  // Storage
   {
     id: 18,
-    name: "Samsung 970 EVO Plus 1TB",
-    brand: "Samsung",
-    category: "ssd",
-    price: 149.99,
-    colors: ["#000000"],
-    image: "https://via.placeholder.com/300x200?text=Samsung+970+EVO+Plus+1TB",
-    description: "SSD NVMe hiệu năng cao.",
-      stock: 50,
-      quantity: 50,
-    specifications: { type: "NVMe", capacity: "1TB" }
+    name: "Logitech G Pro X 2 Lightspeed",
+    brand: "Logitech",
+    type: "tai-nghe",
+    price: 249.99,
+    colors: ["#000000", "#FFFFFF"],
+    image: "../Assets/img/Logitech-g-pro-x-2-lightspeed.png",
+    description: "Tai nghe gaming không dây, màng loa Graphene 50mm, Blue VO!CE.",
+    stock: 15,
+    quantity: 15
   },
-  // CPU
   {
     id: 19,
-    name: "Intel Core i7-12700K",
-    brand: "Intel",
-    category: "cpu",
-    price: 349.99,
-    colors: ["#C0C0C0"],
-    image: "https://via.placeholder.com/300x200?text=Intel+i7-12700K",
-    description: "CPU mạnh mẽ cho gaming và dựng phim.",
-      stock: 14,
-      quantity: 14,
-    specifications: { cores: "12", threads: "20" }
+    name: "SteelSeries Arctis Nova 7",
+    brand: "SteelSeries",
+    type: "tai-nghe",
+    price: 179.99,
+    colors: ["#000000"],
+    image: "../Assets/img/Steelseries-arctis-nova-7.png", // <-- CHƯA CÓ ẢNH
+    description: "Tai nghe gaming không dây, kết nối đa nền tảng, mic AI clear.",
+    stock: 18,
+    quantity: 18
   },
-  // HDD
+  // Gear - Monitor (3 sản phẩm)
   {
     id: 20,
-    name: "Seagate Barracuda 2TB",
-    brand: "Seagate",
-    category: "hdd",
-    price: 59.99,
+    name: "LG 27GR95QE-B UltraGear OLED",
+    brand: "LG",
+    type: "man-hinh",
+    price: 899.99,
     colors: ["#000000"],
-    image: "https://via.placeholder.com/300x200?text=Seagate+2TB",
-    description: "Ổ cứng lưu trữ dung lượng lớn.",
-      stock: 40,
-      quantity: 40,
-    specifications: { capacity: "2TB", rpm: "7200" }
+    image: "../Assets/img/LG 27GR95QE-B UltraGear 27 OLED 2K 240Hz.png",
+    description: "Màn hình gaming 27 inch QHD, 240Hz, tấm nền OLED, 0.03ms.",
+    stock: 10,
+    quantity: 10
+  },
+  {
+    id: 21,
+    name: "Asus ROG Swift PG32UCDM",
+    brand: "Asus",
+    type: "man-hinh",
+    price: 1299.99,
+    colors: ["#000000"],
+    image: "../Assets/img/Asus-rog-swift-pg32ucdm-32-oled-4k.png",
+    description: "Màn hình 32 inch 4K, 240Hz, tấm nền QD-OLED, HDR10.",
+    stock: 5,
+    quantity: 5
+  },
+  {
+    id: 22,
+    name: "Gigabyte M27Q",
+    brand: "Gigabyte",
+    type: "man-hinh",
+    price: 329.99,
+    colors: ["#000000"],
+    image: "../Assets/img/Gigabyte-m27q-27.png",
+    description: "Màn hình gaming 27 inch QHD, 170Hz, IPS, KVM Switch.",
+    stock: 20,
+    quantity: 20
+  },
+  // Gear - Components (CPU, VGA, RAM, SSD) (10 sản phẩm)
+  {
+    id: 23,
+    name: "Intel Core i9-14900K",
+    brand: "Intel",
+    type: "cpu",
+    price: 549.99,
+    colors: ["#C0C0C0"],
+    image: "../Assets/img/Intel-Core-i9-14900K.png",
+    description: "CPU đầu bảng, 24 nhân 32 luồng, xung nhịp 6.0GHz, cho gaming/làm việc nặng.",
+    stock: 15,
+    quantity: 15
+  },
+  {
+    id: 24,
+    name: "AMD Ryzen 7 7800X3D",
+    brand: "AMD",
+    type: "cpu",
+    price: 399.99,
+    colors: ["#C0C0C0"],
+    image: "../Assets/img/AMD-Ryzen-7-7800X3D.png",
+    description: "CPU gaming tốt nhất với 3D V-Cache, 8 nhân 16 luồng, socket AM5.",
+    stock: 25,
+    quantity: 25
+  },
+  {
+    id: 25,
+    name: "Intel Core i5-14600K",
+    brand: "Intel",
+    type: "cpu",
+    price: 319.99,
+    colors: ["#C0C0C0"],
+    image: "../Assets/img/Intel-Core-i5-14600K.png",
+    description: "CPU tầm trung hiệu năng cao, 14 nhân 20 luồng, xung nhịp 5.3GHz.",
+    stock: 30,
+    quantity: 30
+  },
+  {
+    id: 26,
+    name: "Gigabyte GeForce RTX 4090 GAMING OC 24G",
+    brand: "Gigabyte",
+    type: "vga",
+    price: 1799.99,
+    colors: ["#000000", "#C0C0C0"],
+    image: "../Assets/img/GIGABYTE-GeForce-RTX-4090-GAMING-OC-24G .png",
+    description: "Card đồ họa mạnh nhất, 24GB VRAM, tản nhiệt 3 quạt Windforce.",
+    stock: 5,
+    quantity: 5
+  },
+  {
+    id: 27,
+    name: "Asus TUF Gaming RTX 4070 Ti SUPER OC 16G",
+    brand: "Asus",
+    type: "vga",
+    price: 899.99,
+    colors: ["#000000"],
+    image: "../Assets/img/ASUS-TUF-Gaming-GeForce-RTX-4070-Ti-12GB.png",
+    description: "Card đồ họa cao cấp 16GB VRAM, bền bỉ chuẩn quân đội.",
+    stock: 12,
+    quantity: 12
+  },
+  {
+    id: 28,
+    name: "MSI RX 7900 XTX GAMING TRIO CLASSIC 24G",
+    brand: "MSI",
+    type: "vga",
+    price: 999.99,
+    colors: ["#000000", "#FF0000"],
+    image: "../Assets/img/MSI-RX-7900-XTX-GAMING-TRIO-CLASSIC-24G.png",
+    description: "Card đồ họa cao cấp AMD, 24GB VRAM, tản nhiệt Tri Frozr 2.",
+    stock: 8,
+    quantity: 8
+  },
+  {
+    id: 29,
+    name: "Corsair Vengeance RGB 32GB DDR5 6000MHz",
+    brand: "Corsair",
+    type: "ram",
+    price: 129.99,
+    colors: ["#000000", "#FFFFFF"],
+    image: "../Assets/img/Corsair-Vengeance-RGB-64GB-(2x32GB)-6000-DDR5.png",
+    description: "Kit RAM DDR5 (2x16GB) bus 6000MHz, LED RGB, hỗ trợ iCUE.",
+    stock: 40,
+    quantity: 40
+  },
+  {
+    id: 30,
+    name: "G.Skill Trident Z5 RGB 32GB DDR5 6400MHz",
+    brand: "G.Skill",
+    type: "ram",
+    price: 139.99,
+    colors: ["#000000", "#C0C0C0"],
+    image: "../Assets/img/DDR5-G.Skill-Trident-Z5-RGB-2x16GB-6000mhz.png",
+    description: "Kit RAM DDR5 (2x16GB) bus 6400MHz, thiết kế đẹp, hiệu năng cao.",
+    stock: 35,
+    quantity: 35
+  },
+  {
+    id: 31,
+    name: "Samsung 990 Pro 2TB NVMe",
+    brand: "Samsung",
+    type: "ssd",
+    price: 169.99,
+    colors: ["#000000"],
+    image: "../Assets/img/SSD Samsung 990 PRO 2TB M.2 PCIe Gen4 NVMe.png", // <-- CHƯA CÓ ẢNH
+    description: "SSD NVMe Gen4 tốc độ cao nhất, 2TB, có tản nhiệt (tùy chọn).",
+    stock: 50,
+    quantity: 50
+  },
+  {
+    id: 32,
+    name: "Kingston KC3000 1TB NVMe",
+    brand: "Kingston",
+    type: "ssd",
+    price: 99.99,
+    colors: ["#000000"],
+    image: "../Assets/img/SSD Kingston KC3000 2TB M.2 PCIe gen 4 NVMe.png", // <-- CHƯA CÓ ẢNH
+    description: "SSD NVMe Gen4 1TB, tốc độ đọc/ghi cao 7000/6000 MB/s.",
+    stock: 40,
+    quantity: 40
+  },
+  // Gear - Phụ kiện khác (Ghế, Mousepad, Tản nhiệt) (4 sản phẩm)
+  {
+    id: 33,
+    name: "Anda Seat Kaiser 3 (Large)",
+    brand: "Anda",
+    type: "ghe",
+    price: 499.99,
+    colors: ["#000000", "#800080"],
+    image: "../Assets/img/kaiser-3.png",
+    description: "Ghế gaming cao cấp, đệm 4D, gối đầu từ tính, da PVC.",
+    stock: 15,
+    quantity: 15
+  },
+  {
+    id: 34,
+    name: "Corsair TC100 Relaxed (Fabric)",
+    brand: "Corsair",
+    type: "ghe",
+    price: 249.99,
+    colors: ["#000000", "#808080"],
+    image: "../Assets/img/Corsair-TC100-Fabric-CF-9010052-WW.png",
+    description: "Ghế gaming bọc vải, thiết kế thư giãn, form rộng.",
+    stock: 20,
+    quantity: 20
+  },
+  {
+    id: 35,
+    name: "Razer Atlas (Tempered Glass)",
+    brand: "Razer",
+    type: "lot-chuot",
+    price: 99.99,
+    colors: ["#000000", "#FFFFFF"],
+    image: "../Assets/img/razer-atlas.png",
+    description: "Lót chuột gaming bằng kính cường lực, siêu mượt, chống trầy.",
+    stock: 30,
+    quantity: 30
+  },
+  {
+    id: 36,
+    name: "NZXT Kraken 360 RGB",
+    brand: "NZXT",
+    type: "tan-nhiet",
+    price: 179.99,
+    colors: ["#FFFFFF", "#000000"],
+    image: "../Assets/img/AIO NZXT Kraken 360 RGB.png",
+    description: "Tản nhiệt nước AIO 360mm, màn hình LCD trên pump, quạt RGB.",
+    stock: 18,
+    quantity: 18
   }
 ];
+
+localStorage.setItem("orderHistory", JSON.stringify(sampleProducts));
 
 // Chuẩn hóa từng sản phẩm: đảm bảo có các thuộc tính isHidden, stock và quantity
 sampleProducts.forEach(p => {
@@ -389,8 +555,7 @@ const samplePrices = {
   }
 };
 
-// Lưu vào localStorage nếu chưa có
-if (!localStorage.getItem('products')) {
+if (localStorage.getItem('products')) {
   localStorage.setItem('products', JSON.stringify(sampleProducts));
 }
 
