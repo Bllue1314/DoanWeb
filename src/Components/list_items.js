@@ -307,6 +307,7 @@ resetFilter.onclick = () => {
     document.querySelectorAll(".filter-color span.selected").forEach(span => {
         span.classList.remove("selected");
     });
+    uncheckAll();
     renderProducts(products);
     updateButtonText(products);
 }
@@ -417,6 +418,10 @@ document.querySelectorAll("#filterPanel label").forEach(label => {
         e.stopPropagation();
     });
 });
+
+function uncheckAll() {
+    document.querySelectorAll('#filterPanel input[type="checkbox"]').forEach(cb => cb.checked = false);
+}
 
 
 
