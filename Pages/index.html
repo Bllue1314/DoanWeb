@@ -30,8 +30,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="../Pages/index.html">Home</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">More info</a></li>
+            <li id = "aboutLink"><a href="#">More info</a></li>
         </ul>
         <div class="btns">
             <!-- THÊM ICON GIỎ HÀNG VÀO ĐÂY -->
@@ -60,11 +59,11 @@
     </nav>
 
     <header class="main_header">
-        <form class="search_container">
+        <form class="search_container" onsubmit = "search(event)">
             <button type="submit" class="search_button">
                 <i class="fas fa-search"></i>
             </button>
-            <input type="search" class="search_input" placeholder="Tìm kiếm...">
+            <input type="search" id = "search-input" class="search_input" placeholder="Tìm kiếm...">
         </form>
         <div class="marquee">
             <div class="marquee-content">
@@ -116,6 +115,21 @@
             <tbody id="historyDetailBody">
             </tbody>
         </table>
+    </div>
+
+    </div>
+
+     <!-- Popup hỗ trợ -->
+        <div id="supportPopup" class="popup" style="visibility: visible; animation-name: backgroundeffect1;"> 
+            <div class="popup-content"  >
+                <div class="close" id="closeSupportPopup">X</div>
+                    <!-- Thêm nội dung chi tiết của trang hỗ trợ -->
+                    <div id="supportContent">
+
+                    </div>
+            </div>             
+        </div>
+        
     </div>
 
     <div class="filter-panel" id="filterPanel">
@@ -253,7 +267,7 @@
                     <div class="labelline">Email</div>
                 </div>
                 <div class="input-box">
-                    <input type="number" required>
+                    <input type="number" required id = "phone">
                     <div class="labelline">Số điện thoại</div>
                 </div>
                 <button type="submit" class="btn">Tạo tài khoản</button>
@@ -322,6 +336,35 @@
         </div>
     </div>
     <div id="pagination" class="pagination"></div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <h3>Liên hệ chúng tôi</h3>
+                <p>Email: <br> boPC@gmail.com</p>
+                <p>Điện thoại: <br> 012 036 3636</p>
+                <p>Địa chỉ: <br> 120 Yên Lãng, Hà Nội</p>
+            </div>
+            <div class="footer-content">
+                <h3>Liên kết</h3>
+                <ul class="footer-link-list">
+                    <li><a href="">Trang chủ</a></li>
+                    <li><a href="">Về chúng tôi</a></li>
+                    <li><a href="">Sản phẩm</a></li>
+                </ul>
+            </div>
+            <div class="footer-content">
+                <h3>Theo dõi chúng tôi</h3>
+                <ul class="social-icons">
+                    <li><a href=""><i class="fab fa-facebook"></i></a></li>
+                    <li><a href=""><i class="fab fa-instagram"></i></a></li>
+                    <li><a href=""><i class="fab fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="bottom-bar">
+                <p>&copy; 2025 BoPc company. All rights reserved</p>
+        </div>
+    </footer>
 
     <script src="../src/Components/list_items.js"></script>
     <script src="../src/Components/cart-manager.js"></script>

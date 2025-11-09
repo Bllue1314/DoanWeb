@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý sản phẩm</title>
+    <link rel="stylesheet" href="../Assets/Css/admin.css">
+    <link rel="stylesheet" href="../Assets/Css/manager-products.css">
+    <link rel="stylesheet" href="../Assets/Css/manager-orders.css">
+    <link rel="stylesheet" href="../Assets/Css/manager-imports.css">
+    <link rel="stylesheet" href="../Assets/Css/manager-prices.css">
+    <link rel="stylesheet" href="../Assets/Css/manager-inventory.css">
+</head>
+<body>
+    <header class="header">
+        <button class="back-btn" onclick="window.history.back()">Quay lại</button>
+        
+        <div class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUGEZJUyJzT9OvwwU4zHzqfZhpPJ1gmknpLQ&usqp=CAU" alt="Logo">
+        </div>
+
+        <form class="search">
+            <input type="search" class="search_input" placeholder="Tìm kiếm...">
+        </form>
+
+        <ul class="nav">
+            <li><a href="#" id="tab-products">Sản phẩm</a></li>
+            <li><a href="#" id="tab-users">Khách hàng</a></li>
+            <li><a href="#" id="tab-orders">Đơn hàng</a></li>
+            <li><a href="#" id="tab-imports">Nhập hàng</a></li>
+            <li><a href="#" id="tab-prices">Giá bán</a></li>
+            <li><a href="#" id="tab-inventory">Tồn kho</a></li>
+        </ul>
+    </header>
+
+    <div class="container">
+        <!-- DANH SÁCH SẢN PHẨM -->
+        <div id="productSection">
+            <div class="section-header">
+                <h1>Danh sách sản phẩm</h1>
+                <button class="add-btn" onclick="openAddModal()">+ Thêm sản phẩm</button>
+            </div>
+
+            <!-- Filters for products: category, brand, color, search, clear -->
+            <div class="section-filters" id="productFilters">
+                <select id="filterCategory">
+                    <option value="">Tất cả danh mục</option>
+                </select>
+                <select id="filterBrand">
+                    <option value="">Tất cả hãng</option>
+                </select>
+                <select id="filterColor">
+                    <option value="">Tất cả màu</option>
+                </select>
+                <input type="search" id="filterSearch" placeholder="Tìm kiếm sản phẩm...">
+                <button class="filter-btn" onclick="applyProductFilters()">Lọc</button>
+                <button class="back-btn" id="clearProductFilters" onclick="clearProductFilters()" style="display:none;">Xóa bộ lọc</button>
+            </div>
+
+            <div id="productsContainer"></div>
+            <div id="productsPagination"></div>
+        </div>
+
+        <!-- DANH SÁCH KHÁCH HÀNG -->
+        <div id="userSection" class="hidden">
+            <h1>Danh sách khách hàng</h1>
+            <div id="usersContainer" class="users-table"></div>
+        </div>
+
+        <!-- DANH SÁCH ĐƠN HÀNG -->
+        <div id="orderSection" class="hidden">
+            <h1>Quản lý đơn hàng</h1>
+            <div class="section-filters">
+                <input type="date" id="orderFromDate">
+                <input type="date" id="orderToDate">
+                <select id="orderStatus">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="new">Mới đặt</option>
+                    <option value="processing">Đang xử lý</option>
+                    <option value="delivered">Đã giao</option>
+                    <option value="cancelled">Đã hủy</option>
+                </select>
+                <button class="filter-btn" onclick="searchOrders()">Tìm kiếm</button>
+            </div>
+            <div id="ordersContainer"></div>
+        </div>
+
+        <!-- NHẬP HÀNG -->
+        <div id="importSection" class="hidden">
+            <div class="section-header">
+                <h1>Quản lý nhập hàng</h1>
+                <button class="add-btn" onclick="openImportModal()">+ Tạo phiếu nhập</button>
+            </div>
+            <div class="section-filters">
+                <input type="date" id="importFromDate">
+                <input type="date" id="importToDate">
+                <select id="importStatus">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="pending">Chờ xử lý</option>
+                    <option value="completed">Đã hoàn thành</option>
+                </select>
+                <button class="filter-btn" onclick="searchImports()">Tìm kiếm</button>
+            </div>
+            <div id="importsContainer"></div>
+        </div>
+
+        <!-- QUẢN LÝ GIÁ BÁN -->
+        <div id="priceSection" class="hidden">
+            <h1>Quản lý giá bán</h1>
+            <div class="tabs">
+                <button onclick="showPriceTab('category')">Theo danh mục</button>
+                <button onclick="showPriceTab('product')">Theo sản phẩm</button>
+            </div>
+            <div id="pricesContainer"></div>
+        </div>
+
+        <!-- QUẢN LÝ TỒN KHO -->
+        <div id="inventorySection" class="hidden">
+            <h1>Quản lý tồn kho</h1>
+            <div class="section-filters">
+                <select id="categoryFilter" onchange="filterByCategory()">
+                    <option value="">Tất cả danh mục</option>
+                </select>
+                <button class="filter-btn" onclick="checkLowStock()">Kiểm tra hàng sắp hết</button>
+            </div>
+            <div id="inventoryContainer"></div>
+        </div>
+    </div>
+
+    <!-- Popup sửa sản phẩm -->
+        <div id="editModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Chỉnh sửa sản phẩm</h2>
+                <form id="editForm">
+                    <div class="form-group">
+                        <h3>Thông tin cơ bản</h3>
+                        <label>Tên sản phẩm <span class="required">*</span></label>
+                        <input type="text" id="editName" required>
+
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label>Danh mục <span class="required">*</span></label>
+                                <input type="text" id="editCategory" required>
+                            </div>
+                            <div class="form-col">
+                                <label>Loại <span class="required">*</span></label>
+                                <input type="text" id="editType" required>
+                            </div>
+                        </div>
+
+                        <label>Hãng sản xuất</label>
+                        <input type="text" id="editBrand">
+                    </div>
+
+                    <div class="form-group">
+                        <h3>Thông tin kho hàng</h3>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label>Số lượng <span class="required">*</span></label>
+                                <input type="number" id="editQuantity" min="0" required>
+                            </div>
+                            <div class="form-col">
+                                <label>Giá bán <span class="required">*</span></label>
+                                <input type="number" id="editPrice" min="0" step="1000" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h3>Thông tin chi tiết</h3>
+                        <label>Mô tả sản phẩm</label>
+                        <textarea id="editDescription" rows="3" placeholder="Nhập mô tả chi tiết về sản phẩm..."></textarea>
+
+                        <label>Thông số kỹ thuật</label>
+                        <textarea id="editSpecs" rows="3" placeholder='{"cpu":"i7","ram":"16GB"}'></textarea>
+
+                        <label>Màu sắc (phân cách bằng dấu phẩy)</label>
+                        <input type="text" id="editColors" placeholder="#000000,#FFFFFF">
+                    </div>
+
+                    <div class="form-group">
+                        <h3>Hình ảnh & Trạng thái</h3>
+                        <label>Link ảnh sản phẩm</label>
+                        <input type="text" id="editImage" placeholder="https://example.com/image.jpg">
+
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="editIsHidden">
+                                <span>Ẩn sản phẩm khỏi cửa hàng</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="submit" class="save-btn">Lưu thay đổi</button>
+                        <button type="button" class="cancel-btn" onclick="closeModal()">Hủy bỏ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    <!-- Popup nhập hàng -->
+        <div id="importModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Tạo phiếu nhập hàng</h2>
+                <form id="importForm">
+                    <label>Ngày nhập</label>
+                    <input type="date" id="importDate" required>
+
+                    <label>Sản phẩm</label>
+                    <select id="importProductId" required></select>
+
+                    <label>Số lượng</label>
+                    <input type="number" id="importQuantity" min="1" required>
+
+                    <label>Giá nhập</label>
+                    <input type="number" id="importPrice" min="0" step="1000" required>
+
+                    <div class="btn-group">
+                        <button type="submit" class="save-btn">Tạo phiếu</button>
+                        <button type="button" class="cancel-btn" onclick="closeImportModal()">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <!-- Popup chi tiết đơn hàng -->
+        <div id="orderDetailModal" class="modal hidden">
+            <div class="modal-content">
+                <!-- Nội dung sẽ được thêm bởi JavaScript -->
+            </div>
+        </div>
+
+  <script src="../src/Components/admin.js"></script>
+  <script src="../src/Components/manager-product.js"></script>
+  <script src="../src/Components/manager-user.js"></script>
+  <script src="../src/Components/manager-tab.js"></script>
+  <script src="../src/Components/manager-import.js"></script>
+  <script src="../src/Components/manager-price.js"></script>
+  <script src="../src/Components/manager-order.js"></script>
+  <script src="../src/Components/manager-inventory.js"></script>
+</body>
+</html>
+

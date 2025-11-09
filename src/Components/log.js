@@ -26,6 +26,16 @@ function showForm(type) {
     selectedForm.querySelectorAll(".input-box input").forEach(input => {
         input.addEventListener("blur", () => input.classList.add("touched"));
     });
+    document.getElementById("phone").addEventListener("input", function() {
+        const phone = this.value.trim();
+
+        // Regex: bắt đầu bằng 0 + 9 số phía sau = tổng 10 số
+        const isValid = /^0\d{9}$/.test(phone);
+
+        // Nếu hợp lệ → xóa invalid, nếu sai → set invalid
+        this.setCustomValidity(isValid ? "" : "Số điện thoại phải có 10 số và bắt đầu bằng 0");
+    });
+
 }
 
 function switchForm(e, type) {
@@ -51,7 +61,7 @@ function handleRegister(e) {
         return;
     }
 
-    if (!username || !password || !email) {
+    if (!username || !password || !email || !phone) {
         alert("Vui lòng nhập đầy đủ thông tin!");
         return;
     }
@@ -69,12 +79,12 @@ function handleRegister(e) {
         return;
     }
     if (users.some(user => user.phone === phone)) {
-        alert("Tên đăng nhập đã tồn tại!");
+        alert("Số điện thoại đã tồn tại!");
         return;
     }
 
     // Thêm user mới
-    users.push({ username, password, email, phone });
+    users.push({ username, password, email, address: null, phone });
     localStorage.setItem("users", JSON.stringify(users));
 
     alert("Đăng ký thành công!");
@@ -162,12 +172,13 @@ function viewProfile() {
     let email = "";
     
     //lấy địa chỉ khách hàng từ localstorage
-    let address=localStorage.getItem("address");
+    let address = "";
     if (username) {
         const users = JSON.parse(localStorage.getItem("users")) || [];
         const currentUser = users.find(user => user.username === username);
         if (currentUser) {
             email = currentUser.email; // lấy email từ user
+            address = currentUser.address;
         }
     }
     document.getElementById("address").value=address||"";
@@ -190,41 +201,55 @@ function saveProfile(e) {
     const email = document.getElementById("profileEmail").value.trim();
     const currentPassword = document.getElementById("profileCurrentPassword").value.trim();
     const newPassword = document.getElementById("profileNewPassword").value.trim();
-    const newaddress=document.getElementById("address").value.trim();
-    const storedPassword = localStorage.getItem("password");
-    const loggedInUser = localStorage.getItem("loggedInUser");
+    const newaddress = document.getElementById("address").value.trim();
 
-    //Xác thực mật khẩu hiện tại
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Tìm user hiện tại
+    const index = users.findIndex(u => u.username === loggedInUser);
+
+    if (index === -1) {
+        alert("Không tìm thấy tài khoản!");
+        return;
+    }
+
+    const storedPassword = users[index].password;
+
+    // Xác thực mật khẩu hiện tại
     if (currentPassword !== storedPassword) {
         alert("Mật khẩu hiện tại không chính xác!");
         return;
     }
 
-    //nếu không nhập mật khẩu mới thì giữ mật khẩu cũ
+    // Nếu không nhập mật khẩu mới thì giữ mật khẩu cũ
     const finalPassword = newPassword || storedPassword;
+    const phoneNumber = users[index].phone;
 
-    // Cập nhật thông tin vào localStorage
+    // Cập nhật user
+    users[index] = { 
+        username: username, 
+        password: finalPassword, 
+        email: email,
+        address: newaddress,
+        phone: phoneNumber
+    };
+
+    // Lưu lại vào localStorage
+    localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("loggedInUser", username);
-    localStorage.setItem("password", finalPassword);
-    localStorage.setItem("address",newaddress);
-    // nếu bạn đang lưu danh sách users
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const index = users.findIndex(u => u.username === loggedInUser);
-    if (index !== -1) {
-        users[index] = { username, password: finalPassword, email };
-        localStorage.setItem("users", JSON.stringify(users));
-    }
 
     // Cập nhật giao diện
     document.getElementById("userName").textContent = username;
+
     alert("Cập nhật thông tin thành công!");
     closeProfile();
 }
 
-// Đóng popup
 function closeProfile() {
     document.getElementById("profilePopup").style.display = "none";
 }
+
 
 // Hiển thị menu khi bấm vào tên user
 document.addEventListener("click", (event) => {
