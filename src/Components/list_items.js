@@ -397,7 +397,8 @@ function applyFilters() {
     const selectedFavorite = document.querySelector("input[data-type='yeu-thich']:checked");
 
     if (selectedFavorite) {
-        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const favKey = _getFavoritesKey();
+        const favorites = JSON.parse(localStorage.getItem(favKey)) || [];
         filtered = filtered.filter(p => favorites.includes(String(p.id)));
     }
 
@@ -579,8 +580,6 @@ function showHistoryDetail(orderId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderHistory();
-    //đóng popup detail
     const closeDetailPopup = document.getElementById('closeDetailPopup');
     if (closeDetailPopup) {
         closeDetailPopup.onclick = () => {
