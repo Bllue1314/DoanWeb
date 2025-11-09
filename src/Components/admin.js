@@ -81,110 +81,6 @@ function setActiveTab(activeLink) {
   activeLink.classList.add("active-tab");
 }
 
-// ===================== MẪU USER =====================
-const user = [
-  {
-    id: 1,
-    name: "Lê Đức Thọ",
-    call: "0938123456",
-    email: "leductho@gmail.com",
-    address: "123 Nguyễn Trãi, Quận 5, TP.HCM",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    passworks:"2513648",
-    lock: 0
-  },
-  {
-    id: 2,
-    name: "Nguyễn Văn A",
-    call: "0987654321",
-    email: "nguyenvana@gmail.com",
-    address: "45 Lê Lợi, Quận 1, TP.HCM",
-    image: "https://randomuser.me/api/portraits/men/45.jpg",
-    passworks:"26723623527",
-    lock: 0
-  },
-  {
-    id: 3,
-    name: "Trần Thị B",
-    call: "0905123123",
-    email: "tranthib@gmail.com",
-    address: "12 Hai Bà Trưng, Quận 3, TP.HCM",
-    image: "https://randomuser.me/api/portraits/women/68.jpg",
-    passworks:"623623547",
-    lock: 0
-  },
-  {
-    id: 4,
-    name: "Phạm Minh Cường",
-    call: "0912456789",
-    email: "cuongpham@gmail.com",
-    address: "67 Nguyễn Huệ, Quận 1, TP.HCM",
-    image: "https://randomuser.me/api/portraits/men/12.jpg",
-    passworks:"3523612547",
-    lock: 0
-  },
-  {
-    id: 5,
-    name: "Đặng Thị Hồng",
-    call: "0978123456",
-    email: "hongdang@gmail.com",
-    address: "22 Pasteur, Quận 1, TP.HCM",
-    image: "https://randomuser.me/api/portraits/women/22.jpg",
-    passworks:"234262525",
-    lock: 0
-  },
-  {
-    id: 6,
-    name: "Vũ Đức Nam",
-    call: "0932345678",
-    email: "namvu@gmail.com",
-    address: "55 Võ Văn Tần, Quận 3, TP.HCM",
-    image: "https://randomuser.me/api/portraits/men/21.jpg",
-    passworks:"3673462352",
-    lock: 0
-  },
-  {
-    id: 7,
-    name: "Bùi Thanh Hà",
-    call: "0909456123",
-    email: "thanhha@gmail.com",
-    address: "101 Nguyễn Đình Chiểu, Quận 3, TP.HCM",
-    image: "https://randomuser.me/api/portraits/women/47.jpg",
-    passworks:"63583435247",
-    lock: 0
-  },
-  {
-    id: 8,
-    name: "Phan Văn Quang",
-    call: "0945567890",
-    email: "quangphan@gmail.com",
-    address: "36 Hoàng Diệu, Quận 4, TP.HCM",
-    image: "https://randomuser.me/api/portraits/men/8.jpg",
-    passworks:"8978974563",
-    lock: 0
-  },
-  {
-    id: 9,
-    name: "Ngô Thị Lan",
-    call: "0988123123",
-    email: "lanngo@gmail.com",
-    address: "9 Nguyễn Văn Cừ, Quận 5, TP.HCM",
-    image: "https://randomuser.me/api/portraits/women/38.jpg",
-    passworks:"25326236",
-    lock: 0
-  },
-  {
-    id: 10,
-    name: "Trịnh Công Sơn",
-    call: "0919123456",
-    email: "sontrinh@gmail.com",
-    address: "88 Lý Thường Kiệt, Quận 10, TP.HCM",
-    image: "https://randomuser.me/api/portraits/men/50.jpg",
-    passworks:"25324235",
-    lock: 0
-  }
-];
-localStorage.setItem("users", JSON.stringify(user));
 
 // ===================== LẤY THÔNG TIN TỪ LOCAL =====================
 /*
@@ -192,15 +88,15 @@ localStorage.setItem("users", JSON.stringify(user));
  * Trả về [] nếu không có
  */
 function getuser(){
-  const user = JSON.parse(localStorage.getItem("users"));
-  return user ? user : [];
+  const users = JSON.parse(localStorage.getItem("users"));
+  return users ? users : [];
 }
 // ===================== LƯU DANH SÁCH USER =====================
 /*
  * Lưu mảng user vào localStorage và refresh UI
  */
-function savedata(user){
-  localStorage.setItem("users", JSON.stringify(user));
+function savedata(users){
+  localStorage.setItem("users", JSON.stringify(users));
   alert("Đã lưu thông tin");
   renderUser();
 }
@@ -288,8 +184,8 @@ function renderUser() {
         <tbody id="userbody">
           ${users.map(u => `
             <tr>
-              <td>${u.name}</td>
-              <td>${u.call}</td>
+              <td>${u.username}</td>
+              <td>${u.phone}</td>
               <td>${u.address}</td>
               <td>${u.email}</td>
               <td>
@@ -321,7 +217,7 @@ function luusanpham(products) {
 // Hàm mở form thêm sản phẩm mới
 function openAddModal() {
     document.getElementById("editForm").reset();
-    document.querySelector(".modal").dataset.id = '';
+    document.querySelector(".modal").dataset.id ='';
     document.querySelector(".modal h2").textContent = "Thêm Sản Phẩm Mới";
     document.querySelector(".modal").classList.remove("hidden");
 }
@@ -333,7 +229,6 @@ function openEditModal(id) {
     
     if (product) {
         document.getElementById("editName").value = product.name;
-        document.getElementById("editCategory").value = product.category;
         document.getElementById("editType").value = product.type || '';
         document.getElementById("editBrand").value = product.brand || '';
         document.getElementById("editPrice").value = product.price || 0;
@@ -341,11 +236,7 @@ function openEditModal(id) {
         document.getElementById("editColors").value = Array.isArray(product.colors) ? product.colors.join(',') : (product.colors || '');
         document.getElementById("editImage").value = product.image || '';
         document.getElementById("editDescription").value = product.description || '';
-        document.getElementById("editSpecs").value = typeof product.specifications === 'object' ? 
-            JSON.stringify(product.specifications, null, 2) : 
-            (product.specifications || '');
         document.getElementById("editIsHidden").checked = product.isHidden || false;
-        
         document.querySelector(".modal").dataset.id = id;
         document.querySelector(".modal h2").textContent = "Sửa Thông Tin Sản Phẩm";
         document.querySelector(".modal").classList.remove("hidden");
@@ -377,26 +268,17 @@ document.getElementById("editForm").addEventListener("submit", function(e) {
         return;
     }
     
-    // Parse specifications from JSON
-    let specifications;
-    try {
-        const specsStr = document.getElementById("editSpecs").value.trim();
-        specifications = specsStr ? JSON.parse(specsStr) : {};
-    } catch (e) {
-        alert("Định dạng thông số kỹ thuật không hợp lệ. Vui lòng nhập theo định dạng JSON");
-        return;
-    }
+   
+    
 
     let sanpham = {
         name: document.getElementById("editName").value.trim(),
-        category: document.getElementById("editCategory").value.trim(),
         type: document.getElementById("editType").value.trim(),
         brand: document.getElementById("editBrand").value.trim(),
         price: price,
         colors: document.getElementById("editColors").value.split(",").map(c => c.trim()).filter(c => c),
         image: document.getElementById("editImage").value.trim(),
         description: document.getElementById("editDescription").value.trim(),
-        specifications: specifications,
         quantity: quantity,
         stock: quantity, // Sync stock with quantity
         isHidden: document.getElementById("editIsHidden").checked
@@ -404,7 +286,6 @@ document.getElementById("editForm").addEventListener("submit", function(e) {
 
     let products = getsanpham();
     let id = document.querySelector(".modal").dataset.id;
-    
     if (id) {
         // Edit mode - update existing product
         let index = products.findIndex(p => p.id == id);
@@ -437,7 +318,7 @@ function xoasanpham(id) {
 // Hàm ẩn/hiện sản phẩm
 function toggleHidden(id) {
     let products = getsanpham();
-    let product = products.find(p => p.id == id);
+    let product = products.find(p => p.id === id);
     if (product) {
         product.isHidden = !product.isHidden;
         luusanpham(products);
@@ -448,47 +329,50 @@ function toggleHidden(id) {
 // Khởi tạo các bộ lọc từ dữ liệu sản phẩm
 function initializeFilters() {
     const products = getsanpham();
-    
     // Lấy danh sách danh mục và thương hiệu duy nhất
-    const categories = [...new Set(products.map(p => p.type))];
+    const type = [...new Set(products.map(p => p.type))];
     const brands = [...new Set(products.map(p => p.brand))];
-    
+    const color=[...new Set(products.flatMap(p => p.colors || []))];
     // Cập nhật select danh mục
-    const categorySelect = document.getElementById("filterCategory");
-    categorySelect.innerHTML = '<option value="">Tất cả danh mục</option>' +
-        categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
-    
+    const typeSelect = document.getElementById("filterType");
+    typeSelect.innerHTML = '<option value="">Tất cả danh mục</option>' +
+        type.map(cat => `<option value="${cat}">${cat}</option>`).join('');
     // Cập nhật select thương hiệu
     const brandSelect = document.getElementById("filterBrand");
     brandSelect.innerHTML = '<option value="">Tất cả thương hiệu</option>' +
         brands.map(brand => `<option value="${brand}">${brand}</option>`).join('');
+    const colorSelect = document.getElementById("filterColor");
+    colorSelect.innerHTML = '<option value="">Tất cả màu sắc</option>' +  
+        color.map(color => `<option value="${color}">${color}</option>`).join('');
 }
 
 // Áp dụng bộ lọc
 function applyProductFilters() {
-    const category = document.getElementById("filterCategory").value;
+    const type = document.getElementById("filterType").value;
     const brand = document.getElementById("filterBrand").value;
     const search = document.getElementById("filterSearch").value.toLowerCase();
+    const color = document.getElementById("filterColor").value;
     
     let products = getsanpham();
     let filtered = products.filter(product => {
-        const matchCategory = !category || product.category === category;
+        const matchType = !type || product.type === type;
         const matchBrand = !brand || product.brand === brand;
+        const matchColor = !color || (product.colors || []).includes(color);
         const matchSearch = !search || 
             product.name.toLowerCase().includes(search) ||
             product.description.toLowerCase().includes(search);
             
-        return matchCategory && matchBrand && matchSearch;
+        return matchType && matchBrand && matchSearch && matchColor;
     });
     
     renderFilteredProducts(filtered);
     document.getElementById("clearProductFilters").style.display = 
-        (category || brand || search) ? "inline-block" : "none";
+        (type || brand || search || color) ? "inline-block" : "none";
 }
 
 // Xóa bộ lọc
 function clearProductFilters() {
-    document.getElementById("filterCategory").value = "";
+    document.getElementById("filterType").value = "";
     document.getElementById("filterBrand").value = "";
     document.getElementById("filterSearch").value = "";
     document.getElementById("clearProductFilters").style.display = "none";
@@ -526,8 +410,8 @@ function renderProducts(filteredProducts = null) {
                             <span class="value">${product.brand || '---'}</span>
                         </div>
                         <div class="detail-item">
-                            <span class="label">Danh mục:</span>
-                            <span class="value">${product.category || '---'}</span>
+                            <span class="label">Loại:</span>
+                            <span class="value">${product.type || '---'}</span>
                         </div>
                         <div class="detail-item">
                             <span class="label">Giá bán:</span>
@@ -584,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===================== QUẢN LÝ STORAGE =====================
 function getPrices() {
   return JSON.parse(localStorage.getItem('prices')) || {
-    categories: {},  // Tỷ lệ lợi nhuận theo danh mục
+    type: {},  // Tỷ lệ lợi nhuận theo danh mục
     products: {}     // Tỷ lệ lợi nhuận theo sản phẩm
   };
 }
@@ -645,7 +529,7 @@ function renderCategoryPrices() {
   
   // Lấy danh sách các danh mục từ sản phẩm
   const products = JSON.parse(localStorage.getItem('products')) || [];
-  const categories = [...new Set(products.map(p => p.category || p.type))];
+  const categories = [...new Set(products.map(p => p.type ))].filter(c => c);
 
   container.innerHTML = `
     <table class="prices-table">
@@ -662,7 +546,7 @@ function renderCategoryPrices() {
             <td>${cat}</td>
             <td>
                 <input type="number" min="0" max="100" 
-                  value="${prices.categories[cat] || 30}"
+                  value="${prices.type[cat] || 30}"
                   onchange="updateCategoryProfit('${cat}', this.value)">
               </td>
             <td>
@@ -813,14 +697,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===================== QUẢN LÝ ORDER =====================
 function getOrders() {
-  return JSON.parse(localStorage.getItem('orders')) || [];
+  return JSON.parse(localStorage.getItem('orderHistory')) || [];
 }
 
 /*
  * Lưu mảng đơn hàng vào localStorage
  */
 function saveOrders(orders) {
-  localStorage.setItem('orders', JSON.stringify(orders));
+  localStorage.setItem('orderHistory', JSON.stringify(orders));
 }
 
 // ===================== TÌM KIẾM ĐƠN HÀNG =====================
@@ -859,7 +743,7 @@ function searchOrders() {
     orders = orders.filter(order => order.date >= fromDate);
   }
   if (toDate) {
-    orders = orders.filter(order => order.date <= toDate);
+    orders = orders.filter(order => order.date<= toDate);
   }
   
   // Lọc theo trạng thái
@@ -879,7 +763,7 @@ function searchOrders() {
  */
 function updateOrderStatus(orderId, newStatus) {
   const orders = getOrders();
-  const orderIndex = orders.findIndex(order => order.id === orderId);
+  const orderIndex = orders.findIndex(order => order.orderId === orderId);
   
   if (orderIndex === -1) {
     alert('Không tìm thấy đơn hàng!');
@@ -911,8 +795,9 @@ function updateOrderStatus(orderId, newStatus) {
  */
 function viewOrderDetails(orderId) {
   const orders = getOrders();
-  const order = orders.find(o => o.id === orderId);
-  
+  const order = orders.find(o => o.orderId === orderId);
+
+ 
   if (!order) {
     alert('Không tìm thấy đơn hàng!');
     return;
@@ -922,9 +807,9 @@ function viewOrderDetails(orderId) {
   const container = modal.querySelector('.modal-content');
   
   container.innerHTML = `
-    <h2>Chi tiết đơn hàng #${order.id}</h2>
+    <h2>Chi tiết đơn hàng #${order.orderId}</h2>
     <p><strong>Ngày đặt:</strong> ${order.date}</p>
-    <p><strong>Khách hàng:</strong> ${getUserName(order.userId)}</p>
+    
     <p><strong>Trạng thái:</strong> ${getStatusText(order.status)}</p>
     
     <table class="order-items">
@@ -939,7 +824,7 @@ function viewOrderDetails(orderId) {
       <tbody>
         ${order.items.map(item => `
           <tr>
-            <td>${getProductName(item.productId)}</td>
+            <td>${item.name}</td>
             <td>${item.quantity}</td>
             <td>${item.price.toLocaleString()}đ</td>
             <td>${(item.quantity * item.price).toLocaleString()}đ</td>
@@ -956,17 +841,17 @@ function viewOrderDetails(orderId) {
     
     <div class="modal-buttons">
       ${order.status === 'new' ? `
-        <button onclick="updateOrderStatus(${order.id}, 'processing')">
+        <button onclick="updateOrderStatus(${order.orderId}, 'processing')">
           Xử lý đơn hàng
         </button>
       ` : ''}
       ${order.status === 'processing' ? `
-        <button onclick="updateOrderStatus(${order.id}, 'delivered')">
+        <button onclick="updateOrderStatus(${order.orderId}, 'delivered')">
           Xác nhận đã giao
         </button>
       ` : ''}
       ${order.status !== 'delivered' && order.status !== 'cancelled' ? `
-        <button onclick="updateOrderStatus(${order.id}, 'cancelled')">
+        <button onclick="updateOrderStatus(${order.orderId}, 'cancelled')">
           Hủy đơn hàng
         </button>
       ` : ''}
@@ -1005,14 +890,20 @@ function renderOrders(orders = getOrders()) {
       <tbody>
         ${orders.map(order => `
           <tr>
-            <td>#${order.id}</td>
+            <td>#${order.orderId}</td>
             <td>${order.date}</td>
-            <td>${getUserName(order.userId)}</td>
+            <td>${order.username}</td>
             <td>${order.total.toLocaleString()}đ</td>
             <td>${getStatusText(order.status)}</td>
             <td>
-              <button onclick="viewOrderDetails(${order.id})">
+              <button onclick="viewOrderDetails(${order.orderId})">
                 Xem chi tiết
+              </button>
+              <button onclick="updateOrderStatus(${order.orderId}, 'cancelled')">
+                Hủy đơn
+              </button>
+              <button onclick="updateOrderStatus(${order.orderId}, 'delivered')">
+                Đánh dấu đã giao
               </button>
             </td>
           </tr>
@@ -1080,29 +971,6 @@ function closeOrderDetail() {
 /*
  * Khởi tạo dữ liệu mẫu khi load trang nếu chưa có orders
  */
-document.addEventListener('DOMContentLoaded', () => {
-  if (!localStorage.getItem('orders')) {
-    // Tạo dữ liệu mẫu
-    const sampleOrders = [
-      {
-        id: 1,
-        date: '2025-11-01',
-        userId: 1,
-        status: 'new',
-        items: [
-          {
-            productId: 1,
-            quantity: 2,
-            price: 20000
-          }
-        ],
-        total: 40000
-      }
-    ];
-    saveOrders(sampleOrders);
-  }
-  renderOrders();
-});
 
 
 

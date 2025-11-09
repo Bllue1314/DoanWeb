@@ -182,3 +182,241 @@ nav.detail-view .logo {
     color: white;
     transform: scale(1.05);
 }
+
+
+/* ABOUT */
+
+.popup {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    top: 0;
+    position: fixed;
+    display: none;
+    animation-duration: 0.3s;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 11000;
+    font-size: 16px;
+}
+
+#supportPopup .popup-content {
+    scroll-behavior: smooth;
+    font-family: sans-serif;
+    overflow: auto;
+    max-height: 610px;
+    width: 1340px;
+    background-color: white;
+    top: 90px;
+    /* left: 89px; */
+    left: 50%;
+    transform: translate(-50%, 0%);
+    position: fixed;
+    padding: 30px 30px 30px 30px;
+    border-radius: 10px;
+}
+
+.popup-content .close {
+    z-index: 2;
+    top: -10px;
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: all 0.5s;
+}
+
+.popup-content .close:hover {
+    background: #1ebfc1;
+    transform: scale(1.2);
+}
+
+#supportPopup .popup-content .header-popup {
+    width: auto;
+    background: #000000;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 4rem;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    color: #4daf54;
+}
+
+#supportPopup .popup-content .nav-popup {
+    padding: 20px 20px;
+    background: greenyellow;
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+}
+
+#supportPopup .popup-content .nav-popup a {
+    font-weight: 600;
+    font-size: 2.2rem;
+    color: #000000;
+}
+
+#supportPopup .popup-content .nav-popup a:hover {
+    color: #4daf54;
+    transition: 0.5s;
+}
+
+#supportPopup .popup-content #faq {
+    position: relative;
+    margin-top: 30px;
+}
+
+#supportPopup .popup-content .heading {
+    z-index: 3;
+    font-size: 2.2rem;
+    font-size: 900;
+    margin-bottom: 16px;
+    color: #000000;
+}
+
+#supportPopup .popup-content .desc strong {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 1.8rem;
+    color: #c23564;
+    line-height: 2;
+}
+
+#supportPopup .popup-content .desc {
+    font-size: 1.6rem;
+    line-height: 1.44;
+}
+
+#supportPopup .popup-content #shipping {
+    position: relative;
+    margin-top: 30px;
+}
+
+#supportPopup .popup-content #returns {
+    position: relative;
+    margin-top: 30px;
+}
+
+#supportPopup .popup-content #contact {
+    position: relative;
+    margin-top: 30px;
+}
+
+#faq::after,
+#shipping::after,
+#returns::after,
+#contact::after {
+    position: absolute;
+    font-weight: 400;
+    content: "";
+    width: 100%;
+    height: 2px;
+    background: greenyellow;
+    bottom: -15px;
+}
+
+#supportPopup .popup-content .fixed-footer {
+    z-index: 1;
+    position: sticky;
+    bottom: -0px;
+}
+
+#supportPopup .popup-content .footer-popup {
+    width: auto;
+    border-radius: 10px;
+    margin-top: 16px;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    background: greenyellow;
+    color: #000000;
+}
+
+.popup-open {
+    overflow: hidden;
+}
+
+#supportPopup .popup-content {
+    font-size: 14px;
+}
+
+#supportPopup .popup-content .header-popup {
+    font-size: 2rem;
+    padding: 20px;
+}
+
+#supportPopup .popup-content .nav-popup a {
+    font-size: 1.3rem;
+}
+
+#supportPopup .popup-content .heading {
+    font-size: 1.4rem;
+}
+
+#supportPopup .popup-content .desc,
+#supportPopup .popup-content .desc strong {
+    font-size: 1.2rem;
+}
+
+/* Footer của popup */
+#supportPopup .popup-content .footer-popup {
+    font-size: 1.2rem;
+    padding: 20px;
+}
+
+/*  */
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    #supportPopup .popup-content .header-popup {
+        font-size: 2.4rem;
+    }
+
+    #supportPopup .popup-content .nav-popup {
+        display: grid;
+        row-gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #supportPopup .popup-content .nav-popup a {
+        width: fit-content;
+    }
+
+    #supportPopup .popup-content .nav-popup a:nth-child(even) {
+        margin-left: auto;
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 667px) {
+    #supportPopup .popup-content .header-popup {
+        font-size: 1.9rem;
+        word-break: keep-all;
+        text-align: center;
+    }
+
+    #supportPopup .popup-content .nav-popup {
+        display: grid;
+        row-gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #supportPopup .popup-content .nav-popup a {
+        width: fit-content;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    #supportPopup .popup-content .nav-popup a:nth-child(even) {
+        margin-left: auto;
+    }
+
+    #supportPopup .popup-content .footer-popup {
+        text-align: center;
+        font-size: 1.4rem;
+    }
+}
