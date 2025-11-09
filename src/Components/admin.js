@@ -192,7 +192,7 @@ localStorage.setItem("users", JSON.stringify(user));
  * Trả về [] nếu không có
  */
 function getuser(){
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("users"));
   return user ? user : [];
 }
 // ===================== LƯU DANH SÁCH USER =====================
