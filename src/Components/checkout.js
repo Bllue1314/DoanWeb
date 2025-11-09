@@ -104,10 +104,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
 
         const newOrder = {
-            orderId: "DH" + Date.now(),
+            //orderid không được có kí tự mò gần ch
+
+            orderId: Date.now(),
             username: localStorage.getItem("loggedInUser") || "Khách",
-            date: new Date().toLocaleDateString('vi-VN'),
-            address: formData.get('address') + ", " + formData.get('city'),
+            date: new Date().toISOString().split('T')[0],
+            address: formData.get('address') ,
             status: "Đang xử lý",
             total: cartManager.getTotal(),
             items: cartManager.getItems()
