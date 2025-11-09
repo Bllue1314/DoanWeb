@@ -1,5 +1,13 @@
-// Danh sách sản phẩm - Bạn có thể thêm/sửa/xóa sản phẩm ở đây
-const products = JSON.parse(localStorage.getItem('products'));
+function getProductsFromStorage() {
+    let products = JSON.parse(localStorage.getItem("products"));
+
+    // Nếu localStorage rỗng, trả về một mảng rỗng.
+    if (!products) {
+        products = [];
+    }
+    return products;
+}
+const products = getProductsFromStorage();
 // Hàm tạo HTML cho mỗi sản phẩm
 function createProductCard(product) {
     const favKey = _getFavoritesKey();
