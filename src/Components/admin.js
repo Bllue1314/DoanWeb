@@ -184,7 +184,7 @@ const user = [
     lock: 0
   }
 ];
-localStorage.setItem("user", JSON.stringify(user));
+localStorage.setItem("users", JSON.stringify(user));
 
 // ===================== LẤY THÔNG TIN TỪ LOCAL =====================
 /*
@@ -200,7 +200,7 @@ function getuser(){
  * Lưu mảng user vào localStorage và refresh UI
  */
 function savedata(user){
-  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("users", JSON.stringify(user));
   alert("Đã lưu thông tin");
   renderUser();
 }
@@ -228,7 +228,7 @@ function resetPassword(id) {
     return;
   }
   users[index].passworks = "1";
-  localStorage.setItem("user", JSON.stringify(users));
+  localStorage.setItem("users", JSON.stringify(users));
   renderUser();
    alert(`Đã reset mật khẩu của tài khoản: ${users[index].name}`);
 }
@@ -251,12 +251,12 @@ function block(id) {
 
   if (users[index].lock === 0) {
     users[index].lock = 1;
-    localStorage.setItem("user", JSON.stringify(users));
+    localStorage.setItem("users", JSON.stringify(users));
     renderUser();
     alert(`Đã khóa tài khoản của: ${users[index].name}`);
   } else {
     users[index].lock = 0;
-    localStorage.setItem("user", JSON.stringify(users));
+    localStorage.setItem("users", JSON.stringify(users));
     renderUser();
     alert(`Đã mở khóa tài khoản của: ${users[index].name}`);
   }
