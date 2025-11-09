@@ -1,4 +1,8 @@
 /* Thanh header nằm cố định trên đầu */
+.main-content {
+    display: none;
+}
+
 .header {
   background-color: black;
   width: 100%;
@@ -85,6 +89,12 @@ body {
   border-bottom: 2px solid orange;
   padding-bottom: 4px;
 }
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
 
 /* Phần nội dung bên dưới tránh bị che */
 .container {
