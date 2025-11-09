@@ -355,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <section id="returns">
             <h2 class="heading">Chính sách Đổi trả và Hoàn tiền</h2>
             <p class="desc">
-                Chúng tôi chấp nhận đổi trả trong vòng 30 ngày kể từ ngày mua.
+                Chúng tôi chấp nhận đổi trả trong vòng 36 ngày kể từ ngày mua.
                 Để đổi trả, vui lòng liên hệ với chúng tôi qua trang Liên hệ.
             </p>
             <p class="desc">
@@ -364,7 +364,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </p>
             <p class="desc">
                 <strong>Hoàn Tiền:</strong> Hoàn tiền sẽ được xử lý trong vòng
-                7-10 ngày làm việc sau khi nhận được sản phẩm đổi trả.
+                3-6 ngày làm việc sau khi nhận được sản phẩm đổi trả.
             </p>
             <!-- Thêm hướng dẫn đổi trả và hoàn tiền -->
         </section>
