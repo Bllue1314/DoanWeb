@@ -1548,3 +1548,55 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   renderImports();
 });
+
+
+
+
+/* LOGIN ADMIN*/
+document.addEventListener("DOMContentLoaded", function () {
+    const isLoggedIn = localStorage.getItem("loggedInAdmin");
+    
+    if (!isLoggedIn) {
+        // Chưa đăng nhập → hiện form login
+        document.querySelector(".wrapper").style.display = "flex";
+        document.querySelector(".main-content").style.display = "none";
+    } else {
+        // Đã đăng nhập → ẩn login, hiện trang chính
+        document.querySelector(".wrapper").style.display = "none";
+        document.querySelector("body").style.background = "grey";
+        document.querySelector(".main-content").style.display = "flex";
+    }
+});
+
+// Tạo tài khoản admin
+const account = {
+    username: "admin123",
+    password: "admin123"
+};
+localStorage.setItem("admins", JSON.stringify([account]));
+
+// Lắng nghe submit form login
+document.querySelector(".btn").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const username = document.querySelector('.input-box input[type="text"]').value.trim();
+    const password = document.querySelector('.input-box input[type="password"]').value.trim();
+
+    const admins = JSON.parse(localStorage.getItem("admins")) || [];
+    const admin = admins.find(u => u.username === username && u.password === password);
+
+    if (admin) {
+        localStorage.setItem("loggedInAdmin", username);
+        document.querySelector(".wrapper").style.display = "none";
+        document.querySelector(".main-content").style.display = "flex";
+        document.body.classList.remove("login-mode");
+        alert(`Xin chào, ${admin.username}! Bạn đã đăng nhập thành công.`);
+    } else {
+        alert("Sai tên đăng nhập hoặc mật khẩu!");
+    }
+});
+
+function logout() {
+    localStorage.removeItem("loggedInAdmin");
+    window.location.href = "../Pages/index.html";
+}

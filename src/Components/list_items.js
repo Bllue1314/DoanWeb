@@ -2,7 +2,8 @@
 const products = JSON.parse(localStorage.getItem('products'));
 // Hàm tạo HTML cho mỗi sản phẩm
 function createProductCard(product) {
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const favKey = _getFavoritesKey();
+    const favorites = JSON.parse(localStorage.getItem(favKey)) || [];
     const isLiked = favorites.includes(String(product.id)) ? "liked" : "";
 
     const colorSpans = product.colors.map(color =>
@@ -29,22 +30,23 @@ function createProductCard(product) {
                 <div class="card_description">
                     ${product.description}
                 </div>
-                <div class="card_buy">
-                    <div class="card_price">
-                        ${product.price}$
-                    </div>
-                    <div class="card_action">
+                <div class="card_action">
+                    <div class="card_buy">
+                        <div class="card_price">${product.price}$</div>
                         <button>Buy Now</button>
                     </div>
                 </div>
             </div>
         </div>
     `;
-
 }
+
 let currentPage = 1;
 const itemsPerPage = 6; // Mỗi trang 6 sản phẩm
 let currentProductList = products;
+function hiddenItem(list) {
+    currentProductList = list;
+}
 
 function addClickEventsToBuyNow() {
     const buyButtons = document.querySelectorAll('#productsContainer .card_action button');
@@ -163,6 +165,23 @@ function renderPagination() {
 // Render sản phẩm khi trang load
 renderProducts(products);
 
+/* KEY */
+
+function _getHistoryKey() {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    if (!loggedInUser) return null;
+    return `orderHistory_${loggedInUser}`;
+}
+function _getFavoritesKey() {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    if (loggedInUser) {
+        return `favorites_${loggedInUser}`;
+    }
+    return null;
+}
+
+//
+
 /*filter*/
 document.querySelectorAll(".dropdown-item").forEach(item => {
     item.addEventListener("click", () => {
@@ -219,8 +238,16 @@ function addClickEventsToHearts() {
 
             const card = icon.closest('.card');
             const productId = card.dataset.productId;
+            const favKey = _getFavoritesKey();
+            if (!favKey) {
+                alert("Vui lòng đăng nhập để sử dụng chức năng này.");
+                if (typeof showForm === 'function') {
+                    showForm('login');
+                }
+                return;
+            }
 
-            let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            let favorites = JSON.parse(localStorage.getItem(favKey)) || [];
 
             if (favorites.includes(productId)) {
                 favorites = favorites.filter(id => id !== productId);
@@ -230,7 +257,7 @@ function addClickEventsToHearts() {
                 icon.classList.add('liked');
             }
 
-            localStorage.setItem('favorites', JSON.stringify(favorites));
+            localStorage.setItem(favKey, JSON.stringify(favorites));
         });
     });
 }
@@ -280,6 +307,7 @@ resetFilter.onclick = () => {
     document.querySelectorAll(".filter-color span.selected").forEach(span => {
         span.classList.remove("selected");
     });
+    uncheckAll();
     renderProducts(products);
     updateButtonText(products);
 }
@@ -370,7 +398,8 @@ function applyFilters() {
     const selectedFavorite = document.querySelector("input[data-type='yeu-thich']:checked");
 
     if (selectedFavorite) {
-        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const favKey = _getFavoritesKey();
+        const favorites = JSON.parse(localStorage.getItem(favKey)) || [];
         filtered = filtered.filter(p => favorites.includes(String(p.id)));
     }
 
@@ -389,6 +418,10 @@ document.querySelectorAll("#filterPanel label").forEach(label => {
         e.stopPropagation();
     });
 });
+
+function uncheckAll() {
+    document.querySelectorAll('#filterPanel input[type="checkbox"]').forEach(cb => cb.checked = false);
+}
 
 
 
@@ -423,7 +456,15 @@ btnHistoryOrder.onclick = () => {
 };
 
 function renderHistory() {
-    const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
+    const historyKey = _getHistoryKey();
+    if (!historyKey) {
+        alert("Vui lòng đăng nhập để sử dụng chức năng này.");
+        if (typeof showForm === 'function') {
+            showForm('login');
+        }
+        return;
+    }
+    const history = historyKey ? JSON.parse(localStorage.getItem(historyKey)) || [] : [];
     const tbody = document.getElementById("historybody");
 
     if (history.length === 0) {
@@ -448,6 +489,55 @@ function renderHistory() {
         </tr>
     `).join('');
 }
+function showHistoryDetail(orderId) {
+    const historyKey = _getHistoryKey();
+    if (!historyKey) return;
+
+    const history = JSON.parse(localStorage.getItem(historyKey)) || [];
+    const order = history.find(o => String(o.orderId) === orderId);
+
+    if (!order) {
+        alert("Không tìm thấy đơn hàng!");
+        return;
+    }
+
+    const detailBody = document.getElementById("historyDetailBody");
+    const detailCaption = document.getElementById("historyDetailCaption");
+
+    // Cập nhật tiêu đề popup
+    detailCaption.textContent = `Chi tiết Đơn hàng: ${orderId}`;
+
+    // Đổ dữ liệu item vào bảng (đã sửa để hiện màu)
+    detailBody.innerHTML = order.items.map(item => `
+        <tr>
+            <td>
+                <div class="item-info">
+                    <img src="${item.image}" alt="${item.name}">
+                    <span>${item.name}</span>
+                </div>
+            </td>
+            <td>
+                ${item.selectedColor ?
+            `<span class="item-color-dot" 
+                           style="background-color: ${item.selectedColor}; 
+                                  width: 20px; height: 20px; 
+                                  border-radius: 50%; 
+                                  display: inline-block;
+                                  border: 1px solid #ccc;">
+                     </span>`
+            : 'N/A'}
+            </td>
+            <td>${item.price.toLocaleString('en-US')} $</td>
+            <td>${item.quantity}</td>
+            <td>${(item.price * item.quantity).toLocaleString('en-US')} $</td>
+        </tr>
+    `).join('');
+
+    // Hiển thị popup chi tiết
+    document.getElementById("historyPopup").classList.add("faded");
+    document.getElementById("historyDetailPopup").classList.add("show");
+}
+
 function showHistoryDetail(orderId) {
     const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
     const order = history.find(o => o.orderId === orderId);
@@ -495,8 +585,6 @@ function showHistoryDetail(orderId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderHistory();
-    //đóng popup detail
     const closeDetailPopup = document.getElementById('closeDetailPopup');
     if (closeDetailPopup) {
         closeDetailPopup.onclick = () => {
