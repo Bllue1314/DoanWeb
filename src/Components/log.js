@@ -99,9 +99,9 @@ function handleLogin(e) {
     const username = form.querySelector("input[type='text']").value.trim();
     const password = form.querySelector("input[type='password']").value.trim();
 
-    const admins = JSON.parse(localStorage.getItem("admins")) || [];
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const admin = admins.find(u => u.username === username && u.password === password);
+    const user = users.find(u => u.username === username && u.password === password);
 
     if (user) {
         alert(`Xin chào, ${user.username}! Bạn đã đăng nhập thành công.`);

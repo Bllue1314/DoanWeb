@@ -307,6 +307,7 @@ resetFilter.onclick = () => {
     document.querySelectorAll(".filter-color span.selected").forEach(span => {
         span.classList.remove("selected");
     });
+    uncheckAll();
     renderProducts(products);
     updateButtonText(products);
 }
@@ -397,7 +398,8 @@ function applyFilters() {
     const selectedFavorite = document.querySelector("input[data-type='yeu-thich']:checked");
 
     if (selectedFavorite) {
-        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const favKey = _getFavoritesKey();
+        const favorites = JSON.parse(localStorage.getItem(favKey)) || [];
         filtered = filtered.filter(p => favorites.includes(String(p.id)));
     }
 
@@ -416,6 +418,10 @@ document.querySelectorAll("#filterPanel label").forEach(label => {
         e.stopPropagation();
     });
 });
+
+function uncheckAll() {
+    document.querySelectorAll('#filterPanel input[type="checkbox"]').forEach(cb => cb.checked = false);
+}
 
 
 
@@ -579,8 +585,6 @@ function showHistoryDetail(orderId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderHistory();
-    //đóng popup detail
     const closeDetailPopup = document.getElementById('closeDetailPopup');
     if (closeDetailPopup) {
         closeDetailPopup.onclick = () => {

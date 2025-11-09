@@ -118,7 +118,7 @@ const sampleProducts = [
     brand: "Glorious",
     type: "chuot",
     price: 99.99,
-    colors: ["#000000", "#FFFFFF"],
+    colors: ["#000000", "#00FF00"],
     image: "../Assets/img/Glorious-model-O-wireless-2.png",
     description: "Chuột gaming không dây đối xứng, thiết kế lỗ, nhẹ 68g.",
     stock: 20,
