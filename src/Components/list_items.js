@@ -439,6 +439,7 @@ btnHistoryOrder.onclick = () => {
 function renderHistory() {
     const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
     const tbody = document.getElementById("historybody");
+   
 
     if (history.length === 0) {
         tbody.innerHTML = `

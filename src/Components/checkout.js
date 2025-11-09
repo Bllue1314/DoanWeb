@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const newOrder = {
             orderId: "DH" + Date.now(),
+            username: localStorage.getItem("loggedInUser") || "Khách",
             date: new Date().toLocaleDateString('vi-VN'),
             address: formData.get('address') + ", " + formData.get('city'),
             status: "Đang xử lý",

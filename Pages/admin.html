@@ -13,15 +13,13 @@
 </head>
 <body>
     <header class="header">
-        <button class="back-btn" onclick="window.history.back()">Quay lại</button>
+       
         
         <div class="logo">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUGEZJUyJzT9OvwwU4zHzqfZhpPJ1gmknpLQ&usqp=CAU" alt="Logo">
+            <img src="../Assets/img/conchobopc.png" alt="Logo">
         </div>
 
-        <form class="search">
-            <input type="search" class="search_input" placeholder="Tìm kiếm...">
-        </form>
+       
 
         <ul class="nav">
             <li><a href="#" id="tab-products">Sản phẩm</a></li>
@@ -43,7 +41,7 @@
 
             <!-- Filters for products: category, brand, color, search, clear -->
             <div class="section-filters" id="productFilters">
-                <select id="filterCategory">
+                <select id="filterType">
                     <option value="">Tất cả danh mục</option>
                 </select>
                 <select id="filterBrand">
@@ -138,10 +136,7 @@
                         <input type="text" id="editName" required>
 
                         <div class="form-row">
-                            <div class="form-col">
-                                <label>Danh mục <span class="required">*</span></label>
-                                <input type="text" id="editCategory" required>
-                            </div>
+                            
                             <div class="form-col">
                                 <label>Loại <span class="required">*</span></label>
                                 <input type="text" id="editType" required>
@@ -170,9 +165,6 @@
                         <h3>Thông tin chi tiết</h3>
                         <label>Mô tả sản phẩm</label>
                         <textarea id="editDescription" rows="3" placeholder="Nhập mô tả chi tiết về sản phẩm..."></textarea>
-
-                        <label>Thông số kỹ thuật</label>
-                        <textarea id="editSpecs" rows="3" placeholder='{"cpu":"i7","ram":"16GB"}'></textarea>
 
                         <label>Màu sắc (phân cách bằng dấu phẩy)</label>
                         <input type="text" id="editColors" placeholder="#000000,#FFFFFF">
