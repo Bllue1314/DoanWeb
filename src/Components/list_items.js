@@ -111,17 +111,80 @@ function createProductCard(product) {
                 <div class="card_description">
                     ${product.description}
                 </div>
-                <div class="card_price">
-                    ${product.price}$
+                <div class="card_buy">
+                    <div class="card_price">
+                        ${product.price}$
+                    </div>
+                    <div class="card_action">
+                        <button>Buy Now</button>
+                    </div>
                 </div>
             </div>
         </div>
     `;
-}
 
+}
 let currentPage = 1;
 const itemsPerPage = 6; // Mỗi trang 6 sản phẩm
 let currentProductList = products;
+
+function addClickEventsToBuyNow() {
+    const buyButtons = document.querySelectorAll('#productsContainer .card_action button');
+
+    buyButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            // Ngăn sự kiện click của thẻ (card) chạy
+            event.stopPropagation();
+
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) {
+                alert("Vui lòng đăng nhập để mua hàng.");
+                // Giả sử bạn có hàm showForm() ở global
+                if (typeof showForm === 'function') {
+                    showForm('login');
+                }
+                return;
+            }
+
+            // Lấy ID sản phẩm từ card cha
+            const card = button.closest('.card');
+            const productId = card.dataset.productId;
+
+            // Tìm thông tin sản phẩm đầy đủ từ mảng 'products'
+            const product = products.find(p => String(p.id) === productId);
+            if (!product) return;
+
+            // ---- Logic "Buy Now" ----
+            // Giả sử cartManager đã được định nghĩa ở đâu đó
+
+            // 1. Lấy màu mặc định (màu đầu tiên)
+            const selectedColor = (product.colors && product.colors.length > 0) ? product.colors[0] : null;
+
+            // 2. Số lượng mặc định là 1 (vì không có ô chọn ở trang chính)
+            const quantity = 1;
+
+            // 3. Xóa sạch giỏ hàng hiện tại
+            cartManager.items = [];
+
+            // 4. Tạo item mới với màu và số lượng
+            const buyNowItem = {
+                ...product,
+                quantity: quantity,
+                selectedColor: selectedColor // Thêm màu đã chọn
+            };
+
+            // 5. Thêm duy nhất item này vào giỏ hàng
+            cartManager.items.push(buyNowItem);
+
+            // 6. Lưu giỏ hàng và cập nhật icon
+            cartManager.saveToStorage();
+            cartManager.updateCartCount();
+
+            // 7. Chuyển hướng sang trang thanh toán
+            window.location.href = 'checkout.html';
+        });
+    });
+}
 
 // Render tất cả sản phẩm
 function renderProducts(list) {
@@ -137,6 +200,7 @@ function renderProducts(list) {
     container.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
     addClickEventsToCards();
     addClickEventsToHearts();
+    addClickEventsToBuyNow();
     renderPagination();
 
 }
@@ -151,6 +215,7 @@ function renderCurrentPage() {
 
     addClickEventsToCards();
     addClickEventsToHearts();
+    addClickEventsToBuyNow();
     renderPagination();
 }
 
