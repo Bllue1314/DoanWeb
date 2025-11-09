@@ -443,7 +443,7 @@ const sampleProducts = [
   }
 ];
 
-localStorage.setItem("orderHistory", JSON.stringify(sampleProducts));
+localStorage.setItem("products", JSON.stringify(sampleProducts));
 
 // Chuẩn hóa từng sản phẩm: đảm bảo có các thuộc tính isHidden, stock và quantity
 sampleProducts.forEach(p => {
