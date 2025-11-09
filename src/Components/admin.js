@@ -1563,7 +1563,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         // Đã đăng nhập → ẩn login, hiện trang chính
         document.querySelector(".wrapper").style.display = "none";
-        document.querySelector("body").style.background = "grey";
+        document.body.classList.remove("login-mode");
         document.querySelector(".main-content").style.display = "flex";
     }
 });

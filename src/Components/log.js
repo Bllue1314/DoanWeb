@@ -160,8 +160,16 @@ function logout() {
     localStorage.removeItem("loggedInUser");
     document.getElementById("userSection").style.display = "none";
     document.getElementById("logBtn").style.display = "flex";
+
     document.getElementById('cartIcon').style.display = 'none';
     document.getElementById('btnHistoryOrder').style.display = 'none';
+
+    cartManager.loadFromStorage();
+    cartManager.updateCartCount();
+
+    if (typeof renderProducts === 'function' && typeof products === 'object') {
+        renderProducts(products);
+    }
 }
 
 // Xử lý xem thông tin
