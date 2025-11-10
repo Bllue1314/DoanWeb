@@ -1,7 +1,3 @@
-
-
-
-
 document.addEventListener("DOMContentLoaded", () => {
   // Định nghĩa cấu trúc tab
   const tabs = [
@@ -1135,7 +1131,7 @@ function renderOrders(orders = getOrders()) {
             <td>#${order.orderId}</td>
             <td>${order.date}</td>
             <td>${order.username}</td>
-            <td>${order.total.toLocaleString()}$</td>
+            <td>${order.total.toLocaleString()}đ</td>
             <td>${getStatusText(order.status)}</td>
             <td>
               <button onclick="viewOrderDetails(${order.orderId})">
@@ -1235,37 +1231,6 @@ function saveInventory(inventory) {
   localStorage.setItem('inventory', JSON.stringify(inventory));
 }
 
-// ===================== KHỞI TẠO GIAO DIỆN TỒN KHO =====================
-function initializeInventorySection() {
-  const inventorySection = document.getElementById('inventorySection');
-  if (inventorySection) {
-    inventorySection.innerHTML = `
-      <div class="section-filters">
-        <h2>Quản lý số lượng tồn</h2>
-        <div class="filter-group">
-          <input type="text" id="inventorySearch" placeholder="Tìm kiếm sản phẩm..." onkeyup="searchInventory()">
-          <select id="categoryFilter" onchange="searchInventory()">
-            <option value="">Tất cả danh mục</option>
-          </select>
-          <input type="date" id="inventoryFromDate">
-          <input type="date" id="inventoryToDate">
-          <button onclick="searchInventory()">Tra cứu</button>
-          <button onclick="checkLowStock()" class="warning-btn">Kiểm tra hàng sắp hết</button>
-          <button onclick="clearInventoryFilters()">Xóa lọc</button>
-        </div>
-      </div>
-      <div id="inventoryContainer"></div>
-    `;
-    
-    // Set default dates (first day of month to today)
-    const today = new Date().toISOString().split('T')[0];
-    const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
-    
-    document.getElementById('inventoryFromDate').value = firstDayOfMonth;
-    document.getElementById('inventoryToDate').value = today;
-  }
-}
-
 // ===================== KIỂM TRA HÀNG SẮP HẾT =====================
 /*
  * Kiểm tra và cảnh báo các sản phẩm sắp hết hàng
@@ -1276,159 +1241,141 @@ function checkLowStock() {
   const products = JSON.parse(localStorage.getItem('products')) || [];
   const lowStockProducts = products.filter(p => (p.quantity || 0) <= 5);
   
-  if (lowStockProducts.length === 0) {
-    alert('Không có sản phẩm nào sắp hết hàng.');
-    return;
-  }
-  
-  // Hiển thị danh sách sản phẩm sắp hết
   renderInventory(lowStockProducts);
-  
-  // Hiển thị cảnh báo
-  let alertMessage = 'CÁC SẢN PHẨM SẮP HẾT HÀNG:\n\n';
-  lowStockProducts.forEach(product => {
-    alertMessage += `• ${product.name}: ${product.quantity} sản phẩm\n`;
-  });
-  alertMessage += `\nTổng cộng: ${lowStockProducts.length} sản phẩm`;
-  
-  alert(alertMessage);
+  if (lowStockProducts.length) {
+    alert(`Có ${lowStockProducts.length} sản phẩm sắp hết hàng!`);
+  } else {
+    alert('Không có sản phẩm nào sắp hết hàng.');
+  }
 }
 
-// ===================== TRA CỨU TỒN KHO =====================
+// ===================== LỌC THEO DANH MỤC =====================
 /*
- * Tra cứu số lượng tồn của một sản phẩm, theo loại trong khoảng thời gian
+ * Lọc danh sách inventory theo danh mục được chọn trên UI
  */
-function searchInventory() {
-  const searchTerm = document.getElementById('inventorySearch').value.toLowerCase();
+function filterByCategory() {
   const category = document.getElementById('categoryFilter').value;
-  const fromDate = document.getElementById('inventoryFromDate').value;
-  const toDate = document.getElementById('inventoryToDate').value;
+  const products = JSON.parse(localStorage.getItem('products')) || [];
   
-  let products = JSON.parse(localStorage.getItem('products')) || [];
-  
-  // Lọc theo tên sản phẩm
-  if (searchTerm) {
-    products = products.filter(p => 
-      p.name.toLowerCase().includes(searchTerm) ||
-      (p.description && p.description.toLowerCase().includes(searchTerm))
-    );
+  // Show back button after filtering
+  const backBtn = document.querySelector('#inventoryBackBtn');
+  if (!backBtn && category) {
+    const filtersDiv = document.querySelector('#inventorySection .section-filters');
+    const newBackBtn = document.createElement('button');
+    newBackBtn.id = 'inventoryBackBtn';
+    newBackBtn.className = 'back-btn';
+    newBackBtn.textContent = 'Quay lại';
+    newBackBtn.onclick = () => {
+      document.getElementById('categoryFilter').value = '';
+      renderInventory();
+      newBackBtn.remove();
+    };
+    filtersDiv.appendChild(newBackBtn);
   }
   
-  // Lọc theo danh mục
-  if (category) {
-    products = products.filter(p => p.type === category);
-  }
-  
-  renderInventory(products, fromDate, toDate);
+  const filteredProducts = category ? 
+    products.filter(p => (p.category || p.type) === category) : 
+    products;
+    
+  renderInventory(filteredProducts);
 }
 
-// ===================== XÓA BỘ LỌC =====================
-function clearInventoryFilters() {
-  document.getElementById('inventorySearch').value = '';
-  document.getElementById('categoryFilter').value = '';
-  
-  const today = new Date().toISOString().split('T')[0];
-  const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
-  
-  document.getElementById('inventoryFromDate').value = firstDayOfMonth;
-  document.getElementById('inventoryToDate').value = today;
-  
-  renderInventory();
-}
 // ===================== BÁO CÁO NHẬP XUẤT TỒN =====================
+/*
+ * Sinh báo cáo nhập/xuất/tồn cho 1 sản phẩm theo khoảng thời gian
+ * Input: productId, fromDate (YYYY-MM-DD), toDate (YYYY-MM-DD)
+ * Output: { import: tổng số nhập, export: tổng xuất, balance: chênh lệch }
+ * Lưu ý: chỉ tính các phiếu nhập có status === 'completed' và các đơn hàng không bị 'cancelled'
+ */
 function generateInventoryReport(productId, fromDate, toDate) {
   const imports = JSON.parse(localStorage.getItem('imports')) || [];
   const orders = JSON.parse(localStorage.getItem('orderHistory')) || [];
   
+  // Lọc theo thời gian và sản phẩm
   const pid = typeof productId === 'string' ? parseInt(productId) : productId;
-  
-  // Tính tổng nhập - chỉ tính các phiếu nhập đã hoàn thành
-  const productImports = imports.filter(imp => {
-    const matchProduct = imp.productId === pid || String(imp.productId) === String(productId);
-    const matchStatus = imp.status === 'completed';
-    const matchDate = (!fromDate || imp.date >= fromDate) && (!toDate || imp.date <= toDate);
+  const productImports = imports
+    .filter(imp => 
+      (imp.productId === pid || String(imp.productId) === String(productId)) &&
+      imp.status === 'completed' &&
+      imp.date >= fromDate &&
+      imp.date <= toDate
+    );
     
-    return matchProduct && matchStatus && matchDate;
-  });
-  
+  const productOrders = orders
+    .filter(order => 
+      order.status !== 'cancelled' &&
+      order.date >= fromDate &&
+      order.date <= toDate
+    )
+    .map(order => order.items)
+    .flat()
+  .filter(item => item.productId === pid || String(item.productId) === String(productId));
+    
+  // Tính tổng
   const totalImport = productImports.reduce((sum, imp) => sum + (imp.quantity || 0), 0);
-  
-  // Tính tổng xuất - chỉ tính các đơn hàng không bị hủy
-  let totalExport = 0;
-  
-  orders.forEach(order => {
-    if (order.status !== 'cancelled' && 
-        (!fromDate || order.date >= fromDate) && 
-        (!toDate || order.date <= toDate)) {
-      
-      order.items.forEach(item => {
-        const itemProductId = item.productId || item.id;
-        if (itemProductId === pid || String(itemProductId) === String(productId)) {
-          totalExport += item.quantity || 0;
-        }
-      });
-    }
-  });
-  
-  // Tồn kho = Nhập trong kỳ - Xuất trong kỳ
-  const stock = totalImport - totalExport;
+  const totalExport = productOrders.reduce((sum, item) => sum + (item.quantity || 0), 0);
   
   return {
     import: totalImport,
     export: totalExport,
-    stock: stock
+    balance: totalImport - totalExport
   };
 }
 
 // ===================== HIỂN THỊ TỒN KHO =====================
-function renderInventory(products = JSON.parse(localStorage.getItem('products')) || [], fromDate = null, toDate = null) {
+/*
+ * Hiển thị bảng tồn kho
+ * - Nếu không truyền products thì mặc định lấy toàn bộ products từ storage
+ * - Hiển thị: tên, danh mục, tồn kho hiện tại, nhập trong tháng, xuất trong tháng, trạng thái
+ */
+function renderInventory(products = JSON.parse(localStorage.getItem('products')) || []) {
   const container = document.getElementById('inventoryContainer');
   
-  if (!products || products.length === 0) {
-    container.innerHTML = '<p class="no-data">Không tìm thấy sản phẩm nào phù hợp.</p>';
+  if (!products.length) {
+    container.innerHTML = '<p>Không có sản phẩm nào.</p>';
     return;
   }
 
+  // Cập nhật danh sách danh mục cho filter
   updateCategoryFilter(products);
 
-  if (!fromDate) {
-    fromDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
-  }
-  if (!toDate) {
-    toDate = new Date().toISOString().split('T')[0];
-  }
+  // Lấy ngày đầu tháng và cuối tháng hiện tại
+  const now = new Date();
+  const firstDay = new Date(now.getFullYear(), now.getMonth(), 1)
+    .toISOString().split('T')[0];
+  const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0)
+    .toISOString().split('T')[0];
 
   container.innerHTML = `
-    <div class="inventory-header">
-      <h3>Báo cáo tồn kho từ ${fromDate} đến ${toDate}</h3>
-      <p class="summary">Tổng số sản phẩm: <strong>${products.length}</strong></p>
-    </div>
     <table class="inventory-table">
       <thead>
         <tr>
           <th>Sản phẩm</th>
           <th>Danh mục</th>
-          <th>Nhập trong kỳ</th>
-          <th>Xuất trong kỳ</th>
           <th>Tồn kho</th>
+          <th>Nhập trong tháng</th>
+          <th>Xuất trong tháng</th>
           <th>Trạng thái</th>
         </tr>
       </thead>
       <tbody>
         ${products.map(product => {
-          const report = generateInventoryReport(product.id, fromDate, toDate);
-          const status = getStockStatus(report.stock);
+          const report = generateInventoryReport(
+            product.id,
+            firstDay,
+            lastDay
+          );
+          const stockVal = (typeof product.stock !== 'undefined') ? product.stock : (product.quantity || 0);
+          const status = getStockStatus(stockVal);
           
           return `
-            <tr class="inventory-row ${status.class}">
-              <td class="product-name">${product.name}</td>
-              <td class="product-category">${product.type || ''}</td>
-              <td class="import-quantity">${report.import}</td>
-              <td class="export-quantity">${report.export}</td>
-              <td class="stock ${status.class}">${report.stock}</td>
-              <td class="status ${status.class}">
-                <span class="status-badge">${status.text}</span>
-              </td>
+            <tr class="${status.class}">
+              <td>${product.name}</td>
+              <td>${product.category || product.type || ''}</td>
+              <td>${stockVal}</td>
+              <td>${report.import}</td>
+              <td>${report.export}</td>
+              <td>${status.text}</td>
             </tr>
           `;
         }).join('')}
@@ -1437,68 +1384,36 @@ function renderInventory(products = JSON.parse(localStorage.getItem('products'))
   `;
 }
 
-// ===================== KIỂM TRA HÀNG SẮP HẾT =====================
-function checkLowStock() {
-  const products = JSON.parse(localStorage.getItem('products')) || [];
-  const fromDate = document.getElementById('inventoryFromDate').value;
-  const toDate = document.getElementById('inventoryToDate').value;
-  
-  let lowStockProducts = [];
-  
-  products.forEach(product => {
-    const report = generateInventoryReport(product.id, fromDate, toDate);
-    if (report.stock <= 5) {
-      lowStockProducts.push({
-        ...product,
-        stock: report.stock
-      });
-    }
-  });
-  
-  if (lowStockProducts.length === 0) {
-    alert('Không có sản phẩm nào sắp hết hàng.');
-    return;
-  }
-  
-  // Hiển thị danh sách sản phẩm sắp hết
-  renderInventory(lowStockProducts, fromDate, toDate);
-  
-  // Hiển thị cảnh báo
-  let alertMessage = 'CÁC SẢN PHẨM SẮP HẾT HÀNG:\n\n';
-  lowStockProducts.forEach(product => {
-    alertMessage += `• ${product.name}: ${product.stock} sản phẩm\n`;
-  });
-  alertMessage += `\nTổng cộng: ${lowStockProducts.length} sản phẩm`;
-  
-  alert(alertMessage);
-}
-
 // ===================== HÀM HỖ TRỢ =====================
-function getStockStatus(stock) {
-  if (stock <= 0) {
-    return { text: 'Hết hàng', class: 'out-of-stock' };
-  }
-  if (stock <= 5) {
-    return { text: 'Sắp hết', class: 'low-stock' };
-  }
-  return { text: 'Còn hàng', class: 'in-stock' };
-}
-// ===================== CẬP NHẬT DANH MỤC CHO BỘ LỌC =====================
 /*
  * Cập nhật danh sách option cho bộ lọc danh mục
  */
 function updateCategoryFilter(products) {
-  const categories = [...new Set(products.map(p => p.type))].filter(cat => cat);
+  const categories = [...new Set(products.map(p => p.category || p.type))];
   const filter = document.getElementById('categoryFilter');
   
-  if (filter) {
-    const currentValue = filter.value;
-    filter.innerHTML = '<option value="">Tất cả danh mục</option>' +
-      categories.map(cat => `<option value="${cat}" ${cat === currentValue ? 'selected' : ''}>${cat}</option>`).join('');
-  }
+  filter.innerHTML = `
+    <option value="">Tất cả danh mục</option>
+    ${categories.map(cat => 
+      `<option value="${cat}">${cat}</option>`
+    ).join('')}
+  `;
 }
 
-// ===================== KHỞI TẠO KHI TRANG LOAD =====================
+/*
+ * Trả về trạng thái tồn kho (text, css class) dựa trên quantity
+ */
+function getStockStatus(quantity) {
+  if (quantity <= 0) {
+    return { text: 'Hết hàng', class: 'out-of-stock' };
+  }
+  if (quantity <= 5) {
+    return { text: 'Sắp hết', class: 'low-stock' };
+  }
+  return { text: 'Còn hàng', class: '' };
+}
+
+// Khởi tạo khi trang load
 /*
  * Khi trang load: đảm bảo mọi product có thuộc tính quantity (nếu chưa có -> gán 0)
  * Sau đó gọi renderInventory để hiển thị
@@ -1524,10 +1439,14 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('products', JSON.stringify(products));
   }
   
-  // Khởi tạo giao diện tồn kho
-  initializeInventorySection();
   renderInventory();
 });
+
+
+
+
+
+
 // ===================== QUẢN LÝ IMPORT =====================
 /*
  * Lấy danh sách phiếu nhập từ localStorage
@@ -1798,8 +1717,8 @@ function renderImports(imports = getImports()) {
             <td>${imp.date}</td>
             <td>${getProductName(imp.productId)}</td>
             <td>${imp.quantity}</td>
-            <td>${imp.price.toLocaleString()}$</td>
-            <td>${imp.total.toLocaleString()}$</td>
+            <td>${imp.price.toLocaleString()}</td>
+            <td>${imp.total.toLocaleString()}đ</td>
             <td>${imp.status === 'pending' ? 'Chờ xử lý' : 'Đã hoàn thành'}</td>
             <td>
               ${imp.status === 'pending' ? `

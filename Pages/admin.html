@@ -58,7 +58,7 @@
 
                     <!-- Filters for products: category, brand, color, search, clear -->
                     <div class="section-filters" id="productFilters">
-                        <select id="filterCategory">
+                        <select id="filterType">
                             <option value="">Tất cả loại</option>
                         </select>
                         <select id="filterBrand">
@@ -154,10 +154,7 @@
                             <input type="text" id="editName" required>
 
                             <div class="form-row">
-                                <div class="form-col">
-                                    <label>Danh mục <span class="required">*</span></label>
-                                    <input type="text" id="editCategory" required>
-                                </div>
+                                
                                 <div class="form-col">
                                     <label>Loại <span class="required">*</span></label>
                                     <input type="text" id="editType" required>
@@ -187,8 +184,7 @@
                             <label>Mô tả sản phẩm</label>
                             <textarea id="editDescription" rows="3" placeholder="Nhập mô tả chi tiết về sản phẩm..."></textarea>
 
-                            <label>Thông số kỹ thuật</label>
-                            <textarea id="editSpecs" rows="3" placeholder='{"cpu":"i7","ram":"16GB"}'></textarea>
+                           
 
                             <label>Màu sắc (phân cách bằng dấu phẩy)</label>
                             <input type="text" id="editColors" placeholder="#000000,#FFFFFF">
