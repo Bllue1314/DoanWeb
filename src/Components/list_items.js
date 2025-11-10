@@ -13,7 +13,6 @@ function createProductCard(product) {
     const favKey = _getFavoritesKey();
     const favorites = JSON.parse(localStorage.getItem(favKey)) || [];
     const isLiked = favorites.includes(String(product.id)) ? "liked" : "";
-
     const colorSpans = product.colors.map(color =>
         `<span style="background-color: ${color}"></span>`
     ).join('');
@@ -115,24 +114,127 @@ function addClickEventsToBuyNow() {
 }
 
 // Render tất cả sản phẩm
+// function renderProducts(list) {
+//     currentProductList = list; // *** CẬP NHẬT: Lưu lại danh sách đang xem
+//     currentPage = 1;
+//     const container = document.getElementById('productsContainer');
+//     //lọc sản phẩm ẩn
+//     const visibleProducts = list.filter(product => !product.isHidden);
+//     const start = (currentPage - 1) * itemsPerPage;
+//     const end = start + itemsPerPage;
+
+//     const productsToShow = list.slice(start, end);
+
+//     container.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
+//     addClickEventsToCards();
+//     addClickEventsToHearts();
+//     renderPagination();
+
+// }
+// Hàm kiểm tra và lọc sản phẩm ẩn
+function filterHiddenProducts(products) {
+    console.log("🔍 Kiểm tra sản phẩm ẩn:");
+    
+    const visibleProducts = [];
+    const hiddenProducts = [];
+    
+    products.forEach(product => {
+        if (product.isHidden) {
+            hiddenProducts.push(product);
+            console.log(`🚫 ẨN: ${product.name} (ID: ${product.id})`);
+        } else {
+            visibleProducts.push(product);
+            console.log(`👀 HIỆN: ${product.name} (ID: ${product.id})`);
+        }
+    });
+    
+    console.log(`📊 Kết quả: ${visibleProducts.length} hiện / ${hiddenProducts.length} ẩn`);
+    return visibleProducts;
+}
+function addClickEventsToBuyNow() {
+    const buyButtons = document.querySelectorAll('#productsContainer .card_action button');
+
+    buyButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            // Ngăn sự kiện click của thẻ (card) chạy
+            event.stopPropagation();
+
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            if (!loggedInUser) {
+                alert("Vui lòng đăng nhập để mua hàng.");
+                // Giả sử bạn có hàm showForm() ở global
+                if (typeof showForm === 'function') {
+                    showForm('login');
+                }
+                return;
+            }
+
+            // Lấy ID sản phẩm từ card cha
+            const card = button.closest('.card');
+            const productId = card.dataset.productId;
+
+            // Tìm thông tin sản phẩm đầy đủ từ mảng 'products'
+            const product = products.find(p => String(p.id) === productId);
+            if (!product) return;
+
+            // ---- Logic "Buy Now" ----
+            // Giả sử cartManager đã được định nghĩa ở đâu đó
+
+            // 1. Lấy màu mặc định (màu đầu tiên)
+            const selectedColor = (product.colors && product.colors.length > 0) ? product.colors[0] : null;
+
+            // 2. Số lượng mặc định là 1 (vì không có ô chọn ở trang chính)
+            const quantity = 1;
+            const colorId = selectedColor || 'default';
+            const cartItemId = `${product.id}-${colorId}`;
+            // 3. Xóa sạch giỏ hàng hiện tại
+            cartManager.items = [];
+
+            // 4. Tạo item mới với màu và số lượng
+            const buyNowItem = {
+                ...product,
+                quantity: quantity,
+                selectedColor: selectedColor,// Thêm màu đã chọn
+                cartItemId: cartItemId
+            };
+
+            // 5. Thêm duy nhất item này vào giỏ hàng
+            cartManager.items.push(buyNowItem);
+
+            // 6. Lưu giỏ hàng và cập nhật icon
+            cartManager.saveToStorage();
+            cartManager.updateCartCount();
+
+            // 7. Chuyển hướng sang trang thanh toán
+            window.location.href = 'checkout.html';
+        });
+    });
+}
+// Hàm render với kiểm tra ẩn/hiện
 function renderProducts(list) {
-    currentProductList = list; // *** CẬP NHẬT: Lưu lại danh sách đang xem
+    console.log("=== BẮT ĐẦU RENDER VỚI KIỂM TRA ẨN ===");
+    
+    // Kiểm tra và lọc sản phẩm ẩn
+    const visibleProducts = filterHiddenProducts(list);
+    
+    currentProductList = visibleProducts;
     currentPage = 1;
     const container = document.getElementById('productsContainer');
-
+    
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
+    const productsToShow = visibleProducts.slice(start, end);
 
-    const productsToShow = list.slice(start, end);
-
+    console.log(`🎯 Hiển thị: ${productsToShow.length} sản phẩm`);
+    
     container.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
     addClickEventsToCards();
     addClickEventsToHearts();
     addClickEventsToBuyNow();
     renderPagination();
-
+    
+    console.log("=== KẾT THÚC RENDER ===");
 }
-
 function renderCurrentPage() {
     const container = document.getElementById('productsContainer');
     const start = (currentPage - 1) * itemsPerPage;
@@ -474,7 +576,6 @@ function renderHistory() {
     }
     const history = historyKey ? JSON.parse(localStorage.getItem(historyKey)) || [] : [];
     const tbody = document.getElementById("historybody");
-
     if (history.length === 0) {
         tbody.innerHTML = `
             <tr>
@@ -548,7 +649,7 @@ function showHistoryDetail(orderId) {
 
 function showHistoryDetail(orderId) {
     const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
-    const order = history.find(o => o.orderId === orderId);
+    const order = history.find(o => o.orderId !== orderId);
 
     if (!order) {
         alert("Không tìm thấy đơn hàng!");
@@ -561,19 +662,25 @@ function showHistoryDetail(orderId) {
     // Cập nhật tiêu đề popup
     detailCaption.textContent = `Chi tiết Đơn hàng: ${orderId}`;
 
-    // Đổ dữ liệu item vào bảng (đã sửa để hiện màu)
-    detailBody.innerHTML = order.items.map(item => `
+    // Đổ dữ liệu item vào bảng (ĐÃ SỬA)
+    detailBody.innerHTML = order.items.map(item => {
+        // 🟢 SỬA: Lấy thông tin sản phẩm đầy đủ từ products
+        const fullProduct = products.find(p => p.id == item.productId);
+        
+        return `
         <tr>
             <td>
                 <div class="item-info">
-                    <img src="${item.image}" alt="${item.name}">
+                    <img src="${fullProduct ? fullProduct.image : item.image || 'default-image.jpg'}" 
+                         alt="${item.name}" 
+                         style="width: 50px; height: 50px; object-fit: cover;">
                     <span>${item.name}</span>
                 </div>
             </td>
             <td>
-                ${item.selectedColor ?
+                ${item.selectedColor || (fullProduct && fullProduct.colors && fullProduct.colors[0]) ?
             `<span class="item-color-dot" 
-                           style="background-color: ${item.selectedColor}; 
+                           style="background-color: ${item.selectedColor || (fullProduct.colors[0])}; 
                                   width: 20px; height: 20px; 
                                   border-radius: 50%; 
                                   display: inline-block;
@@ -581,11 +688,12 @@ function showHistoryDetail(orderId) {
                      </span>`
             : 'N/A'}
             </td>
-            <td>${item.price.toLocaleString('en-US')} $</td>
-            <td>${item.quantity}</td>
-            <td>${(item.price * item.quantity).toLocaleString('en-US')} $</td>
+            <td>${item.price ? item.price.toLocaleString('en-US') : '0'} $</td>
+            <td>${item.quantity || 1}</td>
+            <td>${((item.price || 0) * (item.quantity || 1)).toLocaleString('en-US')} $</td>
         </tr>
-    `).join('');
+        `;
+    }).join('');
 
     // Hiển thị popup chi tiết
     document.getElementById("historyPopup").classList.add("faded");
