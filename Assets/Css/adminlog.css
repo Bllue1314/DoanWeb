@@ -1,150 +1,152 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+/* GIAO DIỆN LOGIN CỦA ADMIN */
+
+* {  /*universal selector để áp dụng đồng nhất kiểu chữ lên mọi phẩn tử trong trang*/
+    margin: 0; /*loại bỏ khoảng cách mặc định của trình duyệt*/
+    padding: 0; /*đặt padding mặc định là 0*/
+    box-sizing: border-box; /*đặt box-sizing là border-box để bao gồm padding và border trong kích thước phần tử*/
+    font-family: sans-serif;    /*đặt font chữ mặc định cho toàn bộ trang*/
 }
 
-.login-mode{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: black;
+.login-mode{ /*container chính bao toàn bộ giao diện đăng nhập*/
+    display: flex; /*đặt flexbox để dễ căn chỉnh phân tử con*/
+    justify-content: center; /*căn giữa theo chiều ngang các phẩn tử con*/
+    align-items: center; /*căn giữa theo chiều dọc các phầm tử con*/
+    min-height: 100vh;  /*đặt chiều cao tối thiểu bằng chiều cao cửa sổ trình duyệt*/
+    background: black; /*màu nền của trang đăng nhập*/
+    overflow: hidden; /*ẩn các phần tử tràn ra ngoài*/
 }
 
-.wrapper{
-    position: relative;
-    width: 750px;
+.wrapper{ /*khung chứa/hộp đăng nhập*/
+    position: relative; /*đặt vị trí tương đối để dễ dàng định vị các phần tử con*/
+    width: 750px; /*đặt kích thước cố định cho hộp đăng nhập*/
     height: 450px;
-    background: transparent;
-    border: 2px solid skyblue;
-    box-shadow: 0 0 25px skyblue;
-    overflow: hidden;
-    background: navy;
-
+    background: transparent; /*nền trong suốt*/
+    border: 2px solid skyblue;  /*đặt viền màu xanh*/
+    box-shadow: 0 0 25px skyblue; /*đặt bóng phát sáng(glow) cho hộp đăng nhập*/
+    overflow: hidden; /*ẩn các phần tử tràn ra ngoài*/
+    background: navy;   /*màu nền của hộp đăng nhập*/
 }
 
-.wrapper .form-box.login{
-    left: 0;
-    padding: 0 60px 0 40px;
-}
-
-.wrapper .form-box{
-    position: absolute;
+.wrapper .form-box{ /*hộp chứa biểu mẫu đăng nhập*/
+    position: absolute;  /*khiến .form-box được đặt tuyệt đối trong .wrapper*/
     top: 0;
     width: 50%;
     height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: column; /*sắp xếp các phần tử con theo cột*/
+    justify-content: center; /*căn giữa theo chiều dọc*/
+}
+
+.wrapper .form-box.login{   
+    left: 0; /*đặt hộp đăng nhập ở bên trái của .wrapper*/
+    padding: 0 60px 0 40px; /*thêm khoảng cách bên trong hộp đăng nhập*/
 }
 
 .form-box h2{
     font-size: 32px;
     color: white;
-    text-align: center;
+    text-align: center; /*căn giữa tiêu đề*/
 }
 
-.form-box .input-box{
+.form-box .input-box{ 
     position: relative;
     width: 100%;
     height: 50px;
-    margin: 25px 0;
+    margin: 25px 0; /*khoảng cách trên dưới giữa các hộp nhập liệu*/
 }
 
-.input-box input{
+.input-box input{ /*kiểu dáng cho các ô nhập liệu*/
     width: 100%;
     height: 100%;
     background: transparent;
     border: none;
-    outline: none;
-    border-bottom: 2px solid white;
+    outline: none; /*loại bỏ viền mặc định khi ô được chọn*/
+    border-bottom: 2px solid white; /*đặt viền dưới màu trắng*/
     font-size: 16px;
     color: white;
-    font-weight: 500;
-    padding-right: 23px;
-    transition: 0.3s;
+    font-weight: 500; /*đặt độ đậm của chữ*/
+    padding-right: 23px; /*khoảng cách bên phải trong ô nhập liệu*/
+    transition: 0.3s; /*đặt hiệu ứng chuyển đổi 0.3s*/
 }
 
 .input-box input:focus,
-.input-box input:valid {
+.input-box input:valid { /*khi ô nhập liệu được chọn hoặc có dữ liệu hợp lệ*/
     border-bottom-color: #0ef;
 }
 
-.input-box label{
-    position: absolute;
+.input-box label{ /*kiểu dáng cho nhãn của ô nhập liệu*/
+    position: absolute; /*đặt vị trí tuyệt đối để dễ định vị*/
     top: 50%;
     left: 0;
-    transform: translateY(-50%);
+    transform: translateY(-50%); /*căn giữa theo chiều dọc*/
     color: white;
-    pointer-events: none;
+    pointer-events: none; /*label không nhận sự kiện chuột (click sẽ đi xuống input phía dưới)*/
     transition: 0.3s;
 }
 
 .input-box input:focus~label,
-.input-box input:valid~label {
-    top: -5px;
+.input-box input:valid~label { /*khi ô nhập liệu được chọn hoặc có dữ liệu hợp lệ*/
+    top: -5px; /*di chuyển nhãn lên trên*/
     color: #0ef;
 }
 
-.btn{
+.btn{ /*kiểu dáng cho nút đăng nhập*/
     position: relative;
     width: 100%;
     height: 45px;
     background: transparent;
     border: 2px solid skyblue;
     outline: none;
-    border-radius: 40px;
-    cursor: pointer;
+    border-radius: 40px; /*bo tròn các góc của nút*/
+    cursor: pointer; /*thay đổi con trỏ chuột khi hover qua nút*/
     font-size: 16px;
     color: white;
     font-weight: 600;
-    z-index: 1;
+    z-index: 1; /*đặt z-index để nút nằm trên các phần tử khác*/
     overflow: hidden;
 
 }
 
-.btn::before {
+.btn::before { /*tạo hiệu ứng nền động cho nút*/
     content: '';
     position: absolute;
     width: 100%;
-    height: 300%;
+    height: 300%; /*kích thước lớn hơn nút để tạo hiệu ứng tràn*/
     top: -100%;
     left: 0;
-    background: linear-gradient(black, skyblue);
-    z-index: -1;
+    background: linear-gradient(black, skyblue); /*tạo gradient từ đen đến xanh*/
+    z-index: -1; /*đặt z-index để nền nằm dưới nút*/
     transition: 0.3s;
 }
 
-.btn:hover::before{
+.btn:hover::before{ /*khi hover qua nút*/
     top: 0;
 }
 
-.wrapper .info-text{
+.wrapper .info-text{ /*hộp chứa văn bản thông tin*/
     position: absolute;
     top: 0;
     width: 50%;
     height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: column; /*sắp xếp các phần tử con theo cột*/
+    justify-content: center; /*căn giữa theo chiều dọc*/
 }
 
-.wrapper .info-text.login{
+.wrapper .info-text.login{ /*hộp văn bản thông tin "WELCOME BACK" ở bên phải của .wrapper*/
     right: 0;
     text-align: right;
     padding: 0 40px 60px 150px;
 }
 
-.info-text h2{
+.info-text h2{ 
     font-size: 36px;
     color: white;
     line-height: 1.3;
     text-transform: uppercase;
 }
 
-.wrapper .bg-animate{
+.wrapper .bg-animate{ /*phần tử nền động trang trí*/
     position: absolute;
     top: 0;
     right: 0;
