@@ -1597,5 +1597,4 @@ document.querySelector(".btn").addEventListener("click", function (e) {
 
 function logout() {
     localStorage.removeItem("loggedInAdmin");
-    window.location.href = "../Pages/index.html";
 }
