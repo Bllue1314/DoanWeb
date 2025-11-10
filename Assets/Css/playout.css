@@ -108,9 +108,12 @@
     transition: all 0.3s;
 }
 
-.color-dot:hover {
+
+.color-dot.selected {
     border-color: #4daf54;
-    transform: scale(1.1);
+
+    transform: scale(1.15);
+
 }
 
 .product-quantity {

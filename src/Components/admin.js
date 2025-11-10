@@ -318,7 +318,7 @@ function xoasanpham(id) {
 // Hàm ẩn/hiện sản phẩm
 function toggleHidden(id) {
     let products = getsanpham();
-    let product = products.find(p => p.id == id);
+    let product = products.find(p => p.id === id);
     if (product) {
         product.isHidden = !product.isHidden;
         luusanpham(products);
@@ -335,7 +335,7 @@ function initializeFilters() {
     const color=[...new Set(products.flatMap(p => p.colors || []))];
     // Cập nhật select danh mục
     const typeSelect = document.getElementById("filterType");
-    typeSelect.innerHTML = '<option value="">Tất cả danh mục</option>' +
+    typeSelect.innerHTML = '<option value="">Tất cả loại</option>' +
         type.map(cat => `<option value="${cat}">${cat}</option>`).join('');
     // Cập nhật select thương hiệu
     const brandSelect = document.getElementById("filterBrand");
@@ -372,7 +372,7 @@ function applyProductFilters() {
 
 // Xóa bộ lọc
 function clearProductFilters() {
-    document.getElementById("filterCategory").value = "";
+    document.getElementById("filterType").value = "";
     document.getElementById("filterBrand").value = "";
     document.getElementById("filterSearch").value = "";
     document.getElementById("clearProductFilters").style.display = "none";
@@ -468,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===================== QUẢN LÝ STORAGE =====================
 function getPrices() {
   return JSON.parse(localStorage.getItem('prices')) || {
-    categories: {},  // Tỷ lệ lợi nhuận theo danh mục
+    type: {},  // Tỷ lệ lợi nhuận theo danh mục
     products: {}     // Tỷ lệ lợi nhuận theo sản phẩm
   };
 }
@@ -531,7 +531,7 @@ function renderCategoryPrices() {
   
   // Lấy danh sách các danh mục từ sản phẩm
   const products = JSON.parse(localStorage.getItem('products')) || [];
-  const categories = [...new Set(products.map(p => p.type))].filter(c => c);
+  const categories = [...new Set(products.map(p => p.type ))].filter(c => c);
 
   container.innerHTML = `
     <div class="section-filters">
@@ -981,7 +981,7 @@ function searchOrders() {
     orders = orders.filter(order => order.date >= fromDate);
   }
   if (toDate) {
-    orders = orders.filter(order => order.date <= toDate);
+    orders = orders.filter(order => order.date<= toDate);
   }
   
   // Lọc theo trạng thái
