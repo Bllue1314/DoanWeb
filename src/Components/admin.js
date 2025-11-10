@@ -1,3 +1,7 @@
+
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
   // Định nghĩa cấu trúc tab
   const tabs = [
