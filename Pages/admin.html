@@ -33,10 +33,12 @@
             <button class="back-btn" onclick="logout()">Đăng xuất</button>
             
             <div class="logo">
-                <img src="../Assets/img/conchobopc.png" alt="Logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUGEZJUyJzT9OvwwU4zHzqfZhpPJ1gmknpLQ&usqp=CAU" alt="Logo">
             </div>
 
-            
+            <form class="search">
+                <input type="search" class="search_input" placeholder="Tìm kiếm...">
+            </form>
 
             <ul class="nav">
                 <li><a href="#" id="tab-products">Sản phẩm</a></li>
@@ -66,7 +68,7 @@
                         </select>
                         <select id="filterColor">
                             <option value="">Tất cả màu</option>
-                            </select>
+                        </select>
                         <input type="search" id="filterSearch" placeholder="Tìm kiếm sản phẩm...">
                         <button class="filter-btn" onclick="applyProductFilters()">Lọc</button>
                         <button class="back-btn" id="clearProductFilters" onclick="clearProductFilters()" style="display:none;">Xóa bộ lọc</button>
@@ -180,7 +182,7 @@
                                     <input type="number" id="editPrice" min="0" step="1000" required>
                                 </div>
                             </div>
-                            </div>
+                        </div>
 
                         <div class="form-group">
                             <h3>Thông tin chi tiết</h3>
